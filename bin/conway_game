@@ -1,0 +1,66 @@
+#!/usr/bin/env ruby
+
+require 'slop'
+
+opts = Slop.parse(help: true,
+                  banner: true,
+                  strict: true,
+                  optional_arguments: true) do
+  banner 'Usage: conway_game [options]'
+
+  on 'w', 'width=',  '[int] Board width', as: Integer
+  on      'height=', '[int] Board height', as: Integer
+  on 'n', 'num_ticks=',  '[int] Max number of ticks to generate', as: Integer
+  on 's', 'sleep=',      '[flt] Sleep duration', as: Float
+  on 'p', 'points=',     '[str] e.g. "acorn 50 18 p 1 2 p 3 4"', as: String
+  on 'S', 'step',        'Hold ticks for user input'
+  on      'silent',      'Only render the final state'
+  on 'm', 'multiplayer', 'Use multiplayer evaluation'
+end
+
+width = opts[:width] || 70
+height = opts[:height] || 40
+shapes = opts[:points] || "acorn 50 18"
+slp = opts[:sleep] || 0.02
+n = opts[:num_ticks]
+
+require 'conway_game'
+include ConwayGame
+b = BoardState.new(width, height)
+
+require 'conway_game/extras'
+b.extend(BoardState::Extras)
+b.add_shapes(shapes)
+
+if opts.multiplayer?
+  require 'conway_game/multiplayer'
+  b.extend(BoardState::Multiplayer)
+end
+
+count = 0
+while n.nil? or count <= n
+  if n.nil? or !opts.silent?
+    puts
+    puts count
+    puts b.render
+  end
+
+  if opts.multiplayer?
+    b.mp_tick
+  else
+    b.tick
+  end
+  
+  if opts.step?
+    gets
+  else
+    sleep slp if slp > 0.0
+  end
+  count += 1
+end
+
+if n and opts.silent?
+  puts
+  puts count
+  puts b.render
+end
