@@ -1,7 +1,8 @@
 #!/usr/bin/env ruby
 
+# process cmdline options
+#
 require 'slop'
-
 opts = Slop.parse(help: true,
                   banner: true,
                   strict: true,
@@ -17,29 +18,33 @@ opts = Slop.parse(help: true,
   on      'silent',      'Only render the final state'
   on 'm', 'multiplayer', 'Use multiplayer evaluation'
 end
-
 width = opts[:width] || 70
 height = opts[:height] || 40
 shapes = opts[:points] || "acorn 50 18"
 slp = opts[:sleep] || 0.02
 n = opts[:num_ticks]
+render_continuous = (n.nil? or !opts.silent?)
 
+
+# create game
+#
 require 'conway_game'
+require 'conway_game/extras'
+
 include ConwayGame
 b = BoardState.new(width, height)
-
-require 'conway_game/extras'
 b.extend(BoardState::Extras)
 b.add_shapes(shapes)
-
 if opts.multiplayer?
   require 'conway_game/multiplayer'
   b.extend(BoardState::Multiplayer)
 end
 
+# play game
+#
 count = 0
 while n.nil? or count <= n
-  if n.nil? or !opts.silent?
+  if render_continuous
     puts
     puts count
     puts b.render
@@ -59,6 +64,8 @@ while n.nil? or count <= n
   count += 1
 end
 
+# finish
+#
 if n and opts.silent?
   puts
   puts count

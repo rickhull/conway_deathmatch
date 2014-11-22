@@ -1,7 +1,10 @@
 require 'conway_game'
+require 'yaml'
 
 class ConwayGame::BoardState
   module Extras
+    @@known_shapes = nil
+
     # just ignore points out of bounds
     def add_points(points, x_off = 0, y_off = 0, val = ALIVE)
       points.each { |point|
@@ -12,17 +15,20 @@ class ConwayGame::BoardState
       self
     end
 
-    def get_shapes
-      # @@shapes?
+    # memoioze lib/conway_game/data/shapes.yaml
+    def known_shapes
+      return @@known_shapes if @@known_shapes
+      return (@@known_shapes =
+              YAML.load_file File.join(__dir__, 'data', 'shapes.yaml'))
     end
-    
+
     # parse a string like "acorn 12 22 block 5 0 p 1 2 p 3 4 p 56 78"
     # add known shapes
     def add_shapes(str, val = ALIVE)
       tokens = str.split
       points = []
       while !tokens.empty?
-        shape = tokens.shift
+        shape = tokens.shift.downcase
         raise "no coordinates for #{shape}" if tokens.length < 2
         x = tokens.shift.to_i
         y = tokens.shift.to_i
@@ -30,8 +36,7 @@ class ConwayGame::BoardState
         when 'p'
           points << [x, y]
         else
-          known = SHAPES[shape.to_sym]
-          if known
+          if (known = self.known_shapes[shape])
             self.add_points(known, x, y, val)
           else
             raise "unknown shape: #{shape}"
