@@ -15,11 +15,10 @@ class ConwayGame::BoardState
       self
     end
 
-    # memoioze lib/conway_game/data/shapes.yaml
+    # memoize lib/conway_game/data/shapes.yaml
     def known_shapes
-      return @@known_shapes if @@known_shapes
-      return (@@known_shapes =
-              YAML.load_file File.join(__dir__, 'data', 'shapes.yaml'))
+      @@known_shapes ||=
+        YAML.load_file(File.join(__dir__, 'data', 'shapes.yaml'))
     end
 
     # parse a string like "acorn 12 22 block 5 0 p 1 2 p 3 4 p 56 78"
