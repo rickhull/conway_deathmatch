@@ -1,7 +1,7 @@
 require 'buildar'
 
 Buildar.new do |b|
-  b.gemspec.name = 'conway_deathmatch'
+  b.gemspec.name = 'conway_game'
   b.gemspec.summary = "Conway's Game of Life, including Arena Deathmatch!"
   b.gemspec.description = "Multiparty (1P default), currently simple"
   b.gemspec.author = 'Rick Hull'
