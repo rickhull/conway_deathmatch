@@ -35,10 +35,7 @@ include ConwayGame
 b = BoardState.new(width, height)
 b.extend(BoardState::Extras)
 b.add_shapes(shapes)
-if opts.multiplayer?
-  require 'conway_game/multiplayer'
-  b.extend(BoardState::Multiplayer)
-end
+b.multiplayer = opts.multiplayer?
 
 # play game
 #
@@ -50,11 +47,7 @@ while n.nil? or count <= n
     puts b.render
   end
 
-  if opts.multiplayer?
-    b.mp_tick
-  else
-    b.tick
-  end
+  b.tick
   
   if opts.step?
     gets

@@ -8,7 +8,6 @@ Buildar.new do |b|
   b.gemspec.license = 'GPL'
   b.gemspec.files = ['lib/conway_game.rb',
                      'lib/conway_game/extras.rb',
-                     'lib/conway_game/multiplayer.rb',
                      'lib/conway_game/data/shapes.yaml',
                      'bin/conway_game']
   b.gemspec.executables = ['conway_game']
