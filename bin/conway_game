@@ -20,6 +20,7 @@ opts = Slop.parse(help: true,
 end
 width = opts[:width] || 70
 height = opts[:height] || 40
+# assumes 1P, TODO: figure out MP
 shapes = opts[:points] || "acorn 50 18"
 slp = opts[:sleep] || 0.02
 n = opts[:num_ticks]
@@ -33,8 +34,7 @@ require 'conway_game/shapes'
 
 include ConwayGame
 b = BoardState.new(width, height)
-b.extend(BoardState::Extras)
-b.add_shapes(shapes)
+Shapes.add(b, shapes) # assumes 1P
 b.multiplayer = opts.multiplayer?
 
 # play game
