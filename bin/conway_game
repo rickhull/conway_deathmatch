@@ -29,7 +29,7 @@ render_continuous = (n.nil? or !opts.silent?)
 # create game
 #
 require 'conway_game'
-require 'conway_game/extras'
+require 'conway_game/shapes'
 
 include ConwayGame
 b = BoardState.new(width, height)
