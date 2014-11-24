@@ -15,8 +15,6 @@ Buildar.new do |b|
 end
 
 require 'rake/testtask'
-
 desc "Run tests"
-Rake::TestTask.new do |t|
-#  t.libs << 'test'
-end
+Rake::TestTask.new
+
