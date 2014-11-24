@@ -1,6 +1,7 @@
 require 'minitest/spec'
 require 'minitest/autorun'
-require 'conway_game'
+require_relative '../lib/conway_game'
+require_relative '../lib/conway_game/shapes'
 
 include ConwayGame
 
