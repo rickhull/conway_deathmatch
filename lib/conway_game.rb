@@ -78,7 +78,7 @@ class ConwayGame::BoardState
     neighbors
   end
 
-  # multiplayer
+  # multiplayer, neighbor count and birthright
   def neighbor_stats(x, y)
     total = 0
     largest = 0
@@ -96,11 +96,7 @@ class ConwayGame::BoardState
   # generate the next state table
   def tick
     new_state = self.class.new_state(@xr.last, @yr.last)
-    @xr.each { |x|
-      @yr.each { |y|
-        new_state[x][y] = next_value(x, y)
-      }
-    }
+    @xr.each { |x| @yr.each { |y|  new_state[x][y] = next_value(x, y)  } }
     @state = new_state
     self
   end
@@ -110,4 +106,11 @@ class ConwayGame::BoardState
     @state.transpose.map { |row| row.join }.join("\n")
   end
   alias_method :render, :render_text
+
+  # full board scan
+  def population
+    population = Hash.new(0)
+    @state.each { |col| col.each { |val|  population[val] += 1  } }
+    population
+  end
 end
