@@ -1,17 +1,17 @@
 require 'buildar'
 
 Buildar.new do |b|
-  b.gemspec.name = 'conway_game'
-  b.gemspec.summary = "Conway's Game of Life, including Arena Deathmatch!"
-  b.gemspec.description = "Multiparty (1P default), currently simple"
+  b.gemspec.name = 'conway_deathmatch'
+  b.gemspec.summary = "Conway's Game of Life"
+  b.gemspec.description = "Deathmatch"
   b.gemspec.author = 'Rick Hull'
   b.gemspec.license = 'GPL'
-  b.gemspec.files = ['lib/conway_game.rb',
-                     'lib/conway_game/shapes.rb',
-                     'lib/conway_game/data/shapes.yaml',
-                     'bin/conway_game']
-  b.gemspec.executables = ['conway_game']
-  b.gemspec.version = '0.0.0.0'
+  b.gemspec.files = ['lib/conway_deathmatch.rb',
+                     'lib/conway_deathmatch/shapes.rb',
+                     'lib/conway_deathmatch/data/shapes.yaml',
+                     'bin/conway_deathmatch']
+  # b.gemspec.executables = ['conway_deathmatch']
+  b.gemspec.version = '0.0.0.1'
 end
 
 require 'rake/testtask'

@@ -1,11 +1,11 @@
-require 'conway_game'
+require 'conway_deathmatch'
 require 'yaml'
 
 module ConwayGame
   module Shapes
     @@known
 
-    # memoize lib/conway_game/data/shapes.yaml
+    # memoize data/shapes.yaml
     def self.known
       @@known ||= YAML.load_file(File.join(__dir__, 'data', 'shapes.yaml'))
     end

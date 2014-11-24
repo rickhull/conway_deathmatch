@@ -7,7 +7,7 @@ opts = Slop.parse(help: true,
                   banner: true,
                   strict: true,
                   optional_arguments: true) do
-  banner 'Usage: conway_game [options]'
+  banner 'Usage: conway_deathmatch [options]'
 
   on 'w', 'width=',  '[int] Board width', as: Integer
   on      'height=', '[int] Board height', as: Integer
@@ -29,8 +29,8 @@ render_continuous = (n.nil? or !opts.silent?)
 
 # create game
 #
-require 'conway_game'
-require 'conway_game/shapes'
+require 'conway_deathmatch'
+require 'conway_deathmatch/shapes'
 
 include ConwayGame
 b = BoardState.new(width, height)
