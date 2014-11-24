@@ -28,12 +28,7 @@ class ConwayGame::BoardState
   
   # Conway's Game of Life transition rules
   def next_value(x, y)
-    birthright = ALIVE
-    if @multiplayer
-      n, birthright = neighbor_stats(x, y)
-    else
-      n = count_neighbors(x, y)
-    end
+    n, birthright = neighbor_stats(x, y)
     if alive?(x, y)
       (n == 2 or n == 3) ? birthright : DEAD
     else
@@ -54,25 +49,14 @@ class ConwayGame::BoardState
     in_bounds?(x, y) and @state[x][y] != DEAD
   end
   
-  # 8 potential neighbors
-  def count_neighbors(x, y)
-    count = 0
-    (x-1..x+1).each { |xn|
-      (y-1..y+1).each { |yn|
-        next if xn == x and yn == y # don't count self
-        count += 1 if alive?(xn, yn) 
-      }
-    }
-    count
-  end
-
-  # multiplayer, population of each neighbor
+  # population of each neighbor
   def neighbor_population(x, y)
     neighbors = Hash.new(0)
     (x-1..x+1).each { |xn|
       (y-1..y+1).each { |yn|
-        next if xn == x and yn == y # don't count self
-        neighbors[@state[xn][yn]] += 1 if alive?(xn, yn)
+        if alive?(xn, yn) and !(xn == x and yn == y) # don't count self
+          neighbors[@state[xn][yn]] += 1
+        end
       }
     }
     neighbors
@@ -80,17 +64,21 @@ class ConwayGame::BoardState
 
   # multiplayer, neighbor count and birthright
   def neighbor_stats(x, y)
-    total = 0
-    largest = 0
-    birthright = nil
-    neighbor_population(x, y).each { |sym, cnt|
-      total += cnt
-      if cnt > largest
-        largest = cnt
-        birthright = sym
-      end
-    }
-    [total, birthright]
+    if @multiplayer
+      total = 0
+      largest = 0
+      birthright = nil
+      neighbor_population(x, y).each { |sym, cnt|
+        total += cnt
+        if cnt > largest
+          largest = cnt
+          birthright = sym
+        end
+      }
+      [total, birthright]
+    else
+      [neighbor_population(x, y).values.inject :+, ALIVE]
+    end
   end
   
   # generate the next state table
@@ -100,7 +88,23 @@ class ConwayGame::BoardState
     @state = new_state
     self
   end
+
+  # set a single point, raise on OOB
+  def populate(x, y, val = ALIVE)
+    in_bounds!(x, y)
+    @state[x][y] = val
+  end
   
+  # set several points (2d array), ignore OOB
+  def add_points(points, x_off = 0, y_off = 0, val = ALIVE)
+    points.each { |point|
+      x = point[0] + x_off
+      y = point[1] + y_off
+      @state[x][y] = val if self.in_bounds?(x, y)
+    }
+    self
+  end
+
   # for line-based text output, iterate over y-values first (i.e. per row)
   def render_text
     @state.transpose.map { |row| row.join }.join("\n")
