@@ -8,7 +8,7 @@ Gem::Specification.new do |s|
                    'lib/conway_deathmatch/shapes.rb',
                    'lib/conway_deathmatch/data/shapes.yaml',
                    'bin/conway_deathmatch']
-  # s.executables = ['conway_deathmatch']
+  s.executables = ['conway_deathmatch']
   s.homepage    = 'https://github.com/rickhull/conway_deathmatch'
   s.version     = File.read(File.join(__dir__, 'VERSION')).chomp
 end
