@@ -7,9 +7,16 @@ Buildar.new do |b|
   b.gemspec.author = 'Rick Hull'
   b.gemspec.license = 'GPL'
   b.gemspec.files = ['lib/conway_game.rb',
-                     'lib/conway_game/extras.rb',
+                     'lib/conway_game/shapes.rb',
                      'lib/conway_game/data/shapes.yaml',
                      'bin/conway_game']
   b.gemspec.executables = ['conway_game']
   b.gemspec.version = '0.0.0.0'
+end
+
+require 'rake/testtask'
+
+desc "Run tests"
+Rake::TestTask.new do |t|
+#  t.libs << 'test'
 end

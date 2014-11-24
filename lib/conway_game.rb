@@ -77,7 +77,7 @@ class ConwayGame::BoardState
       }
       [total, birthright]
     else
-      [neighbor_population(x, y).values.inject :+, ALIVE]
+      [neighbor_population(x, y).values.reduce(:+), ALIVE]
     end
   end
   
