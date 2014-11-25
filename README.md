@@ -43,7 +43,7 @@ Demo
 
     # defaults to 70x40 board and an acorn shape
     conway_deathmatch
-
+    
     # multiplayer
     conway_deathmatch --one="acorn 30 30" --two="die_hard 20 10"
 
@@ -73,3 +73,9 @@ Implementation
 ===
 
 Just one file, aside from shape loading.  [Have a look-see](https://github.com/rickhull/conway_deathmatch/blob/master/lib/conway_deathmatch.rb)
+
+This implementation focuses on simplicity and ease of understanding.  Currently
+there are no performance optimizations.  I would like to use this project
+to demonstrate the process of optimization, hopefully adding optimization on
+an optional, parallel, or otherwise non-permanent basis -- i.e. maintain the
+simple, naive implementation for reference and correctness.
