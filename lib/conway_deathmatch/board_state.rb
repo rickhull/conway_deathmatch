@@ -1,10 +1,10 @@
-module ConwayGame; end         # create namespace
+module ConwayDeathmatch; end         # create namespace
 
 # data structure for the board - 2d array
 # implements standard and multiplayer evaluation
 # static boundaries are treated as dead
 #
-class ConwayGame::BoardState
+class ConwayDeathmatch::BoardState
   class BoundsError < RuntimeError; end
 
   DEAD = '.'

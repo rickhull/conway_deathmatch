@@ -1,6 +1,6 @@
 require_relative './spec_helper'
 
-describe ConwayGame::BoardState do
+describe ConwayDeathmatch::BoardState do
 
   describe "an empty board" do
     before do

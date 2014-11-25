@@ -33,7 +33,7 @@ render_continuous = (n.nil? or !opts.silent?)
 
 # create game
 #
-include ConwayGame
+include ConwayDeathmatch
 b = BoardState.new(width, height)
 if opts.multiplayer? or opts[:one] or opts[:two] or opts[:three]
   b.multiplayer = true

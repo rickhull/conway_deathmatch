@@ -1,6 +1,6 @@
 require_relative './spec_helper'
 
-describe ConwayGame::Shapes do
+describe ConwayDeathmatch::Shapes do
   before do
     @shape = "acorn"
     @shape_str = "#{@shape} 0 0"
