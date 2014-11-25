@@ -88,8 +88,8 @@ Caveats
 ### Boundaries
 
 As currently implemented, this project uses fixed boundaries, and boundary
-behavior is not standardized to my knowledge.  For this project, out of bounds
-are treated as always-dead and unable-to-be-populated.
+behavior is not standardized to my knowledge.  For this project, points out of
+bounds are treated as always-dead and unable-to-be-populated.
 
 ### Multiplayer
 
