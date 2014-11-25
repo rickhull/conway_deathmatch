@@ -77,8 +77,10 @@ form. After being inspired by competing in CGOLTW, I read their [one background
 page](http://gameoflifetotalwar.com/how-to-play) and then the
 [wikipedia page](http://en.wikipedia.org/wiki/Conway%27s_Game_of_Life).  I
 deliberately avoided any knowledge of any other implementations,
-considering the Nov 2014 implementation to be the naive, simple approach.
-The plan is to implement researched optimizations more or less immediately.
+considering this project's implementation as of November 24 (2014) to be the
+naive, simple approach.
+
+Researched optimizations are now an immediate priority.
 
 Caveats
 ---
