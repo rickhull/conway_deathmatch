@@ -72,8 +72,8 @@ simple, naive implementation for reference and correctness.
 Inspiration
 ---
 Coming into this project, I had significant background knowledge concerning
-Conway's Game of Life, but I could not recited the basic rules in any form.
-After being inspired by competing in CGOLTW, I read their [one background
+Conway's Game of Life, but I could not have recited the basic rules in any
+form. After being inspired by competing in CGOLTW, I read their [one background
 page](http://gameoflifetotalwar.com/how-to-play) and then the
 [wikipedia page](http://en.wikipedia.org/wiki/Conway%27s_Game_of_Life).  I
 deliberately avoided any knowledge of any other implementations,
