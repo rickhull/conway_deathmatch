@@ -2,11 +2,12 @@ Introduction
 ===
 
 [Conway's Game of Life](http://en.wikipedia.org/wiki/Conway%27s_Game_of_Life)
-is a small, simple set of rules for cellular automata.  Operating like a
-simulation, there is a starting state where certain points on a 2 dimensional
-board are populated, and the rules of the game determine the next state,
-generating interesting, unpredictable, and ultimately lifelike patterns over
-time.
+is a small, simple set of rules for
+[cellular automata](http://en.wikipedia.org/wiki/Cellular_automaton).
+Operating like a simulation, there is a starting state where certain points on
+a 2 dimensional board are populated, and the rules of the game determine the
+next state, generating interesting, unpredictable, and ultimately lifelike
+patterns over time.
 
 This project was inspired by http://gameoflifetotalwar.com/ (hereafter CGOLTW).
 You should check it out.  It updates the classic set of rules, which support
