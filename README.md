@@ -34,13 +34,16 @@ contention happens when a new cell must be generated, but none of the
 neighboring parents have a unique plurality.  For this project, birthright
 contention is resolved with a random selection (TODO).
 
-Install
+Usage
 ===
+
+Install
+---
 
     gem install conway_deathmatch
 
 Demo
-===
+---
 
     # defaults to 70x40 board and an acorn shape
     conway_deathmatch
@@ -49,7 +52,7 @@ Demo
     conway_deathmatch --one="acorn 30 30" --two="die_hard 20 10"
 
 Available Shapes
-===
+---
 
 [Definitions](https://github.com/rickhull/conway_deathmatch/blob/master/lib/conway_deathmatch/data/shapes.yaml)
 
