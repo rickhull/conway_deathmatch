@@ -61,9 +61,9 @@ Available Shapes
 Implementation
 ===
 
-Just one file, aside from shape loading.  [Have a look-see](https://github.com/rickhull/conway_deathmatch/blob/master/lib/conway_deathmatch/board_state.rb)
+Just one file, aside from shape loading: [Have a look-see](https://github.com/rickhull/conway_deathmatch/blob/master/lib/conway_deathmatch/board_state.rb)
 
-This implementation focuses on simplicity and ease of understanding.  Currently
+This implementation emphasizes simplicity and ease of understanding.  Currently
 there are no performance optimizations.  I would like to use this project
 to demonstrate the process of optimization, ideally adding optimization on
 an optional, parallel, or otherwise non-permanent basis -- i.e. maintain the
