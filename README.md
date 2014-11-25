@@ -76,6 +76,6 @@ Just one file, aside from shape loading.  [Have a look-see](https://github.com/r
 
 This implementation focuses on simplicity and ease of understanding.  Currently
 there are no performance optimizations.  I would like to use this project
-to demonstrate the process of optimization, hopefully adding optimization on
+to demonstrate the process of optimization, ideally adding optimization on
 an optional, parallel, or otherwise non-permanent basis -- i.e. maintain the
 simple, naive implementation for reference and correctness.
