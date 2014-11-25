@@ -6,11 +6,11 @@ describe ConwayDeathmatch::Shapes do
     @shape_str = "#{@shape} 0 0"
   end
 
-  it "should recognize #{@shape}" do
+  it "must recognize #{@shape}" do
     Shapes.known.fetch(@shape).must_be_instance_of Array
   end
 
-  it "should confirm #{@shape} on the board" do
+  it "must confirm #{@shape} on the board" do
     @board = BoardState.new(20, 20)
     Shapes.add(@board, @shape_str)
     Shapes.known.fetch(@shape).each { |xy_ary|
