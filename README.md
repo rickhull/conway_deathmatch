@@ -34,7 +34,7 @@ Demo
     conway_deathmatch
     
     # multiplayer
-    conway_deathmatch --one="acorn 30 30" --two="die_hard 20 10"
+    conway_deathmatch --one "acorn 30 30" --two "die_hard 20 10"
 
 Available Shapes
 ---
