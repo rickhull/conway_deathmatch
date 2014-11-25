@@ -4,37 +4,53 @@ require_relative '../lib/conway_deathmatch'
 require_relative '../lib/conway_deathmatch/shapes'
 
 include ConwayGame
+DEAD = BoardState::DEAD
+ALIVE = BoardState::ALIVE
 
 describe ConwayGame::BoardState do
   
   describe "an empty board" do
-    X = 5
-    Y = 5
-    DEAD = BoardState::DEAD
-    ALIVE = BoardState::ALIVE
-    
     before do
-      @bs = BoardState.new(X, Y)
+      @x = 5
+      @y = 5
+      @board = BoardState.new(@x, @y)
     end
     
     it "should have dead population" do
-      @bs.population[DEAD].must_equal X*Y
-      @bs.population.keys.length.must_equal 1
+      @board.population[DEAD].must_equal @x * @y
+      @board.population.keys.length.must_equal 1
     end
 
     it "should still be dead after a tick" do
-      @bs.tick.population[DEAD].must_equal X*Y
-      @bs.population.keys.length.must_equal 1
+      @board.tick.population[DEAD].must_equal @x*@y
+      @board.population.keys.length.must_equal 1
     end
 
     it "should accept a block" do
-      @bs.populate 1,1
-      @bs.populate 1,2
-      @bs.populate 2,1
-      @bs.populate 2,2
+      @board.populate 1,1
+      @board.populate 1,2
+      @board.populate 2,1
+      @board.populate 2,2
 
-      @bs.population[DEAD].must_equal X * Y - 4
-      @bs.population[ALIVE].must_equal 4
+      @board.population[DEAD].must_equal @x * @y - 4
+      @board.population[ALIVE].must_equal 4
+    end
+  end
+
+  describe "adding shapes" do
+    before do
+      @x = 40
+      @y = 40
+      @shape = "acorn"
+      @shape_str = "#{@shape} 0 0"
+      @board = BoardState.new(@x, @y)
+      Shapes.add(@board, @shape_str)
+    end
+
+    it "should recognize \"#{@shape_str}\"" do
+      Shapes.known.fetch(@shape).each { |xy_ary|
+        @board.value(*xy_ary).must_equal ALIVE
+      }
     end
   end
 end

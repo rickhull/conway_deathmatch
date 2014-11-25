@@ -36,6 +36,11 @@ class ConwayGame::BoardState
     end
   end
 
+  def value(x, y)
+    in_bounds!(x,y)
+    @state[x][y].dup
+  end
+
   def in_bounds?(x, y)
     @xr.include?(x) and @yr.include?(y)
   end
