@@ -67,7 +67,7 @@ class ConwayDeathmatch::BoardState
     neighbors
   end
 
-  # multiplayer, neighbor count and birthright
+  # total (alive) neighbor count and birthright
   def neighbor_stats(x, y)
     if @multiplayer
       total = 0
