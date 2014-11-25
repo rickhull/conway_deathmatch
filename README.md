@@ -69,6 +69,17 @@ to demonstrate the process of optimization, ideally adding optimization on
 an optional, parallel, or otherwise non-permanent basis -- i.e. maintain the
 simple, naive implementation for reference and correctness.
 
+Inspiration
+---
+Coming into this project, I had significant background knowledge concerning
+Conway's Game of Life, but I could not recited the basic rules in any form.
+After being inspired by competing in CGOLTW, I read their [one background
+page](http://gameoflifetotalwar.com/how-to-play) and then the
+[wikipedia page](http://en.wikipedia.org/wiki/Conway%27s_Game_of_Life).  I
+deliberately avoided any knowledge of any other implementations,
+considering the Nov 2014 implementation to be the naive, simple approach.
+The plan is to implement researched optimizations more or less immediately.
+
 Caveats
 ---
 
