@@ -2,8 +2,6 @@ require 'conway_deathmatch/board_state'
 require 'yaml'
 
 module ConwayDeathmatch::Shapes
-  @@known
-  
   # memoize data/shapes.yaml
   def self.known
     @@known ||= YAML.load_file(File.join(__dir__, 'data', 'shapes.yaml'))
