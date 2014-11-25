@@ -1,8 +1,10 @@
 #!/usr/bin/env ruby
 
+require 'slop'
+require 'conway_deathmatch'
+
 # process cmdline options
 #
-require 'slop'
 opts = Slop.parse(help: true,
                   banner: true,
                   strict: true,
@@ -21,6 +23,7 @@ opts = Slop.parse(help: true,
   on      'two=',        '[str] points for population "2"'
   on      'three=',      '[str] points for population "3"'
 end
+
 width = opts[:width] || 70
 height = opts[:height] || 40
 shapes = opts[:points] || "acorn 50 18"
@@ -30,9 +33,6 @@ render_continuous = (n.nil? or !opts.silent?)
 
 # create game
 #
-require 'conway_deathmatch'
-require 'conway_deathmatch/shapes'
-
 include ConwayGame
 b = BoardState.new(width, height)
 if opts.multiplayer? or opts[:one] or opts[:two] or opts[:three]

@@ -5,6 +5,7 @@ Gem::Specification.new do |s|
   s.authors     = ["Rick Hull"]
   s.license     = 'GPL'
   s.files       = ['lib/conway_deathmatch.rb',
+                   'lib/conway_deathmatch/board_state.rb',
                    'lib/conway_deathmatch/shapes.rb',
                    'lib/conway_deathmatch/data/shapes.yaml',
                    'bin/conway_deathmatch']

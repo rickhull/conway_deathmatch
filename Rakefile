@@ -7,5 +7,6 @@ end
 
 require 'rake/testtask'
 desc "Run tests"
-Rake::TestTask.new
-
+Rake::TestTask.new do |t|
+  t.pattern = "test/*.rb"
+end

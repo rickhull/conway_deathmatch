@@ -1,4 +1,4 @@
-require 'conway_deathmatch'
+require 'conway_deathmatch/board_state'
 require 'yaml'
 
 module ConwayGame
