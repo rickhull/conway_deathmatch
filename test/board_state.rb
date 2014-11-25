@@ -1,15 +1,7 @@
-require 'minitest/spec'
-require 'minitest/autorun'
-require_relative '../lib/conway_deathmatch'
-require_relative '../lib/conway_deathmatch/shapes'
-
-
-include ConwayGame
-DEAD = BoardState::DEAD
-ALIVE = BoardState::ALIVE
+require_relative './spec_helper'
 
 describe ConwayGame::BoardState do
-  
+
   describe "an empty board" do
     before do
       @x = 5
