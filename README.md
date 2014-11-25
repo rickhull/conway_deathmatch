@@ -30,8 +30,8 @@ approach, and this project's approach is similar but different.  In CGOLTW,
 there are always 3 populations, and one population (civilians) is special, in
 that civilians are born where there is birthright contention.  Birthright
 contention happens when a new cell must be generated, but none of the
-neighboring parents have a unique plurality.
-
+neighboring parents have a unique plurality.  For this project, birthright
+contention is resolved with a random selection (TODO).
 
 Install
 ===
