@@ -19,21 +19,6 @@ project for exploration and learning.  My initial motivation was to make a
 "proving ground" for searching for simple shapes and patterns with high birth
 rates for determining successful CGOLTW strategies. 
 
-Caveats
----
-
-As currently implemented, this project uses fixed boundaries, and boundary
-behavior is not standardized to my knowledge.  For this project, out of bounds
-are treated as always-dead and unable-to-be-populated.
-
-The rules for multiplayer are not standardized.  I read about the CGOLTW
-approach, and this project's approach is similar but different.  In CGOLTW,
-there are always 3 populations, and one population (civilians) is special, in
-that civilians are born where there is birthright contention.  Birthright
-contention happens when a new cell must be generated, but none of the
-neighboring parents have a unique plurality.  For this project, birthright
-contention is resolved with a random selection (TODO).
-
 Usage
 ===
 
@@ -83,3 +68,22 @@ there are no performance optimizations.  I would like to use this project
 to demonstrate the process of optimization, ideally adding optimization on
 an optional, parallel, or otherwise non-permanent basis -- i.e. maintain the
 simple, naive implementation for reference and correctness.
+
+Caveats
+---
+
+### Boundaries
+
+As currently implemented, this project uses fixed boundaries, and boundary
+behavior is not standardized to my knowledge.  For this project, out of bounds
+are treated as always-dead and unable-to-be-populated.
+
+### Multiplayer
+
+The rules for multiplayer are not standardized.  I read about the CGOLTW
+approach, and this project's approach is similar but different.  In CGOLTW,
+there are always 3 populations, and one population (civilians) is special, in
+that civilians are born where there is birthright contention.  Birthright
+contention happens when a new cell must be generated, but none of the
+neighboring parents have a unique plurality.  For this project, birthright
+contention is resolved with a random selection (TODO).
