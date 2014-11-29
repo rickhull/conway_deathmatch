@@ -22,6 +22,12 @@ rates for determining successful CGOLTW strategies.
 Usage
 ===
 
+Requirements
+---
+
+* Ruby 2.0 or greater -- *__dir__* is used in the gemspec and for shape loading
+
+
 Install
 ---
 
