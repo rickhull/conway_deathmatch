@@ -27,9 +27,7 @@ Usage
 Requirements
 ---
 
-* Ruby 2.0 or greater
-
-`\_\_dir\_\_` is used in the gemspec and for shape loading
+* Ruby 2.0 or greater (`__dir__` is used in the gemspec and for shape loading)
 
 
 Install
