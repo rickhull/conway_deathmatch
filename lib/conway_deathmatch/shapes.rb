@@ -4,7 +4,7 @@ require 'yaml'
 module ConwayDeathmatch::Shapes
   # memoize data/shapes.yaml
   def self.known
-    @@known ||= YAML.load_file(File.join(__dir__, 'data', 'shapes.yaml'))
+    @@known ||= YAML.load_file(File.join(File.dirname(File.realpath(__FILE__)), 'data', 'shapes.yaml'))
   end
   
   # parse a string like "acorn 12 22 block 5 0 p 1 2 p 3 4 p 56 78"
