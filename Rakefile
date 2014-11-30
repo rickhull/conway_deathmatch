@@ -5,6 +5,8 @@ Buildar.new do |b|
   b.version_file = 'VERSION'
 end
 
+task default: %w[test]
+
 require 'rake/testtask'
 desc "Run tests"
 Rake::TestTask.new do |t|
