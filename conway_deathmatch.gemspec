@@ -12,4 +12,5 @@ Gem::Specification.new do |s|
                    'lib/conway_deathmatch/data/shapes.yaml',
                    'bin/conway_deathmatch']
   s.executables = ['conway_deathmatch']
+  s.add_development_dependency "buildar"
 end
