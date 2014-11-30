@@ -2,7 +2,7 @@
 [![Gem Version](https://badge.fury.io/rb/conway_deathmatch.svg)](http://badge.fury.io/rb/conway_deathmatch)
 [![Code Climate](https://codeclimate.com/github/rickhull/conway_deathmatch/badges/gpa.svg)](https://codeclimate.com/github/rickhull/conway_deathmatch)
 [![Dependency Status](https://gemnasium.com/rickhull/conway_deathmatch.svg)](https://gemnasium.com/rickhull/conway_deathmatch)
-[![Security Status](https://hakiri.io/github/rickhull/conway_deathmatch/master.svg)](https://hakiri.io/github/rickhull/conway_deathmatch/master/shield)
+[![Security Status](https://hakiri.io/github/rickhull/conway_deathmatch/master.svg)](https://hakiri.io/github/rickhull/conway_deathmatch/master)
 
 Introduction
 ===
