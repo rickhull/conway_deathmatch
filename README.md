@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/rickhull/conway_deathmatch.svg?branch=master)](https://travis-ci.org/rickhull/conway_deathmatch)
+
 Introduction
 ===
 
