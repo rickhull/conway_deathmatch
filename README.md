@@ -1,5 +1,6 @@
-[![Gem Version](https://badge.fury.io/rb/conway_deathmatch.svg)](http://badge.fury.io/rb/conway_deathmatch)
 [![Build Status](https://travis-ci.org/rickhull/conway_deathmatch.svg?branch=master)](https://travis-ci.org/rickhull/conway_deathmatch)
+[![Gem Version](https://badge.fury.io/rb/conway_deathmatch.svg)](http://badge.fury.io/rb/conway_deathmatch)
+[![Code Climate](https://codeclimate.com/github/rickhull/conway_deathmatch/badges/gpa.svg)](https://codeclimate.com/github/rickhull/conway_deathmatch)
 [![Dependency Status](https://gemnasium.com/rickhull/conway_deathmatch.svg)](https://gemnasium.com/rickhull/conway_deathmatch)
 
 Introduction
