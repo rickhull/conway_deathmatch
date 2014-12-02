@@ -62,7 +62,7 @@ class ConwayDeathmatch::BoardState
       (y-1..y+1).each { |yn|
         next if outer_ring and yn < 0 or yn >= @y_len
         next if xn == x and yn == y # don't count self
-        neighbors[@state[xn][yn]] += 1 if alive?(xn, yn)
+        neighbors[@state[xn][yn]] += 1
       }
     }
     neighbors
@@ -83,7 +83,12 @@ class ConwayDeathmatch::BoardState
       }
       [total, birthright]
     else
-      [neighbor_population(x, y).values.reduce(:+), ALIVE]
+      count = 0
+      neighbor_population(x, y).each { |sym, cnt|
+        next if sym == DEAD
+        count += cnt
+      }
+      [count, ALIVE]
     end
   end
   
