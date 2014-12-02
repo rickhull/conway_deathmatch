@@ -19,9 +19,8 @@ class ConwayDeathmatch::BoardState
   attr_accessor :multiplayer
   
   def initialize(x_len, y_len)
-    # ranges, yay! (exclude_end)
-    @xr = (0...x_len)
-    @yr = (0...y_len)
+    @xmax = x_len
+    @ymax = y_len
     @state = self.class.new_state(x_len, y_len)
     @multiplayer = false
   end
@@ -42,11 +41,11 @@ class ConwayDeathmatch::BoardState
   end
 
   def in_bounds?(x, y)
-    @xr.include?(x) and @yr.include?(y)
+    x.between?(0, @xmax - 1) and y.between?(0, @ymax - 1)
   end
   
   def in_bounds!(x, y)
-    raise(BoundsError, "(#{x}, #{y}) (#{@xr}, #{@yr})") unless in_bounds?(x, y)
+    raise(BoundsError, "(#{x}, #{y}) (#{@xmax}, #{@ymax})") unless in_bounds?(x, y)
   end
   
   # out of bounds considered dead
@@ -88,8 +87,8 @@ class ConwayDeathmatch::BoardState
   
   # generate the next state table
   def tick
-    new_state = self.class.new_state(@xr.last, @yr.last)
-    @xr.each { |x| @yr.each { |y|  new_state[x][y] = next_value(x, y)  } }
+    new_state = self.class.new_state(@xmax, @ymax)
+    @xmax.times { |x| @ymax.times { |y|  new_state[x][y] = next_value(x, y)  } }
     @state = new_state
     self
   end
