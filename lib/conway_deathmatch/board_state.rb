@@ -45,7 +45,7 @@ class ConwayDeathmatch::BoardState
   end
   
   def in_bounds!(x, y)
-    raise(BoundsError, "(#{x}, #{y}) (#{@x_len}, #{@y_len})") unless in_bounds?(x, y)
+    raise(BoundsError, "(#{x}, #{y})") unless in_bounds?(x, y)
   end
   
   # out of bounds considered dead
@@ -88,7 +88,9 @@ class ConwayDeathmatch::BoardState
   # generate the next state table
   def tick
     new_state = self.class.new_state(@x_len, @y_len)
-    @x_len.times { |x| @y_len.times { |y|  new_state[x][y] = next_value(x, y)  } }
+    @x_len.times { |x|
+      @y_len.times { |y| new_state[x][y] = next_value(x, y) }
+    }
     @state = new_state
     self
   end
