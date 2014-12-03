@@ -19,6 +19,5 @@ desc "Run benchmarks"
 Rake::TestTask.new do |t|
   t.name = "bench"
   t.pattern = "test/bench_*.rb"
-#  t.loader = :testrb
   t.warning = true
 end

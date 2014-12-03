@@ -3,6 +3,7 @@ require 'minitest/autorun'
 require 'conway_deathmatch'
 
 include ConwayDeathmatch
+
 DEAD = BoardState::DEAD
 ALIVE = BoardState::ALIVE
 

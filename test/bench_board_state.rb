@@ -1,6 +1,7 @@
-require 'conway_deathmatch'
 require 'minitest/benchmark'
 require 'minitest/autorun'
+
+require 'conway_deathmatch'
 
 include ConwayDeathmatch
 
