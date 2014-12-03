@@ -36,7 +36,7 @@ describe ConwayDeathmatch::BoardState do
       @y = 40
       @shape = "acorn"
       @shape_count = 7
-      @shape2_points = [
+      @shape_tick_points = [
         [0, 1],
         [1, 1],
         [2, 1],
@@ -60,10 +60,10 @@ describe ConwayDeathmatch::BoardState do
 
     it "must tick correctly" do
       @board.tick
-      @shape2_points.each { |xy_ary|
+      @shape_tick_points.each { |xy_ary|
         @board.value(*xy_ary).must_equal ALIVE
       }
-      @board.population.fetch(ALIVE).must_equal @shape2_points.length
+      @board.population.fetch(ALIVE).must_equal @shape_tick_points.length
     end
   end
 end
