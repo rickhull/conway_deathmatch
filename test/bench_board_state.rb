@@ -5,7 +5,7 @@ require 'conway_deathmatch'
 
 include ConwayDeathmatch
 
-describe "Create table" do
+describe "BoardState.new Benchmark" do
   bench_range do
     bench_exp 9, 9999, 3
   end
@@ -15,7 +15,7 @@ describe "Create table" do
   end
 end
 
-describe "Board ticks" do
+describe "BoardState#tick Benchmark" do
   bench_range do
     bench_exp 1, 100, 3
   end
