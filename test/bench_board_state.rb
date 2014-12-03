@@ -1,5 +1,5 @@
-require 'minitest/benchmark'
 require 'minitest/autorun'
+require 'minitest/benchmark'
 
 require 'conway_deathmatch'
 
