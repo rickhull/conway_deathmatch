@@ -4,4 +4,4 @@ rvm:
   - 2.0.0
   - ruby-head
 env:
-  - BENCH_TICK_THRESH=0.99999; BENCH_NEW_THRESH=0.9
+  - BENCH_TICK_THRESH=0.99; BENCH_NEW_THRESH=0.9
