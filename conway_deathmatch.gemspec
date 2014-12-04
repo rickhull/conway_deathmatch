@@ -18,7 +18,7 @@ Gem::Specification.new do |s|
     'bin/conway_deathmatch',
     'test/bench_board_state.rb',
     'test/spec_helper.rb',
-    'test/test_board_state.rb'
+    'test/test_board_state.rb',
     'test/test_shapes.rb',
   ]
   s.executables = ['conway_deathmatch']
