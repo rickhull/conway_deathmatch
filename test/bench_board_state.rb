@@ -28,4 +28,12 @@ describe "BoardState#tick Benchmark" do
     Shapes.add(b, "acorn 50 18")
     n.times { b.tick }
   end
+
+  bench_performance_linear "multiplayer demo", BENCH_TICK_THRESH do |n|
+    b = BoardState.new(70, 40)
+    b.multiplayer = true
+    Shapes.add(b, "acorn 30 30", "1")
+    Shapes.add(b, "die_hard 20 10", "2")
+    n.times { b.tick }
+  end
 end
