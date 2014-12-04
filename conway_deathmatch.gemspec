@@ -6,13 +6,23 @@ Gem::Specification.new do |s|
   s.authors     = ["Rick Hull"]
   s.homepage    = 'https://github.com/rickhull/conway_deathmatch'
   s.license     = 'GPL'
-  s.files       = ['lib/conway_deathmatch.rb',
-                   'lib/conway_deathmatch/board_state.rb',
-                   'lib/conway_deathmatch/shapes.rb',
-                   'lib/conway_deathmatch/data/shapes.yaml',
-                   'bin/conway_deathmatch']
+  s.files       = [
+    'conway_deathmatch.gemspec',
+    'VERSION',
+    'Rakefile',
+    'README.md',
+    'lib/conway_deathmatch.rb',
+    'lib/conway_deathmatch/board_state.rb',
+    'lib/conway_deathmatch/shapes.rb',
+    'lib/conway_deathmatch/data/shapes.yaml',
+    'bin/conway_deathmatch'
+    'test/bench_board_state.rb',
+    'test/spec_helper.rb',
+    'test/test_board_state.rb'
+    'test/test_shapes.rb',
+  ]
   s.executables = ['conway_deathmatch']
   s.add_development_dependency "buildar", "~> 2"
   s.add_development_dependency "minitest", "~> 5"
-  s.required_ruby_version = ">= 2"
+  s.required_ruby_version = "~> 2"
 end
