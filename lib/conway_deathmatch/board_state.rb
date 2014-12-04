@@ -60,8 +60,8 @@ class ConwayDeathmatch::BoardState
     (x-1..x+1).each { |xn|
       next if outer_ring and !xn.between?(0, @x_len - 1)
       (y-1..y+1).each { |yn|
-        next if outer_ring and !yn.between?(0, @y_len - 1)
-        next if xn == x and yn == y # don't count self
+        next if (outer_ring and !yn.between?(0, @y_len - 1)) or
+          (xn == x and yn == y)
         neighbors[@state[xn][yn]] += 1
       }
     }
