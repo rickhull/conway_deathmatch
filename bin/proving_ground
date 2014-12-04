@@ -1,0 +1,155 @@
+#!/usr/bin/env ruby
+
+require 'slop'
+require 'conway_deathmatch'
+
+# process cmdline options
+#
+opts = Slop.parse(help: true,
+                  banner: true,	
+	          strict: true,
+		  optional_arguments: true) do
+  banner 'Usage: proving_ground [options]'
+
+  on 'w', 'width=',      '[int] Board width', as: Integer
+  on      'height=',     '[int] Board height', as: Integer
+  on 'n', 'num_ticks=',  '[int] Max number of ticks to generate', as: Integer
+  on      'silent',      'Only render the final state'
+  on 'p', 'num_points=', '[int] Number of points to generate', as: Integer
+  on 'm', 'max_collisions=', '[int] Max number of collisions', as: Integer
+end
+
+width = opts[:width] || 40
+height = opts[:height] || 40
+n = opts[:num_ticks] || 20
+p = opts[:num_points] || 5
+max_c = opts[:max_collisions] || p ** 2
+
+# choose center point
+# choose next point within 2 units randomly
+def generate_points(num_points, width, height)
+  points = [[width / 2, height / 2]]
+  count = 0
+  while points.length < num_points
+    raise("sanity check failed") if count > num_points * 2
+    count += 1
+    next_p = next_point(points.sample)
+    if next_p[0].between?(0, width - 1) and next_p[1].between?(0, height - 1)
+      points << next_p unless points.include?(next_p)
+    else
+      # debug
+      puts "#{next_p.inspect} out of bounds"
+    end
+  end
+  points
+end
+
+def next_point(prev_point)
+  prev_point.map { |dim| random_within(dim, 2) }
+end
+
+def random_within(x, dist)
+  new_x = x - dist + rand(dist * 2)
+  new_x += 1 if new_x >= x
+  new_x
+end
+
+def shape_str(points)
+  points.map { |point| "p #{point[0]} #{point[1]} " }.join(' ')
+end
+
+# search motherfucker
+biggest_pop = 0
+biggest_peak = 0
+biggest_points = []
+biggest_peak_points = []
+
+def conclude!(pop, pop_points, peak, peak_points, w, h)
+  puts "biggest_pop: #{pop}"
+  puts "biggest_points: #{pop_points}"
+  puts "shape_str: #{shape_str(pop_points)}"
+  puts
+  puts "biggest_peak: #{peak}"
+  puts "biggest_peak_points: #{peak_points}"
+  puts "shape_str: #{shape_str(peak_points)}"
+  
+  b = BoardState.new(w, h)
+  b.add_points(pop_points)
+  puts b.render
+  exit 0
+end
+
+Signal.trap("INT") do
+  conclude!(biggest_pop, biggest_points,
+            biggest_peak, biggest_peak_points,
+            width, height)
+end
+
+include ConwayDeathmatch
+ALIVE = BoardState::ALIVE
+SEEN = {}
+collisions = 0
+
+loop {
+  # populate new board with random points
+  #
+  b = BoardState.new(width, height)
+  points = generate_points(p, width, height)
+
+  # have we seen these points before?
+  #
+  if SEEN[points]
+    collisions += 1
+    puts "X" * collisions
+    break if collisions > max_c
+    next
+  else
+    SEEN[points] = true
+  end
+  b.add_points(points)
+
+  # establish vars outside block
+  #
+  pop = nil # establish outside block
+  peak = 0
+  static_cnt = 0
+
+  # tick and track population
+  #
+  n.times { |i|
+    b.tick
+
+    # short-circuit static or (soon-to-be) empty boards
+    #
+    last_pop = pop
+    pop = b.population[ALIVE] || 0
+    break if pop < 3
+    peak = pop if pop > peak
+    if pop != last_pop
+      static_cnt = 0
+    else
+      static_cnt += 1
+    end
+    break if static_cnt > 3
+  }
+
+  puts "Population: #{pop} (#{peak})"
+
+  # track the highest populators
+  #
+  if pop > biggest_pop
+    biggest_pop = pop
+    biggest_points = points
+    puts "\tLargest final: #{biggest_pop}"
+  end
+  
+  if peak > biggest_peak
+    biggest_peak = peak
+    biggest_peak_points = points
+    puts "\tLargest peak: #{biggest_peak}"
+  end
+}
+
+conclude!(biggest_pop, biggest_points,
+          biggest_peak, biggest_peak_points,
+          width, height)
