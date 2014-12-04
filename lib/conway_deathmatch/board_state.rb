@@ -85,8 +85,7 @@ class ConwayDeathmatch::BoardState
     else
       count = 0
       neighbor_population(x, y).each { |sym, cnt|
-        next if sym == DEAD
-        count += cnt
+        count += cnt unless sym == DEAD
       }
       [count, ALIVE]
     end
