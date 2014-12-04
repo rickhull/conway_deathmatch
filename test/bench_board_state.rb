@@ -5,8 +5,8 @@ require 'conway_deathmatch'
 
 include ConwayDeathmatch
 
-BENCH_NEW_THRESH = ENV['BENCH_NEW_THRESH'] || 0.9
-BENCH_TICK_THRESH = ENV['BENCH_TICK_THRESH'] || 0.9995
+BENCH_NEW_THRESH = (ENV['BENCH_NEW_THRESH'] || 0.9).to_f
+BENCH_TICK_THRESH = (ENV['BENCH_TICK_THRESH'] || 0.9995).to_f
 
 describe "BoardState.new Benchmark" do
   bench_range do
