@@ -15,7 +15,7 @@ Gem::Specification.new do |s|
     'lib/conway_deathmatch/board_state.rb',
     'lib/conway_deathmatch/shapes.rb',
     'lib/conway_deathmatch/data/shapes.yaml',
-    'bin/conway_deathmatch'
+    'bin/conway_deathmatch',
     'test/bench_board_state.rb',
     'test/spec_helper.rb',
     'test/test_board_state.rb'
