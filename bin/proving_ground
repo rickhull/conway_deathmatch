@@ -99,9 +99,8 @@ SEEN = {}
 collisions = 0
 
 loop {
-  # populate new board with random points
+  # generate a random shape
   #
-  b = BoardState.new(width, height)
   points = generate_points(p, width, height)
 
   # have we seen these points before?
@@ -109,11 +108,15 @@ loop {
   if SEEN[points]
     collisions += 1
     puts "X" * collisions
-    break if collisions > max_c
+    break if collisions > max_c # exit the loop, stop generating points
     next
   else
     SEEN[points] = true
   end
+
+  # initialize board with generated shape
+  #
+  b = BoardState.new(width, height)
   b.add_points(points)
 
   # establish vars outside block
