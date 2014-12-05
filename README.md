@@ -22,7 +22,7 @@ for space and population.
 
 This project exists not to compete with CGOLTW but as a supplementary
 project for exploration and learning.  My initial motivation was to make a
-"proving ground" for searching for simple shapes and patterns with high birth
+"[proving ground](https://github.com/rickhull/conway_deathmatch/blob/master/bin/proving_ground)" for searching for simple shapes and patterns with high birth
 rates for determining successful CGOLTW strategies.
 
 Usage
@@ -51,7 +51,7 @@ Demo
 Available Shapes
 ---
 
-[Definitions](https://github.com/rickhull/conway_deathmatch/blob/master/lib/conway_deathmatch/shapes/classic.yaml)
+A shape is simply a set of points.  Classic shapes are [defined in a yaml file](https://github.com/rickhull/conway_deathmatch/blob/master/lib/conway_deathmatch/shapes/classic.yaml):
 
 * acorn
 * beacon
@@ -70,16 +70,22 @@ Available Shapes
 * swastika
 * toad
 
+There is [another yaml file](https://github.com/rickhull/conway_deathmatch/blob/master/lib/conway_deathmatch/shapes/discovered.yaml) with shapes discovered via [proving_ground](https://github.com/rickhull/conway_deathmatch/blob/master/bin/proving_ground).
+
+
 Implementation
 ===
 
 Just one file, aside from shape loading: [Have a look-see](https://github.com/rickhull/conway_deathmatch/blob/master/lib/conway_deathmatch/board_state.rb)
 
 This implementation emphasizes simplicity and ease of understanding.  Currently
-there are no performance optimizations.  I would like to use this project
-to demonstrate the process of optimization, ideally adding optimization on
-an optional, parallel, or otherwise non-permanent basis -- i.e. maintain the
-simple, naive implementation for reference and correctness.
+there are minimal performance optimizations -- relating to avoiding unnecessary
+bounds checking.
+
+I would like to use this project to demonstrate the process of optimization,
+ideally adding optimization on an optional, parallel, or otherwise
+non-permanent basis -- i.e. maintain the simple, naive implementation for
+reference and correctness.
 
 Inspiration
 ---
@@ -89,10 +95,8 @@ form. After being inspired by competing in CGOLTW, I read their [one background
 page](http://gameoflifetotalwar.com/how-to-play) and then the
 [wikipedia page](http://en.wikipedia.org/wiki/Conway%27s_Game_of_Life).  I
 deliberately avoided any knowledge of any other implementations,
-considering this project's implementation as of November 24 (2014) to be the
+considering this project's implementation as of December 5 (2014) to be the
 naive, simple approach.
-
-Researched optimizations are now an immediate priority.
 
 Caveats
 ---
