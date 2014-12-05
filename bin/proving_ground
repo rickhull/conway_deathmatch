@@ -130,19 +130,17 @@ loop {
     b.tick
     ticks += 1
 
-    # short-circuit static or (soon-to-be) empty boards
+    # evaluate board
     #
     last_pop = pop
     pop = b.population[ALIVE] || 0
     score += ticks * pop
-
-    break if pop < 3
     peak = pop if pop > peak
-    if pop != last_pop
-      static_cnt = 0
-    else
-      static_cnt += 1
-    end
+
+    # short-circuit static or (soon-to-be) empty boards
+    #
+    break if pop < 3
+    static_cnt = (pop == last_pop ? static_cnt + 1 : 0)
     break if static_cnt > 3
   }
 
