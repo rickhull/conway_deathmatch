@@ -25,6 +25,28 @@ n = opts[:num_ticks] || 20
 p = opts[:num_points] || 5
 max_c = opts[:max_collisions] || p ** 2
 
+# answers / output
+pop_final = 0
+pop_final_points = []
+pop_peak = 0
+pop_peak_points = []
+
+def conclude!(final, final_points, peak, peak_points, w, h)
+  puts
+  puts "final: #{final}"
+  puts "final_points: #{final_points}"
+  puts "shape_str: #{shape_str(final_points)}"
+  puts
+  puts "peak: #{peak}"
+  puts "peak_points: #{peak_points}"
+  puts "shape_str: #{shape_str(peak_points)}"
+
+  b = BoardState.new(w, h)
+  b.add_points(final_points)
+  puts b.render
+  exit 0
+end
+
 # choose center point
 # choose next point within 2 units randomly
 def generate_points(num_points, width, height)
@@ -58,30 +80,9 @@ def shape_str(points)
   points.map { |point| "p #{point[0]} #{point[1]}" }.join(' ')
 end
 
-# search motherfucker
-biggest_pop = 0
-biggest_peak = 0
-biggest_points = []
-biggest_peak_points = []
-
-def conclude!(pop, pop_points, peak, peak_points, w, h)
-  puts "biggest_pop: #{pop}"
-  puts "biggest_points: #{pop_points}"
-  puts "shape_str: #{shape_str(pop_points)}"
-  puts
-  puts "biggest_peak: #{peak}"
-  puts "biggest_peak_points: #{peak_points}"
-  puts "shape_str: #{shape_str(peak_points)}"
-  
-  b = BoardState.new(w, h)
-  b.add_points(pop_points)
-  puts b.render
-  exit 0
-end
-
 Signal.trap("INT") do
-  conclude!(biggest_pop, biggest_points,
-            biggest_peak, biggest_peak_points,
+  conclude!(pop_final, pop_final_points,
+            pop_peak, pop_peak_points,
             width, height)
 end
 
@@ -137,19 +138,19 @@ loop {
 
   # track the highest populators
   #
-  if pop > biggest_pop
-    biggest_pop = pop
-    biggest_points = points
-    puts "\tLargest final: #{biggest_pop}"
+  if pop > pop_final
+    pop_final = pop
+    pop_final_points = points
+    puts "\tLargest final: #{pop_final}"
   end
   
-  if peak > biggest_peak
-    biggest_peak = peak
-    biggest_peak_points = points
-    puts "\tLargest peak: #{biggest_peak}"
+  if peak > pop_peak
+    pop_peak = peak
+    pop_peak_points = points
+    puts "\tLargest peak: #{pop_peak}"
   end
 }
 
-conclude!(biggest_pop, biggest_points,
-          biggest_peak, biggest_peak_points,
+conclude!(pop_final, pop_final_points,
+          pop_peak, pop_peak_points,
           width, height)
