@@ -55,7 +55,7 @@ def random_within(x, dist)
 end
 
 def shape_str(points)
-  points.map { |point| "p #{point[0]} #{point[1]} " }.join(' ')
+  points.map { |point| "p #{point[0]} #{point[1]}" }.join(' ')
 end
 
 # search motherfucker
