@@ -6,7 +6,7 @@ require 'conway_deathmatch'
 # process cmdline options
 #
 opts = Slop.parse(help: true,
-                  banner: true,	
+                  banner: true,
 	          strict: true,
 		  optional_arguments: true) do
   banner 'Usage: proving_ground [options]'
@@ -30,8 +30,13 @@ pop_final = 0
 pop_final_points = []
 pop_peak = 0
 pop_peak_points = []
+top_score = 0
+top_score_points = []
 
-def conclude!(final, final_points, peak, peak_points, w, h)
+def conclude!(final, final_points,
+              peak, peak_points,
+              score, score_points,
+              w, h)
   puts
   puts "final: #{final}"
   puts "final_points: #{final_points}"
@@ -40,10 +45,11 @@ def conclude!(final, final_points, peak, peak_points, w, h)
   puts "peak: #{peak}"
   puts "peak_points: #{peak_points}"
   puts "shape_str: #{shape_str(peak_points)}"
+  puts
+  puts "score: #{score}"
+  puts "score_points: #{score_points}"
+  puts "shape_str: #{shape_str(score_points)}"
 
-  b = BoardState.new(w, h)
-  b.add_points(final_points)
-  puts b.render
   exit 0
 end
 
@@ -83,6 +89,7 @@ end
 Signal.trap("INT") do
   conclude!(pop_final, pop_final_points,
             pop_peak, pop_peak_points,
+            top_score, top_score_points,
             width, height)
 end
 
@@ -111,19 +118,24 @@ loop {
 
   # establish vars outside block
   #
-  pop = nil # establish outside block
+  pop = nil
   peak = 0
   static_cnt = 0
+  score = 0
+  ticks = 0
 
   # tick and track population
   #
   n.times { |i|
     b.tick
+    ticks += 1
 
     # short-circuit static or (soon-to-be) empty boards
     #
     last_pop = pop
     pop = b.population[ALIVE] || 0
+    score += ticks * pop
+
     break if pop < 3
     peak = pop if pop > peak
     if pop != last_pop
@@ -134,7 +146,7 @@ loop {
     break if static_cnt > 3
   }
 
-  puts "Population: #{pop} (#{peak})"
+  puts "Population: #{pop} (#{peak}) [#{score}]"
 
   # track the highest populators
   #
@@ -143,14 +155,21 @@ loop {
     pop_final_points = points
     puts "\tLargest final: #{pop_final}"
   end
-  
+
   if peak > pop_peak
     pop_peak = peak
     pop_peak_points = points
     puts "\tLargest peak: #{pop_peak}"
   end
+
+  if score > top_score
+    top_score = score
+    top_score_points = points
+    puts "\tLargest score: #{top_score}"
+  end
 }
 
 conclude!(pop_final, pop_final_points,
           pop_peak, pop_peak_points,
+          top_score, top_score_points,
           width, height)
