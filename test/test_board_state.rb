@@ -36,7 +36,7 @@ describe BoardState do
     end
 
     it "must recognize \"#{SHAPE_STR}\"" do
-      Shapes.known.fetch(SHAPE).each { |xy_ary|
+      Shapes.classic.fetch(SHAPE).each { |xy_ary|
         @board.value(*xy_ary).must_equal ALIVE
       }
       @board.population.fetch(ALIVE).must_equal POINTS_COUNT
