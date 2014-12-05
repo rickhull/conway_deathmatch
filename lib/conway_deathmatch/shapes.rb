@@ -32,7 +32,8 @@ module ConwayDeathmatch::Shapes
       when 'p'
         points << [x, y]
       else
-        board.add_points(classic.fetch(shape), x, y, val)
+        found = classic[shape] || self.discovered.fetch(shape)
+        board.add_points(found, x, y, val)
       end
     end
     board.add_points(points, 0, 0, val)
