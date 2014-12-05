@@ -21,7 +21,7 @@ end
 
 width = opts[:width] || 40
 height = opts[:height] || 40
-n = opts[:num_ticks] || 20
+n = opts[:num_ticks] || 40
 p = opts[:num_points] || 5
 max_c = opts[:max_collisions] || p ** 2
 
@@ -146,7 +146,7 @@ loop {
     break if static_cnt > 3
   }
 
-  puts "Population: #{pop} (#{peak}) [#{score}]"
+  puts "#{pop} (#{peak}) [#{score}]"
 
   # track the highest populators
   #
