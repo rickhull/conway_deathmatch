@@ -23,7 +23,7 @@ for space and population.
 This project exists not to compete with CGOLTW but as a supplementary
 project for exploration and learning.  My initial motivation was to make a
 "proving ground" for searching for simple shapes and patterns with high birth
-rates for determining successful CGOLTW strategies. 
+rates for determining successful CGOLTW strategies.
 
 Usage
 ===
@@ -44,14 +44,14 @@ Demo
 
     # defaults to 70x40 board and an acorn shape
     conway_deathmatch
-    
+
     # multiplayer
     conway_deathmatch --one "acorn 30 30" --two "die_hard 20 10"
 
 Available Shapes
 ---
 
-[Definitions](https://github.com/rickhull/conway_deathmatch/blob/master/lib/conway_deathmatch/data/shapes.yaml)
+[Definitions](https://github.com/rickhull/conway_deathmatch/blob/master/lib/conway_deathmatch/shapes/classic.yaml)
 
 * acorn
 * beacon
