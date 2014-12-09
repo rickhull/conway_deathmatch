@@ -9,7 +9,7 @@ class ConwayDeathmatch::BoardState
 
   DEAD = '.'
   ALIVE = '0'
-  
+
   def self.new_state(x_len, y_len)
     state = []
     x_len.times { state << Array.new(y_len, DEAD) }
@@ -17,14 +17,14 @@ class ConwayDeathmatch::BoardState
   end
 
   attr_accessor :multiplayer
-  
+
   def initialize(x_len, y_len)
     @x_len = x_len
     @y_len = y_len
     @state = self.class.new_state(x_len, y_len)
     @multiplayer = false
   end
-  
+
   # Conway's Game of Life transition rules
   def next_value(x, y)
     n, birthright = neighbor_stats(x, y)
@@ -43,23 +43,23 @@ class ConwayDeathmatch::BoardState
   def in_bounds?(x, y)
     x.between?(0, @x_len - 1) and y.between?(0, @y_len - 1)
   end
-  
+
   def in_bounds!(x, y)
     raise(BoundsError, "(#{x}, #{y})") unless in_bounds?(x, y)
   end
-  
+
   # out of bounds considered dead
   def alive?(x, y)
     @state[x][y] != DEAD rescue false
   end
-  
+
   # population of every neighboring entity, including DEAD
   def neighbor_population(x, y)
     outer_ring = (x == 0 or y == 0 or x == @x_len - 1 or y == @y_len - 1)
     neighbors = Hash.new(0)
-    (x-1..x+1).each { |xn|
+    (x-1).upto(x+1) { |xn|
       next if outer_ring and !xn.between?(0, @x_len - 1)
-      (y-1..y+1).each { |yn|
+      (y-1).upto(y+1) { |yn|
         next if (outer_ring and !yn.between?(0, @y_len - 1)) or
           (xn == x and yn == y)
         neighbors[@state[xn][yn]] += 1
@@ -90,7 +90,7 @@ class ConwayDeathmatch::BoardState
       [count, ALIVE]
     end
   end
-  
+
   # generate the next state table
   def tick
     new_state = self.class.new_state(@x_len, @y_len)
@@ -106,7 +106,7 @@ class ConwayDeathmatch::BoardState
     in_bounds!(x, y)
     @state[x][y] = val
   end
-  
+
   # set several points (2d array), ignore OOB
   def add_points(points, x_off = 0, y_off = 0, val = ALIVE)
     points.each { |point|
