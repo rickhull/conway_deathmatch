@@ -22,7 +22,7 @@ Rake::TestTask.new do |t|
   # t.warning = true
 end
 
-desc "Generate metrics report"
+desc "Generate metrics reports"
 task :metrics => [:flog, :flay, :roodi] do
 end
 
@@ -45,7 +45,7 @@ task :roodi do
 end
 
 # this runs against the installed gem lib, not git / filesystem
-desc "Run ruby-prof on 100 iterations of conway_deathmatch"
+desc "Run ruby-prof on bin/conway_deathmatch (100 ticks)"
 task "ruby-prof" do
   sh ["ruby-prof -m1 bin/conway_deathmatch -- -n100 -s0 --silent",
       "| tee metrics/ruby-prof"].join(' ')
