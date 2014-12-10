@@ -41,14 +41,13 @@ favor of *deathmatch* and *traditional*, respectively.
 
 Rules
 ---
-* Baseline rule: Cells die or stay dead, unless:
+Cells die or stay dead, unless:
 * Birth rule: 3 neighboring cells turn dead to alive
 * Survival rule: 2 or 3 neighboring cells prevent alive cell from dying
 
 Deathmatch rules
 ---
-Either:
-
+Either defensive or aggressive:
 * Defensive: Alive cells never switch sides
   - This is the rule followed by the *Immigration* variant of CGoL, I believe
 * Aggressive: Alive cells survive with majority
