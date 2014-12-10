@@ -1,7 +1,7 @@
 module ConwayDeathmatch; end         # create namespace
 
 # data structure for the board - 2d array
-# implements standard and multiplayer evaluation
+# implements standard and deathmatch evaluation
 # static boundaries are treated as dead
 #
 class ConwayDeathmatch::BoardState
@@ -16,16 +16,27 @@ class ConwayDeathmatch::BoardState
     state
   end
 
-  attr_accessor :multiplayer
+  attr_accessor :deathmatch
 
   def initialize(x_len, y_len)
     @x_len = x_len
     @y_len = y_len
     @state = self.class.new_state(x_len, y_len)
-    @multiplayer = false
+    @deathmatch = :single # :defensive, :aggressive, :friendly
   end
 
-  # deathmatch: :single, :defensive, :aggressive
+  def deathmatch=(val)
+    s = val.to_s.downcase.to_sym
+    @deathmatch = case s
+                  when :single, :aggressive, :defensive, :friendly then s
+                  when :s then :single
+                  when :a then :aggressive
+                  when :d then :defensive
+                  when :f then :friendly
+                  else
+                    raise "unknown: #{val.inspect}"
+                  end
+  end
 
   # Conway's Game of Life transition rules
   def next_value(x, y)
@@ -68,7 +79,14 @@ class ConwayDeathmatch::BoardState
 
   # total (alive) neighbor count and birthright
   def neighbor_stats(x, y)
-    if @multiplayer
+    case @deathmatch
+    when :single
+      count = 0
+      neighbor_population(x, y).each { |sym, cnt|
+        count += cnt unless sym == DEAD
+      }
+      [count, ALIVE]
+    when :aggressive
       total = 0
       largest = 0
       birthright = nil
@@ -80,12 +98,12 @@ class ConwayDeathmatch::BoardState
         end
       }
       [total, birthright]
+    when :defensive
+      raise "not implemented"
+    when :friendly
+      raise "not implemented"
     else
-      count = 0
-      neighbor_population(x, y).each { |sym, cnt|
-        count += cnt unless sym == DEAD
-      }
-      [count, ALIVE]
+      raise "unknown: #{@deathmatch.inspect}"
     end
   end
 

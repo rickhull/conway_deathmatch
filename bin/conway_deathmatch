@@ -11,38 +11,43 @@ opts = Slop.parse(help: true,
                   optional_arguments: true) do
   banner 'Usage: conway_deathmatch [options]'
 
-  on 'w', 'width=',      '[int] Board width', as: Integer
-  on      'height=',     '[int] Board height', as: Integer
-  on 'n', 'num_ticks=',  '[int] Max number of ticks to generate', as: Integer
+  on 'x', 'width=',      '[int] Board width', as: Integer
+  on 'y', 'height=',     '[int] Board height', as: Integer
+  # on 'D', 'dimensions=', '[str] width x height', as: String
+  on 'n', 'ticks=',  '[int] Max number of ticks to generate', as: Integer
   on 's', 'sleep=',      '[flt] Sleep duration', as: Float
   on 'p', 'points=',     '[str] e.g. "acorn 50 18 p 1 2 p 3 4"', as: String
-  on 'S', 'step',        'Hold ticks for user input'
-  on      'silent',      'Only render the final state'
-  on 'm', 'multiplayer', 'Use multiplayer evaluation'
-  on      'one=',        '[str] points for population "1"'
-  on      'two=',        '[str] points for population "2"'
-  on      'three=',      '[str] points for population "3"'
+  on 'g', 'step',        'Hold ticks for user input'
+  on 'r', 'renderfinal', 'Only render the final state'
+  on 'd', 'deathmatch',
+     '[str] single|aggressive|defensive|friendly', as: String
+  on      'one=',        '[str] points for population "1"', as: String
+  on      'two=',        '[str] points for population "2"', as: String
+  on      'three=',      '[str] points for population "3"', as: String
 end
 
 width = opts[:width] || 70
 height = opts[:height] || 40
 shapes = opts[:points] || "acorn 50 18"
 slp = opts[:sleep] || 0.02
-n = opts[:num_ticks]
-render_continuous = (n.nil? or !opts.silent?)
+n = opts[:ticks]
+render_continuous = (n.nil? or !opts.renderfinal?)
 
 # create game
 #
 include ConwayDeathmatch
 b = BoardState.new(width, height)
-if opts.multiplayer? or opts[:one] or opts[:two] or opts[:three]
-  b.multiplayer = true
-end
 
-Shapes.add(b, opts[:one], 1) if opts[:one]
-Shapes.add(b, opts[:two], 2) if opts[:two]
-Shapes.add(b, opts[:three], 3) if opts[:three]
-Shapes.add(b, shapes) unless b.multiplayer
+# Deathmatch or not
+if opts[:one] or opts[:two] or opts[:three]
+  b.deathmatch = opts[:deathmatch] || :aggressive
+  Shapes.add(b, opts[:one], 1) if opts[:one]
+  Shapes.add(b, opts[:two], 2) if opts[:two]
+  Shapes.add(b, opts[:three], 3) if opts[:three]
+else
+  b.deathmatch = opts[:deathmatch] if opts[:deathmatch]
+  Shapes.add(b, shapes)
+end
 
 # play game
 #
@@ -55,7 +60,7 @@ while n.nil? or count <= n
   end
 
   b.tick
-  
+
   if opts.step?
     gets
   else
@@ -66,7 +71,7 @@ end
 
 # finish
 #
-if n and opts.silent?
+if n and opts.renderfinal?
   puts
   puts count
   puts b.render
