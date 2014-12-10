@@ -90,6 +90,24 @@ ideally adding optimization on an optional, parallel, or otherwise
 non-permanent basis -- i.e. maintain the simple, naive implementation for
 reference and correctness.
 
+Boundaries
+---
+Currently:
+
+* Boundaries are static and fixed
+* Points out of bounds are treated as always-dead and unable-to-be-populated.
+
+Deathmatch rules
+---
+Choose:
+* Defensive: Alive cells never switch sides
+  - This is the rule followed by the *Immigration* variant of CGoL, I believe
+* Aggressive: Alive cells survive with majority
+  - 3 neighbors: clear majority
+  - 2 neighbors: coin flip (TODO)
+* Friendly: Just count friendlies
+  - Enemies don't count, party on!
+
 Inspiration
 ---
 This project was inspired by http://gameoflifetotalwar.com/ (hereafter CGOLTW).
@@ -110,21 +128,3 @@ page](http://gameoflifetotalwar.com/how-to-play) and then the
 deliberately avoided any knowledge of any other implementations,
 considering this project's implementation as of December 5 (2014) to be the
 naive, simple approach.
-
-Boundaries
----
-Currently:
-
-* Boundaries are static and fixed
-* Points out of bounds are treated as always-dead and unable-to-be-populated.
-
-Deathmatch rules
----
-Choose:
-* Defensive: Alive cells never switch sides
-  - This is the rule followed by the *Immigration* variant of CGoL, I believe
-* Aggressive: Alive cells survive with majority
-  - 3 neighbors: clear majority
-  - 2 neighbors: coin flip (TODO)
-* Friendly: Just count friendlies
-  - Enemies don't count, party on!
