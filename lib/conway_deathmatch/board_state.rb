@@ -16,26 +16,13 @@ class ConwayDeathmatch::BoardState
     state
   end
 
-  attr_accessor :deathmatch
+  attr_reader :deathmatch
 
   def initialize(x_len, y_len)
     @x_len = x_len
     @y_len = y_len
     @state = self.class.new_state(x_len, y_len)
-    @deathmatch = :single # :defensive, :aggressive, :friendly
-  end
-
-  def deathmatch=(val)
-    s = val.to_s.downcase.to_sym
-    @deathmatch = case s
-                  when :single, :aggressive, :defensive, :friendly then s
-                  when :s then :single
-                  when :a then :aggressive
-                  when :d then :defensive
-                  when :f then :friendly
-                  else
-                    raise "unknown: #{val.inspect}"
-                  end
+    @deathmatch = :single # :aggressive, :defensive, :friendly
   end
 
   # Conway's Game of Life transition rules
@@ -46,6 +33,19 @@ class ConwayDeathmatch::BoardState
     else
       (n == 3) ? birthright : DEAD
     end
+  end
+
+  def deathmatch=(val)
+    s = val.to_s.downcase.to_sym
+    @deathmatch = case s
+                  when :single, :aggressive, :defensive, :friendly then s
+                  when :s, :t, :standard, :traditional then :single
+                  when :a then :aggressive
+                  when :d then :defensive
+                  when :f then :friendly
+                  else
+                    raise "unknown: #{val.inspect}"
+                  end
   end
 
   def value(x, y)
