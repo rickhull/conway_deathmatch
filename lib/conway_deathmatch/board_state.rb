@@ -16,7 +16,7 @@ class ConwayDeathmatch::BoardState
     state
   end
 
-  attr_reader :deathmatch
+  attr_accessor :deathmatch
 
   def initialize(x_len, y_len)
     @x_len = x_len
@@ -33,14 +33,6 @@ class ConwayDeathmatch::BoardState
     else
       (n == 3) ? birthright : DEAD
     end
-  end
-
-  def deathmatch=(val)
-    @deathmatch = case val
-                  when nil, :aggressive, :defensive, :friendly then val
-                  else
-                    raise "unknown: #{val.inspect}"
-                  end
   end
 
   def value(x, y)
