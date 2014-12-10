@@ -46,7 +46,7 @@ Demo
     conway_deathmatch
 
     # multiplayer
-    conway_deathmatch --one "acorn 30 30" --two "die_hard 20 10"
+    conway_deathmatch --one "acorn 30 30" --two "diehard 20 10"
 
 Available Shapes
 ---
@@ -62,7 +62,7 @@ A shape is simply a set of points.  Classic shapes are [defined in a yaml file](
 * block_engine_space (block engine, minimal footprint)
 * block_engine_stripe (block engine, 1 point tall)
 * boat
-* die_hard
+* diehard
 * glider
 * loaf
 * lwss (lightweight spaceship)

@@ -33,7 +33,7 @@ describe "BoardState#tick Benchmark" do
     b = BoardState.new(70, 40)
     b.multiplayer = true
     Shapes.add(b, "acorn 30 30", "1")
-    Shapes.add(b, "die_hard 20 10", "2")
+    Shapes.add(b, "diehard 20 10", "2")
     n.times { b.tick }
   end
 end
