@@ -41,7 +41,7 @@ end
 desc "Run roodi on lib/"
 task :roodi do
   puts
-  sh "roodi -config=roodi.yml lib | tee metrics/roodi"
+  sh "roodi -config=.roodi.yml lib | tee metrics/roodi"
 end
 
 # this runs against the installed gem lib, not git / filesystem
