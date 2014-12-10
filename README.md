@@ -15,6 +15,9 @@ a 2 dimensional board are populated, and the rules of the game determine the
 next state, generating interesting, unpredictable, and ultimately lifelike
 patterns over time.
 
+Inspiration
+---
+
 This project was inspired by http://gameoflifetotalwar.com/ (hereafter CGOLTW).
 You should check it out.  It updates the classic set of rules, which support
 only a single population, for multiple populations which are able to compete
@@ -24,6 +27,33 @@ This project exists not to compete with CGOLTW but as a supplementary
 project for exploration and learning.  My initial motivation was to make a
 "[proving ground](https://github.com/rickhull/conway_deathmatch/blob/master/bin/proving_ground)" for searching for simple shapes and patterns with high birth
 rates for determining successful CGOLTW strategies.
+
+On Deathmatch
+---
+The traditional set of rules tracks a single population, even though it may
+form several distinct islands and disjointed groups.  For this project,
+*deathmatch* refers to multiple populations with respective identities over
+time (e.g. red vs blue).  In a sense, the traditional form is single player (really zero player since there is no user interaction), while deathmatch might
+be considered multiplayer.
+
+For this project, the terms *multiplayer* or *singleplayer* will be avoided in
+favor of *deathmatch* and *traditional*, respectively.
+
+Rules
+---
+* Baseline rule: Cells die or stay dead, unless:
+* Birth rule: 3 neighboring cells turn dead to alive
+* Survival rule: 2 or 3 neighboring cells prevent alive cell from dying
+
+Deathmatch rules
+---
+Either:
+
+* Defensive: Alive cells never switch sides
+  - This is the rule followed by the *Immigration* variant of CGoL, I believe
+* Aggressive: Alive cells survive with majority
+  - 3 neighbors: clear majority
+  - 2 neighbors: coin flip
 
 Usage
 ===
@@ -103,16 +133,7 @@ Caveats
 
 ### Boundaries
 
-As currently implemented, this project uses fixed boundaries, and boundary
-behavior is not standardized to my knowledge.  For this project, points out of
-bounds are treated as always-dead and unable-to-be-populated.
+Currently:
 
-### Multiplayer
-
-The rules for multiplayer are not standardized.  I read about the CGOLTW
-approach, and this project's approach is similar but different.  In CGOLTW,
-there are always 3 populations, and one population (civilians) is special, in
-that civilians are born where there is birthright contention.  Birthright
-contention happens when a new cell must be generated, but none of the
-neighboring parents have a unique plurality.  For this project, birthright
-contention is resolved with a random selection (TODO).
+* Boundaries are static and fixed
+* Points out of bounds are treated as always-dead and unable-to-be-populated.

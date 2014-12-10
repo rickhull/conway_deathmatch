@@ -25,6 +25,8 @@ class ConwayDeathmatch::BoardState
     @multiplayer = false
   end
 
+  # deathmatch: :single, :defensive, :aggressive
+
   # Conway's Game of Life transition rules
   def next_value(x, y)
     n, birthright = neighbor_stats(x, y)
