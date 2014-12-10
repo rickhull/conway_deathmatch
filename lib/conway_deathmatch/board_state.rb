@@ -22,7 +22,7 @@ class ConwayDeathmatch::BoardState
     @x_len = x_len
     @y_len = y_len
     @state = self.class.new_state(x_len, y_len)
-    @deathmatch = :single # :aggressive, :defensive, :friendly
+    @deathmatch = nil # :aggressive, :defensive, :friendly
   end
 
   # Conway's Game of Life transition rules
@@ -36,13 +36,8 @@ class ConwayDeathmatch::BoardState
   end
 
   def deathmatch=(val)
-    s = val.to_s.downcase.to_sym
-    @deathmatch = case s
-                  when :single, :aggressive, :defensive, :friendly then s
-                  when :s, :t, :standard, :traditional then :single
-                  when :a then :aggressive
-                  when :d then :defensive
-                  when :f then :friendly
+    @deathmatch = case val
+                  when nil, :aggressive, :defensive, :friendly then val
                   else
                     raise "unknown: #{val.inspect}"
                   end
@@ -80,7 +75,7 @@ class ConwayDeathmatch::BoardState
   # total (alive) neighbor count and birthright
   def neighbor_stats(x, y)
     case @deathmatch
-    when :single
+    when nil
       count = 0
       neighbor_population(x, y).each { |sym, cnt|
         count += cnt unless sym == DEAD

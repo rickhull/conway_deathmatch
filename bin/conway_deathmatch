@@ -32,20 +32,28 @@ shapes = opts[:points] || "acorn 50 18"
 slp = opts[:sleep] || 0.02
 n = opts[:ticks]
 render_continuous = (n.nil? or !opts.renderfinal?)
+deathmatch = case opts[:deathmatch].to_s.downcase
+             when '', 's', 'standard', 'single', 't', 'traditional' then nil
+             when 'a', 'aggressive' then :aggressive
+             when 'd', 'defensive' then :defensive
+             when 'f', 'friendly' then :friendly
+             else
+               raise "unknown: #{opts[:deathmatch]}"
+             end
 
 # create game
 #
 include ConwayDeathmatch
 b = BoardState.new(width, height)
 
-# Deathmatch or not
+# Multiple populations or not
 if opts[:one] or opts[:two] or opts[:three]
-  b.deathmatch = opts[:deathmatch] || :aggressive
+  b.deathmatch = deathmatch || :aggressive
   Shapes.add(b, opts[:one], 1) if opts[:one]
   Shapes.add(b, opts[:two], 2) if opts[:two]
   Shapes.add(b, opts[:three], 3) if opts[:three]
 else
-  b.deathmatch = opts[:deathmatch] if opts[:deathmatch]
+  b.deathmatch = deathmatch
   Shapes.add(b, shapes)
 end
 
