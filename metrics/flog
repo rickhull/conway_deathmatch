@@ -1,0 +1,8 @@
+   167.7: flog total
+     8.4: flog/method average
+
+    35.6: ConwayDeathmatch::BoardState#neighbor_population lib/conway_deathmatch/board_state.rb:57
+    30.6: ConwayDeathmatch::Shapes::add    lib/conway_deathmatch/shapes.rb:21
+    17.6: ConwayDeathmatch::BoardState#neighbor_stats lib/conway_deathmatch/board_state.rb:68
+    12.5: ConwayDeathmatch::BoardState#add_points lib/conway_deathmatch/board_state.rb:107
+     9.1: ConwayDeathmatch::BoardState#next_value lib/conway_deathmatch/board_state.rb:29

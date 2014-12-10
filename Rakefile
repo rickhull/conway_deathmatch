@@ -21,3 +21,32 @@ Rake::TestTask.new do |t|
   t.pattern = "test/bench_*.rb"
   # t.warning = true
 end
+
+desc "Generate metrics report"
+task :metrics => [:flog, :flay, :roodi] do
+end
+
+desc "Run flog on lib/"
+task :flog do
+  puts
+  sh "flog lib | tee metrics/flog"
+end
+
+desc "Run flay on lib/"
+task :flay do
+  puts
+  sh "flay lib | tee metrics/flay"
+end
+
+desc "Run roodi on lib/"
+task :roodi do
+  puts
+  sh "roodi -config=roodi.yml lib | tee metrics/roodi"
+end
+
+# this runs against the installed gem lib, not git / filesystem
+desc "Run ruby-prof on 100 iterations of conway_deathmatch"
+task "ruby-prof" do
+  sh ["ruby-prof -m1 bin/conway_deathmatch -- -n100 -s0 --silent",
+      "| tee metrics/ruby-prof"].join(' ')
+end
