@@ -55,14 +55,10 @@ class ConwayDeathmatch::BoardState
 
   # population of every neighboring entity, including DEAD
   def neighbor_population(x, y)
-    outer_ring = (x == 0 or y == 0 or x == @x_len - 1 or y == @y_len - 1)
     neighbors = Hash.new(0)
-    (x-1).upto(x+1) { |xn|
-      next if outer_ring and !xn.between?(0, @x_len - 1)
-      (y-1).upto(y+1) { |yn|
-        next if (outer_ring and !yn.between?(0, @y_len - 1)) or
-          (xn == x and yn == y)
-        neighbors[@state[xn][yn]] += 1
+    (x-1 > 0 ? x-1 : 0).upto(x+1 < @x_len ? x+1 : @x_len - 1) { |xn|
+      (y-1 > 0 ? y-1 : 0).upto(y+1 < @y_len ? y+1 : @y_len - 1) { |yn|
+        neighbors[@state[xn][yn]] += 1 unless (xn == x and yn == y)
       }
     }
     neighbors
