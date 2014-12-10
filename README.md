@@ -47,12 +47,14 @@ Cells die or stay dead, unless:
 
 Deathmatch rules
 ---
-Either defensive or aggressive:
+Choose:
 * Defensive: Alive cells never switch sides
   - This is the rule followed by the *Immigration* variant of CGoL, I believe
 * Aggressive: Alive cells survive with majority
   - 3 neighbors: clear majority
-  - 2 neighbors: coin flip
+  - 2 neighbors: coin flip (TODO)
+* Friendly: Just count friendlies
+  - Enemies don't count, party on!
 
 Usage
 ===
