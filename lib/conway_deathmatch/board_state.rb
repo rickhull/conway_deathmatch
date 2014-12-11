@@ -66,31 +66,41 @@ class ConwayDeathmatch::BoardState
 
   # total (alive) neighbor count and birthright
   def neighbor_stats(x, y)
+    cell_val = @state[x][y]
     case @deathmatch
-    when nil, :defensive
+    when nil
       count = 0
       neighbor_population(x, y).each { |sym, cnt|
         count += cnt unless sym == DEAD
       }
-      [count, @deathmatch ? @state[x][y] : ALIVE]
-    when :aggressive
-      total = 0
+      [count, ALIVE]
+
+    when :aggressive, :defensive
+      count = 0
       largest = 0
+      determine_majority = (cell_val == DEAD or @deathmatch == :aggressive)
+      birthright = (determine_majority ? nil : @state[x][y])
       birthrights = []
       neighbor_population(x, y).each { |sym, cnt|
         next if sym == DEAD
-        total += cnt
-        if cnt == largest
-          birthrights << sym
-        end
-        if cnt > largest
-          largest = cnt
-          birthrights = [sym]
+        count += cnt
+
+        if determine_majority
+          birthrights << sym if cnt == largest
+          if cnt > largest
+            largest = cnt
+            birthrights = [sym]
+          end
         end
       }
-      [total, birthrights.sample]
+      [count, birthright || birthrights.sample]
+
     when :friendly
-      raise "not implemented"
+      count = 0
+      neighbor_population(x, y).each { |sym, cnt|
+        count += 1 if sym == my_team
+      }
+      [count, my_team]
     else
       raise "unknown: #{@deathmatch.inspect}"
     end
