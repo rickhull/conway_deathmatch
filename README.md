@@ -48,7 +48,7 @@ Demo
     # defaults to 70x40 board and an acorn shape
     conway_deathmatch
 
-    # multiplayer
+    # deathmatch triggered by several populations
     conway_deathmatch --one "acorn 30 30" --two "diehard 20 10"
 
 Available Shapes
@@ -104,7 +104,7 @@ Choose:
   - This is the rule followed by the *Immigration* variant of CGoL, I believe
 * Aggressive: Alive cells survive with majority
   - 3 neighbors: clear majority
-  - 2 neighbors: coin flip (TODO)
+  - 2 neighbors: coin flip
 * Friendly: Just count friendlies
   - Enemies don't count, party on!
 
