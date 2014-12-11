@@ -19,7 +19,7 @@ Rules
 ---
 Cells die or stay dead, unless:
 * Birth rule: 3 neighboring cells turn dead to alive
-* Survival rule: 2 or 3 neighboring cells prevent alive cell from dying
+* Survival rule: 2 or 3 neighboring cells prevent a live cell from dying
 
 On "Deathmatch"
 ---
