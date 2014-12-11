@@ -67,22 +67,24 @@ class ConwayDeathmatch::BoardState
   # total (alive) neighbor count and birthright
   def neighbor_stats(x, y)
     cell_val = @state[x][y]
+    np = neighbor_population(x, y)
+    np.delete(DEAD)
+
     case @deathmatch
     when nil
       count = 0
-      neighbor_population(x, y).each { |sym, cnt|
-        count += cnt unless sym == DEAD
-      }
+      np.each { |sym, cnt| count += cnt }
       [count, ALIVE]
 
     when :aggressive, :defensive
+      # dead: determine majority (always 3, no need to sample for tie)
+      # alive: agg: determine majority (may tie at 2); def: cell_val
       count = 0
       largest = 0
       determine_majority = (cell_val == DEAD or @deathmatch == :aggressive)
       birthright = (determine_majority ? nil : @state[x][y])
       birthrights = []
-      neighbor_population(x, y).each { |sym, cnt|
-        next if sym == DEAD
+      np.each { |sym, cnt|
         count += cnt
 
         if determine_majority
@@ -96,11 +98,26 @@ class ConwayDeathmatch::BoardState
       [count, birthright || birthrights.sample]
 
     when :friendly
-      count = 0
-      neighbor_population(x, y).each { |sym, cnt|
-        count += 1 if sym == my_team
+      # 1. we already know the count from the next_population hash
+      # 2. if the cell_val is alive, then just count friendlies
+      # 3. otherwise determine majority
+      return [np[cell_val], cell_val] if cell_val != DEAD
+
+      # DEAD, determine birthright by majority
+      largest = 0
+      birthright = nil
+      np.each { |sym, cnt|
+        # determine_majority
+        if cnt > largest
+          largest = cnt
+          birthright = sym
+        end
       }
-      [count, my_team]
+      if birthright
+        [np[birthright], birthright]
+      else
+        [0, DEAD]
+      end
     else
       raise "unknown: #{@deathmatch.inspect}"
     end
