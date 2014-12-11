@@ -76,15 +76,19 @@ class ConwayDeathmatch::BoardState
     when :aggressive
       total = 0
       largest = 0
-      birthright = nil
+      birthrights = []
       neighbor_population(x, y).each { |sym, cnt|
+        next if sym == DEAD
         total += cnt
+        if cnt == largest
+          birthrights << sym
+        end
         if cnt > largest
           largest = cnt
-          birthright = sym
+          birthrights = [sym]
         end
       }
-      [total, birthright]
+      [total, birthrights.sample]
     when :defensive
       raise "not implemented"
     when :friendly
