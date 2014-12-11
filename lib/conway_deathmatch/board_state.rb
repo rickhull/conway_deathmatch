@@ -67,12 +67,12 @@ class ConwayDeathmatch::BoardState
   # total (alive) neighbor count and birthright
   def neighbor_stats(x, y)
     case @deathmatch
-    when nil
+    when nil, :defensive
       count = 0
       neighbor_population(x, y).each { |sym, cnt|
         count += cnt unless sym == DEAD
       }
-      [count, ALIVE]
+      [count, @deathmatch ? @state[x][y] : ALIVE]
     when :aggressive
       total = 0
       largest = 0
@@ -89,8 +89,6 @@ class ConwayDeathmatch::BoardState
         end
       }
       [total, birthrights.sample]
-    when :defensive
-      raise "not implemented"
     when :friendly
       raise "not implemented"
     else
