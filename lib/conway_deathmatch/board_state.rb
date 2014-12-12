@@ -35,35 +35,6 @@ class ConwayDeathmatch::BoardState
     end
   end
 
-  def value(x, y)
-    in_bounds!(x,y)
-    @state[x][y].dup
-  end
-
-  def in_bounds?(x, y)
-    x.between?(0, @x_len - 1) and y.between?(0, @y_len - 1)
-  end
-
-  def in_bounds!(x, y)
-    raise(BoundsError, "(#{x}, #{y})") unless in_bounds?(x, y)
-  end
-
-  # out of bounds considered dead
-  def alive?(x, y)
-    @state[x][y] != DEAD rescue false
-  end
-
-  # population of every neighboring entity, including DEAD
-  def neighbor_population(x, y)
-    neighbors = Hash.new(0)
-    (x-1 > 0 ? x-1 : 0).upto(x+1 < @x_len ? x+1 : @x_len - 1) { |xn|
-      (y-1 > 0 ? y-1 : 0).upto(y+1 < @y_len ? y+1 : @y_len - 1) { |yn|
-        neighbors[@state[xn][yn]] += 1 unless (xn == x and yn == y)
-      }
-    }
-    neighbors
-  end
-
   # total (alive) neighbor count and birthright
   def neighbor_stats(x, y)
     cell_val = @state[x][y]
@@ -121,6 +92,35 @@ class ConwayDeathmatch::BoardState
     else
       raise "unknown: #{@deathmatch.inspect}"
     end
+  end
+
+  def value(x, y)
+    in_bounds!(x,y)
+    @state[x][y].dup
+  end
+
+  def in_bounds?(x, y)
+    x.between?(0, @x_len - 1) and y.between?(0, @y_len - 1)
+  end
+
+  def in_bounds!(x, y)
+    raise(BoundsError, "(#{x}, #{y})") unless in_bounds?(x, y)
+  end
+
+  # out of bounds considered dead
+  def alive?(x, y)
+    @state[x][y] != DEAD rescue false
+  end
+
+  # population of every neighboring entity, including DEAD
+  def neighbor_population(x, y)
+    neighbors = Hash.new(0)
+    (x-1 > 0 ? x-1 : 0).upto(x+1 < @x_len ? x+1 : @x_len - 1) { |xn|
+      (y-1 > 0 ? y-1 : 0).upto(y+1 < @y_len ? y+1 : @y_len - 1) { |yn|
+        neighbors[@state[xn][yn]] += 1 unless (xn == x and yn == y)
+      }
+    }
+    neighbors
   end
 
   # generate the next state table
