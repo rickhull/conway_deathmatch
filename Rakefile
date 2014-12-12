@@ -22,8 +22,8 @@ Rake::TestTask.new do |t|
   # t.warning = true
 end
 
-desc "Generate metrics reports"
-task :metrics => [:flog, :flay, :roodi] do
+desc "Generate code metrics reports"
+task :code_metrics => [:flog, :flay, :roodi] do
 end
 
 desc "Run flog on lib/"
