@@ -16,13 +16,14 @@ class ConwayDeathmatch::BoardState
     state
   end
 
+  # nil for traditional, otherwise :aggressive, :defensive, or :friendly
   attr_accessor :deathmatch
 
-  def initialize(x_len, y_len)
+  def initialize(x_len, y_len, deathmatch = nil)
     @x_len = x_len
     @y_len = y_len
     @state = self.class.new_state(x_len, y_len)
-    @deathmatch = nil # :aggressive, :defensive, :friendly
+    @deathmatch = deathmatch
   end
 
   # Conway's Game of Life transition rules
