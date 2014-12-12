@@ -1,5 +1,5 @@
 Total score (lower is better) = 46
 
 1) Similar code found in :call (mass = 46)
-  lib/conway_deathmatch/board_state.rb:72
-  lib/conway_deathmatch/board_state.rb:73
+  lib/conway_deathmatch/board_state.rb:118
+  lib/conway_deathmatch/board_state.rb:119

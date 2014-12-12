@@ -1,5 +1,5 @@
 
 Running Roodi checks
+[31mlib/conway_deathmatch/board_state.rb:39 - Method name "neighbor_stats" cyclomatic complexity is 14.  It should be 8 or less.[0m
 
 Checked 3 files
-[32mFound 0 errors.[0m
