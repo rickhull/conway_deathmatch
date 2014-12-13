@@ -26,5 +26,6 @@ Gem::Specification.new do |s|
   s.executables = ['conway_deathmatch']
   s.add_development_dependency "buildar", "~> 2"
   s.add_development_dependency "minitest", "~> 5"
+  s.add_development_dependency "simplecov", "~> 0.9.0"
   s.required_ruby_version = "~> 2"
 end
