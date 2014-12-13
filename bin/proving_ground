@@ -1,5 +1,6 @@
 #!/usr/bin/env ruby
 
+require 'set'
 require 'slop'
 require 'conway_deathmatch'
 
@@ -95,7 +96,7 @@ end
 
 include ConwayDeathmatch
 ALIVE = BoardState::ALIVE
-SEEN = {}
+SEEN = Set.new
 collisions = 0
 
 loop {
@@ -105,13 +106,13 @@ loop {
 
   # have we seen these points before?
   #
-  if SEEN[points]
+  if SEEN.member?(points.hash)
     collisions += 1
     puts "X" * collisions
     break if collisions > max_c # exit the loop, stop generating points
     next
   else
-    SEEN[points] = true
+    SEEN << points.hash
   end
 
   # initialize board with generated shape
