@@ -48,21 +48,22 @@ class ConwayDeathmatch::BoardState
       # dead: determine majority (always 3, no need to sample for tie)
       # alive: agg: determine majority (may tie at 2); def: cell_val
       determine_majority = (@state[x][y] == DEAD or @deathmatch == :aggressive)
-      count = 0
+      total = 0
       largest = 0
-      birthright = (determine_majority ? nil : @state[x][y])
       birthrights = []
       npop.each { |sym, cnt|
-        count += cnt
+        total += cnt
+        return [0, DEAD] if total >= 4  # [optimization]
         if determine_majority
-          birthrights << sym if cnt == largest
           if cnt > largest
             largest = cnt
             birthrights = [sym]
+          elsif cnt == largest
+            birthrights << sym
           end
         end
       }
-      [count, birthright || birthrights.sample]
+      [total, determine_majority ? (birthrights.sample || DEAD) : @state[x][y]]
 
     when :friendly
       # [optimized] with knowledge of conway rules
