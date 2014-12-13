@@ -38,27 +38,22 @@ class ConwayDeathmatch::BoardState
 
   # total (alive) neighbor count and birthright
   def neighbor_stats(x, y)
-    cell_val = @state[x][y]
-    np = neighbor_population(x, y)
-    np.delete(DEAD)
+    npop = neighbor_population(x, y).tap { |h| h.delete(DEAD) }
 
     case @deathmatch
     when nil
-      count = 0
-      np.each { |sym, cnt| count += cnt }
-      [count, ALIVE]
+      [npop.values.reduce(0, :+), ALIVE]
 
     when :aggressive, :defensive
       # dead: determine majority (always 3, no need to sample for tie)
       # alive: agg: determine majority (may tie at 2); def: cell_val
+      determine_majority = (@state[x][y] == DEAD or @deathmatch == :aggressive)
       count = 0
       largest = 0
-      determine_majority = (cell_val == DEAD or @deathmatch == :aggressive)
       birthright = (determine_majority ? nil : @state[x][y])
       birthrights = []
-      np.each { |sym, cnt|
+      npop.each { |sym, cnt|
         count += cnt
-
         if determine_majority
           birthrights << sym if cnt == largest
           if cnt > largest
@@ -70,26 +65,18 @@ class ConwayDeathmatch::BoardState
       [count, birthright || birthrights.sample]
 
     when :friendly
-      # 1. we already know the count from the next_population hash
-      # 2. if the cell_val is alive, then just count friendlies
-      # 3. otherwise determine majority
-      return [np[cell_val], cell_val] if cell_val != DEAD
-
-      # DEAD, determine birthright by majority
-      largest = 0
-      birthright = nil
-      np.each { |sym, cnt|
-        # determine_majority
-        if cnt > largest
-          largest = cnt
-          birthright = sym
-        end
-      }
-      if birthright
-        [np[birthright], birthright]
-      else
-        [0, DEAD]
-      end
+      # [optimized] with knowledge of conway rules
+      # if DEAD, need 3 friendlies to qualify for birth sampling
+      # if ALIVE, npop simply has the friendly count
+      cell_val = if @state[x][y] == DEAD
+                   npop.reduce([]) { |memo, (sym,cnt)|
+                     cnt == 3 ? memo + [sym] : memo
+                   }.sample || DEAD
+                 else
+                   @state[x][y]
+                 end
+      # return [0, DEAD] if no one qualifies
+      [npop[cell_val] || 0, cell_val]
     else
       raise "unknown: #{@deathmatch.inspect}"
     end
