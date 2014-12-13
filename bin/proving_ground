@@ -19,11 +19,11 @@ opts = Slop.parse(help: true,
   on 'm', 'max_collisions=', '[int] Max number of collisions', as: Integer
 end
 
-p = opts[:num_points] || 5
-width = opts[:width] || p * 5
-height = opts[:height] || p * 5
-n = opts[:num_ticks] || p * 5
-max_c = opts[:max_collisions] || p ** 2
+num_points = opts[:num_points] || 5
+width = opts[:width] || num_points * 5
+height = opts[:height] || num_points * 5
+num_ticks = opts[:num_ticks] || num_points * 5
+max_c = opts[:max_collisions] || num_points ** 2
 
 # choose center point
 # choose next point within 2 units randomly
@@ -80,7 +80,7 @@ Signal.trap("INT") { conclude!(results, width, height) }
 
 loop {
   # generate a random shape
-  points = generate_points(p, width, height)
+  points = generate_points(num_points, width, height)
 
   # have we seen these points before?
   if seen.member?(points.hash)
@@ -99,7 +99,7 @@ loop {
   static_count = 0               # detect a stabilized board
 
   # iterate the transitions (ticks) and track population
-  n.times { |i|
+  num_ticks.times { |i|
     b.tick
 
     # evaluate board
