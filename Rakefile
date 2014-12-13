@@ -6,6 +6,7 @@ Buildar.new do |b|
 end
 
 task default: %w[test bench]
+task travis: %w[test bench ruby-prof]
 
 require 'rake/testtask'
 desc "Run tests"
