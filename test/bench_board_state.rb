@@ -37,4 +37,22 @@ describe "BoardState#tick Benchmark" do
     Shapes.add(b, "diehard 20 10", "2")
     n.times { b.tick }
   end
+
+  bench_performance_linear "defensive deathmatch demo",
+                           BENCH_TICK_THRESH do |n|
+    b = BoardState.new(70, 40)
+    b.deathmatch = :defensive
+    Shapes.add(b, "acorn 30 30", "1")
+    Shapes.add(b, "diehard 20 10", "2")
+    n.times { b.tick }
+  end
+
+  bench_performance_linear "friendly deathmatch demo",
+                           BENCH_TICK_THRESH do |n|
+    b = BoardState.new(70, 40)
+    b.deathmatch = :friendly
+    Shapes.add(b, "acorn 30 30", "1")
+    Shapes.add(b, "diehard 20 10", "2")
+    n.times { b.tick }
+  end
 end
