@@ -3,6 +3,7 @@ require 'buildar'
 Buildar.new do |b|
   b.gemspec_file = 'conway_deathmatch.gemspec'
   b.version_file = 'VERSION'
+  b.use_git = true
 end
 
 task default: %w[test bench]
