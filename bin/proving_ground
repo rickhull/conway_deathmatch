@@ -98,7 +98,7 @@ loop {
   current = peak = score = 0     # track population (results)
   static_count = 0               # detect a stabilized board
 
-  # iterate the transitions (ticks) and track population
+  # iterate the game of life
   num_ticks.times { |i|
     b.tick
 
