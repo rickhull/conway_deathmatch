@@ -53,19 +53,43 @@ describe BoardState do
 
   describe "aggressive deathmatch" do
     it "must allow survivors to switch sides" do
-      count = 0
-      switched = false
-      loop {
-        count += 1
+      32.times {
         @board = BoardState.new(5, 3, :aggressive)
         @board.populate(1, 1, '1')
         @board.populate(2, 1, '1') # survivor
         @board.populate(3, 1, '2')
 
         @board.tick
-        break if count > 99 or @board.value(2, 1) == '2'
+        break if @board.value(2, 1) == '2'
       }
       @board.value(2, 1).must_equal '2'
+    end
+  end
+
+  describe "defensive deathmatch" do
+    it "must not allow survivors to switch sides" do
+      16.times {
+        @board = BoardState.new(5, 3, :defensive)
+        @board.populate(1, 1, '1')
+        @board.populate(2, 1, '1') # survivor
+        @board.populate(3, 1, '2')
+
+        @board.tick
+        @board.value(2, 1).must_equal '1'
+      }
+    end
+  end
+
+  describe "friendly deathmatch" do
+    it "must allow survivors with excess hostiles nearby" do
+      @board = BoardState.new(5, 5, :friendly)
+      @board.populate(1, 2, '1')
+      @board.populate(2, 2, '1')
+      @board.populate(3, 2, '1')
+      @board.populate(2, 1, '2')
+      @board.populate(2, 3, '2')
+      @board.tick
+      @board.value(2, 2).must_equal '1'
     end
   end
 end
