@@ -7,7 +7,7 @@ describe BoardState do
       @y = 5
       @board = BoardState.new(@x, @y)
     end
-    
+
     it "must have dead population" do
       @board.population[DEAD].must_equal @x * @y
       @board.population.keys.length.must_equal 1
@@ -48,6 +48,24 @@ describe BoardState do
         @board.value(*xy_ary).must_equal ALIVE
       }
       @board.population.fetch(ALIVE).must_equal SHAPE_TICK_POINTS.length
+    end
+  end
+
+  describe "aggressive deathmatch" do
+    it "must allow survivors to switch sides" do
+      count = 0
+      switched = false
+      loop {
+        count += 1
+        @board = BoardState.new(5, 3, :aggressive)
+        @board.populate(1, 1, '1')
+        @board.populate(2, 1, '1') # survivor
+        @board.populate(3, 1, '2')
+
+        @board.tick
+        break if count > 99 or @board.value(2, 1) == '2'
+      }
+      @board.value(2, 1).must_equal '2'
     end
   end
 end
