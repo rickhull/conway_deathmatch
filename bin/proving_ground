@@ -119,20 +119,17 @@ loop {
   # track the highest populators
   #
   if current > results[:final][0]
-    results[:final][0] = current
-    results[:final][1] = points
+    results[:final] = [current, points]
     puts "\tLargest final: #{current}"
   end
 
   if peak > results[:peak][0]
-    results[:peak][0] = peak
-    results[:peak][1] = points
+    results[:peak] = [peak, points]
     puts "\tLargest peak: #{peak}"
   end
 
   if score > results[:score][0]
-    results[:score][0] = score
-    results[:score][1] = points
+    results[:score] = [score, points]
     puts "\tLargest score: #{score}"
   end
 }
