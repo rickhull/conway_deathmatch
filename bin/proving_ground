@@ -83,13 +83,14 @@ loop {
   points = generate_points(num_points, width, height)
 
   # have we seen these points before?
-  if seen.member?(points.hash)
+  hsh = points.hash
+  if seen.member? hsh
     collisions += 1
     puts "X" * collisions
     break if collisions > max_c # exit the loop, stop generating points
     next
   end
-  seen << points.hash
+  seen << hsh
 
   # initialize board with generated shape
   b = BoardState.new(width, height)
