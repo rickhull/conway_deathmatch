@@ -49,6 +49,7 @@ end
 # this runs against the installed gem lib, not git / filesystem
 desc "Run ruby-prof on bin/conway_deathmatch (100 ticks)"
 task "ruby-prof" do
-  sh ["ruby-prof -m1 bin/conway_deathmatch -- -n100 -s0 --renderfinal",
+  sh ["ruby-prof -m1 --exclude-common-cycles bin/conway_deathmatch",
+      "-- -n100 -s0 --renderfinal",
       "| tee metrics/ruby-prof"].join(' ')
 end
