@@ -15,7 +15,7 @@ defmodule ConwayDeathmatch do
   end
 
   def dim(grid) when is_tuple(grid) do
-    {grid |> tuple_size, grid |> elem(0) |> tuple_size}
+    {tuple_size(grid), grid |> elem(0) |> tuple_size}
   end
 
   def cell(grid, x, y) do
