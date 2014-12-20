@@ -2,9 +2,9 @@ defmodule ConwayDeathmatchTest do
   use ExUnit.Case
   doctest ConwayDeathmatch
 
-  test "ConwayDeathmatch.new/2" do
+  test "ConwayDeathmatch.new/3 empty" do
     {c, x_len, y_len} = {ConwayDeathmatch, 3, 4}
-    grid = c.new(x_len, y_len)
+    grid = c.new([], x_len, y_len)
     assert is_tuple(grid)
     assert c.dim(grid) == {x_len, y_len}
     for x <- 0..(x_len - 1) do

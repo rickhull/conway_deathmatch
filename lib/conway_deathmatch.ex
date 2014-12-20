@@ -1,8 +1,4 @@
 defmodule ConwayDeathmatch do
-  def new(x_len, y_len) when is_integer(x_len) and x_len > 0 and  is_integer(y_len) and y_len > 0 do
-    new_grid(x_len, y_len, fn(_, _) -> 0 end)
-  end
-
   # e.g. points = [[1,2], [1,3], [1,4]]
   def new(points, x_len, y_len, val \\ 1) when is_list(points) and is_integer(x_len) and x_len > 0 and is_integer(y_len) and y_len > 0 and is_integer(val) and val > 0 do
     new_grid(x_len, y_len, fn(x, y) ->
