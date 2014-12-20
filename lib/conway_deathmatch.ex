@@ -18,11 +18,11 @@ defmodule ConwayDeathmatch do
     {tuple_size(grid), grid |> elem(0) |> tuple_size}
   end
 
-  def cell(grid, x, y) do
+  def cell(grid, x, y) when is_tuple(grid) and is_integer(x) and x >= 0 and is_integer(y) and y >= 0do
     grid |> elem(x) |> elem(y)
   end
 
-  def tick(grid) do
+  def tick(grid) when is_tuple(grid) do
     {x,y} = dim(grid)
     new_grid(x, y, &next_cell(grid, &1, &2))
   end
@@ -37,7 +37,7 @@ defmodule ConwayDeathmatch do
     end
   end
 
-  defp next_cell(grid, x, y) do
+  defp next_cell(grid, x, y) when is_tuple(grid) and is_integer(x) and x >= 0 and is_integer(y) and y >= 0 do
     conway(cell(grid, x, y), neighbors(grid, x, y))
   end
 
