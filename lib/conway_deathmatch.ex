@@ -41,11 +41,6 @@ defmodule ConwayDeathmatch do
     conway(cell(grid, x, y), neighbors(grid, x, y))
   end
 
-  # count of neighbors which aren't dead (0)
-  defp alive_neighbors(list) when is_list(list) do
-    list |> Enum.count(fn(x) -> x != 0 end)
-  end
-
   # toroidal
   defp tor(x, x_len) when is_integer(x) and is_integer(x_len) and x_len > 0 do
     case rem(x, x_len) do
