@@ -14,7 +14,7 @@ defmodule ConwayDeathmatchTest do
     end
   end
 
-  test "ConwayDeathmatch.new/3" do
+  test "ConwayDeathmatch.new/3 block" do
     {c, x_len, y_len} = {ConwayDeathmatch, 5, 5}
     block = [[1,1], [1,2], [2,1], [2,2]]
     grid = c.new(block, x_len, y_len)
