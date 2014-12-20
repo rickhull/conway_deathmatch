@@ -23,6 +23,13 @@ defmodule ConwayDeathmatch do
     new_grid(x, y, &next_cell(grid, &1, &2))
   end
 
+  def render(grid) when is_tuple(grid) do
+    {xd, yd} = dim(grid)
+    for y <- 0..(yd - 1) do
+      grid |> elem(y) |> Tuple.to_list |> Enum.join
+    end |> Enum.join("\n")
+  end
+
   # TODO: determine birthright
   defp conway(cell_val, neighbors) when is_integer(cell_val) and cell_val >= 0 and is_list(neighbors) do
     case {cell_val, neighbors |> Enum.count(fn x -> x != 0 end)} do
