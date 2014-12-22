@@ -1,14 +1,7 @@
 defmodule ConwayDeathmatch do
   @dead '.'
-  defstruct grid: [[]], width: 0, height: 0, dead: @dead
+  defstruct grid: [[]], width: 0, height: 0, dead: @dead, deathmatch: nil
 
-  #def new(file) do
-  #  lines = File.stream! file
-  #  height = Enum.count lines
-  #  width = lines |> Enum.max_by(&String.length/1) |> String.length
-  #  grid = Enum.map lines, &(parse_line &1, width)
-  #  %ConwayDeathmatch{grid: grid, width: width, height: height}
-  #end
   def new(width, height) do
     grid = for _ <- 0..(width - 1) do
       for _ <- 0..(height - 1) do
@@ -56,14 +49,28 @@ defmodule ConwayDeathmatch do
     [Enum.map(lists, &hd/1) | transpose(Enum.map(lists, &tl/1))]
   end
 
+  # TODO: switch on deathmatch
+  defp next_cell(conway, row, col) do
+    cur = conway |> cell(row, col)
+    case conway.deathmatch do
+      _ -> cur |> next_cell_sp(neighbors(conway, row, col))
+    end
+  end
+
   # single player only
-  defp conway(cell_val, neighbors) do
+  defp next_cell_sp(cell_val, neighbors) do
     living = neighbors |> alive
     case {cell_val, length(living)} do
       {@dead, 3} -> hd(living)
       {v, 2} -> v
       {v, 3} -> v
       {_, _} -> @dead
+    end
+  end
+
+  defp neighbors(conway, row, col) do
+    for x <- (row-1)..(row+1), y <- (col-1)..(col+1), {x,y} != {row,col} do
+      cell conway, tor(x, conway.width), tor(y, conway.height)
     end
   end
 
@@ -86,16 +93,6 @@ defmodule ConwayDeathmatch do
         end
       end)
     |> elem(0)
-  end
-
-  defp next_cell(conway, row, col) do
-    conway |> cell(row, col) |> conway(neighbors(conway, row, col))
-  end
-
-  defp neighbors(conway, row, col) do
-    for x <- (row-1)..(row+1), y <- (col-1)..(col+1), {x,y} != {row,col} do
-      cell conway, tor(x, conway.width), tor(y, conway.height)
-    end
   end
 
   # toroidal   tor(-2, 5) == 3
