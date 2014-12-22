@@ -21,34 +21,34 @@ defmodule ConwayDeathmatch do
     new(width, height) |> add_points(points, val)
   end
 
-  def add_points(struct, points, val) do
-    grid = for row <- 0..(struct.height - 1) do
-      for col <- 0..(struct.width - 1) do
+  def add_points(conway, points, val) do
+    grid = for row <- 0..(conway.height - 1) do
+      for col <- 0..(conway.width - 1) do
         if HashSet.member?(Enum.into(points, HashSet.new), [row, col]) do
           val
         else
-          struct |> cell(row, col)
+          conway |> cell(row, col)
         end
       end
     end
-    %ConwayDeathmatch{struct | grid: grid}
+    %ConwayDeathmatch{conway | grid: grid}
   end
 
-  def cell(struct, row, col) do
-    struct.grid |> Enum.at(row) |> Enum.at(col)
+  def cell(conway, row, col) do
+    conway.grid |> Enum.at(row) |> Enum.at(col)
   end
 
-  def tick(struct) do
-    grid = for row <- 0..(struct.height - 1) do
-      for col <- 0..(struct.width - 1) do
-        struct |> next_cell(row, col)
+  def tick(conway) do
+    grid = for row <- 0..(conway.height - 1) do
+      for col <- 0..(conway.width - 1) do
+        conway |> next_cell(row, col)
       end
     end
-    %ConwayDeathmatch{struct | grid: grid}
+    %ConwayDeathmatch{conway | grid: grid}
   end
 
-  def render(struct) do
-    struct.grid |> transpose |> Enum.map(&Enum.join/1) |> Enum.join("\n")
+  def render(conway) do
+    conway.grid |> transpose |> Enum.map(&Enum.join/1) |> Enum.join("\n")
   end
 
   defp transpose([[] | _]), do: []
@@ -88,13 +88,13 @@ defmodule ConwayDeathmatch do
     |> elem(0)
   end
 
-  defp next_cell(struct, row, col) do
-    struct |> cell(row, col) |> conway(neighbors(struct, row, col))
+  defp next_cell(conway, row, col) do
+    conway |> cell(row, col) |> conway(neighbors(conway, row, col))
   end
 
-  defp neighbors(struct, row, col) do
+  defp neighbors(conway, row, col) do
     for x <- (row-1)..(row+1), y <- (col-1)..(col+1), {x,y} != {row,col} do
-      cell struct, tor(x, struct.width), tor(y, struct.height)
+      cell conway, tor(x, conway.width), tor(y, conway.height)
     end
   end
 
