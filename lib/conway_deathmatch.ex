@@ -1,75 +1,151 @@
 defmodule ConwayDeathmatch do
-  # e.g. points = [[1,2], [1,3], [1,4]]
-  def new(points, x_len, y_len, val \\ 1) when is_list(points) and is_integer(x_len) and x_len > 0 and is_integer(y_len) and y_len > 0 and is_integer(val) and val > 0 do
-    new_grid(x_len, y_len, fn(x, y) ->
-               if HashSet.member?(Enum.into(points, HashSet.new), [x, y]) do
-                 val
-               else
-                 0
-               end
-             end)
+  @dead '.'
+  defstruct grid: [[]], width: 0, height: 0, dead: @dead
+
+  #def new(file) do
+  #  lines = File.stream! file
+  #  height = Enum.count lines
+  #  width = lines |> Enum.max_by(&String.length/1) |> String.length
+  #  grid = Enum.map lines, &(parse_line &1, width)
+  #  %ConwayDeathmatch{grid: grid, width: width, height: height}
+  #end
+  def new(width, height) do
+    grid = for _ <- 0..(width - 1) do
+      for _ <- 0..(height - 1) do
+        @dead
+      end
+    end
+    %ConwayDeathmatch{grid: grid, width: width, height: height}
+  end
+  def new(width, height, points, val \\ 1) do
+    new(width, height) |> add_points(points, val)
   end
 
-  def dim(grid) when is_tuple(grid) do
-    {tuple_size(grid), grid |> elem(0) |> tuple_size}
+  def add_points(struct, points, val) do
+    grid = for row <- 0..(struct.height - 1) do
+      for col <- 0..(struct.width - 1) do
+        if HashSet.member?(Enum.into(points, HashSet.new), [row, col]) do
+          val
+        else
+          struct |> cell(row, col)
+        end
+      end
+    end
+    %ConwayDeathmatch{struct | grid: grid}
   end
 
-  def cell(grid, x, y) when is_tuple(grid) and is_integer(x) and x >= 0 and is_integer(y) and y >= 0do
-    grid |> elem(x) |> elem(y)
+  def cell(struct, row, col) do
+    struct.grid |> Enum.at(row) |> Enum.at(col)
   end
 
-  def tick(grid) when is_tuple(grid) do
-    {x,y} = dim(grid)
-    new_grid(x, y, &next_cell(grid, &1, &2))
+  def tick(struct) do
+    grid = for row <- 0..(struct.height - 1) do
+      for col <- 0..(struct.width - 1) do
+        struct |> next_cell(row, col)
+      end
+    end
+    %ConwayDeathmatch{struct | grid: grid}
   end
 
-  def render(grid) when is_tuple(grid) do
-    {xd, yd} = dim(grid)
-    for y <- 0..(yd - 1) do
-      grid |> elem(y) |> Tuple.to_list |> Enum.join
-    end |> Enum.join("\n")
+  def render(struct) do
+    struct.grid |> transpose |> Enum.map(&Enum.join/1) |> Enum.join("\n")
   end
 
-  # TODO: determine birthright
-  defp conway(cell_val, neighbors) when is_integer(cell_val) and cell_val >= 0 and is_list(neighbors) do
-    case {cell_val, neighbors |> Enum.count(fn x -> x != 0 end)} do
-      {0, 3} -> 1 # birthright?
-      {a, 2} -> a # birthright?
-      {a, 3} -> a # birthright?
-      {_, _} -> 0
+  defp transpose([[] | _]), do: []
+  defp transpose(lists) do
+    [Enum.map(lists, &hd/1) | transpose(Enum.map(lists, &tl/1))]
+  end
+
+  # single player only
+  defp conway(cell_val, neighbors) do
+    living = neighbors |> alive
+    case {cell_val, length(living)} do
+      {@dead, 3} -> hd(living)
+      {v, 2} -> v
+      {v, 3} -> v
+      {_, _} -> @dead
     end
   end
 
-  defp next_cell(grid, x, y) when is_tuple(grid) and is_integer(x) and x >= 0 and is_integer(y) and y >= 0 do
-    conway(cell(grid, x, y), neighbors(grid, x, y))
+  defp alive(neighbors) do
+    neighbors |> Enum.reject(fn n -> n == @dead end)
   end
 
-  # toroidal
-  defp tor(x, x_len) when is_integer(x) and is_integer(x_len) and x_len > 0 do
-    case rem(x, x_len) do
+  defp group(neighbors) do
+    Enum.group_by(neighbors, &(&1))
+  end
+
+  defp majority([head | tail]) do
+    Enum.reduce(tail, {head, Dict.put(%{}, head, 1)},
+      fn i, {lead, group} ->
+        i_count = Dict.get(group, i, 0) + 1
+        if i_count > Dict.get(group, lead) do
+          {i, Dict.put(group, i, i_count)}
+        else
+          {lead, Dict.put(group, i, i_count)}
+        end
+      end)
+    |> elem(0)
+  end
+
+  defp next_cell(struct, row, col) do
+    struct |> cell(row, col) |> conway(neighbors(struct, row, col))
+  end
+
+  defp neighbors(struct, row, col) do
+    for x <- (row-1)..(row+1), y <- (col-1)..(col+1), {x,y} != {row,col} do
+      cell struct, tor(x, struct.width), tor(y, struct.height)
+    end
+  end
+
+  # toroidal   tor(-2, 5) == 3
+  defp tor(num, mod) when is_integer(num) and is_integer(mod) and mod > 0 do
+    case rem(num, mod) do
       r when r >= 0 -> r
-      r             -> r + x_len
+      r             -> r + mod
     end
   end
 
-  defp neighbors(grid, x, y) when is_tuple(grid) and is_integer(x) and is_integer(y) do
-    {x_len, y_len} = dim(grid)
-    x = tor(x, x_len)
-    y = tor(y, y_len)
-    for xn <- (x-1)..(x+1) do
-      xt = tor(xn, x_len)
-      for yn <- (y-1)..(y+1) do
-        cell grid, xt, tor(yn, y_len)
-      end
-    end |> List.flatten |> List.delete_at(4)
-  end
+  def main(args) do
+    {options, argv, errors} =
+    OptionParser.parse(args,
+                       strict: [width:  :integer,
+                                height: :integer,
+                                ticks:  :integer,
+                                sleep:  :float,
+                                points: :string,
+                                step:   :boolean,
+                                one:    :string,
+                                two:    :string,
+                                three:  :string,
+                                renderfinal: :boolean,],
+                       aliases: [x: :width,
+                                 y: :height,
+                                 n: :ticks,
+                                 s: :sleep,
+                                 p: :points,
+                                 g: :step,
+                                 r: :renderfinal,])
 
-  # creates new grid according populated according to fun
-  defp new_grid(x_len, y_len, fun) when is_function(fun) and is_integer(x_len) and is_integer(y_len) and x_len > 0 and y_len > 0 do
-    for x <- 0..(x_len - 1) do
-      for y <- 0..(y_len - 1) do
-        fun.(x, y)
-      end
-    end |> Enum.map(&List.to_tuple/1) |> List.to_tuple
+    unless Enum.empty? errors do
+      errors |> Enum.each(fn t -> IO.puts "warning: #{elem(t, 0)} ignored" end)
+    end
+    unless Enum.empty? argv do
+      argv |> Enum.each(fn s -> IO.puts "warning: #{s} ignored" end)
+    end
+    width = options[:width] || 70
+    height = options[:height] || 40
+    #shapes = options[:points] || "acorn 50 18"
+    #slp = options[:sleep] || 0.02
+    #num_ticks = options[:ticks]
+    #render_continuous = num_ticks || options[:renderfinal]
+
+    grid = new(width, height, [[0,0], [0,1], [0,2], [0,3]])
+
+
+    IO.inspect grid
+    IO.puts grid |> render
+    IO.puts ""
+    IO.puts grid |> tick |> render
   end
 end
