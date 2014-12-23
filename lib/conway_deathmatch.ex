@@ -192,15 +192,12 @@ defmodule ConwayDeathmatch do
 
   def loop(conway, options \\ default_options()) do
     conway |> tick
-    |> print(options) |> kill(options) |> sleep(options)
+    |> print(options) |> stop(options) |> sleep(options)
     |> loop(options)
   end
 
-  def kill(conway, %{ticks: ticks}) do
-    if conway.ticks >= ticks do
-      System.halt(0)
-    end
-    conway
+  def stop(conway, %{ticks: ticks}) do
+    if conway.ticks >= ticks, do: System.halt(0), else: conway
   end
-  def kill(conway, _options), do: conway
+  def stop(conway, _options), do: conway
 end
