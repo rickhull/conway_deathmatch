@@ -6,7 +6,7 @@ defmodule ConwayDeathmatch do
 
   def new(width, height) when is_integer(width) and width > 0 and is_integer(height) and height > 0 do
     grid = for _y <- 0..(height - 1) do
-      for _x <- 0..(width - 1) do # inner loop is the initial address
+      for _x <- 0..(width - 1) do
         @dead
       end
     end
