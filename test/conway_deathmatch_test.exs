@@ -110,10 +110,8 @@ defmodule ConwayDeathmatchTest do
 
   test "parse_args/1" do
     c = ConwayDeathmatch
-    assert c.parse_args(["--help"]) == :help
     assert c.parse_args([]) == c.default_options
-    args = ["1", "2", "3"]
-    assert c.parse_args(args) == {c.default_options, args, []}
+    assert c.parse_args(["blammo", "whap", "zip"]) == c.default_options
   end
 
   test "shape_points/1" do

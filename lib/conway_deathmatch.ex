@@ -12,7 +12,7 @@ defmodule ConwayDeathmatch do
     end
     %ConwayDeathmatch{grid: grid, width: width, height: height}
   end
-  def new(width, height, points, val \\ 1) do
+  def new(width, height, points, val \\ 0) do
     new(width, height) |> add_points(points, val)
   end
 
@@ -135,12 +135,32 @@ defmodule ConwayDeathmatch do
                                            p: :step,
                                            r: :renderfinal,])
     case options do
-      {[help: true], _, _}     -> :help
-      {cmd_opts, [], []}       -> Enum.into(cmd_opts, default_options())
+      {[help: true], _, _} ->
+        usage()
+      {cmd_opts, [], []} ->
+        Enum.into(cmd_opts, default_options())
       {cmd_opts, args, errors} ->
-        {Enum.into(cmd_opts, default_options()), args, errors}
-      _ -> :help
+        arg_errors({Enum.into(cmd_opts, default_options()), args, errors})
+      _ ->
+        usage("unexpected options")
     end
+  end
+
+  def arg_errors({options, args, errors}) do
+    errors |> Enum.each(fn({err,_}) -> IO.puts("warning: #{err} ignored") end)
+    args |> Enum.each(fn(arg) -> IO.puts("warning: #{arg} ignored") end)
+    options
+  end
+
+  def usage(err \\ "") do
+    IO.puts @module_doc
+    String.first(err) and IO.puts "Error: #{err}"
+    System.halt(0)
+  end
+
+  def process_options(%{shapes: shapes} = o) when is_map(o) do
+    IO.inspect o
+    Dict.put(o, :points, shape_points(shapes))
   end
 
   def shape_points(shape_str) do
@@ -164,26 +184,23 @@ defmodule ConwayDeathmatch do
   def sleep(conway, %{sleep: s}), do: :timer.sleep(s) && conway
 
   def default_options do
-    %{width: 70,
-      height: 40,
-      shapes: "p 1 2 p 3 4 p 5 6 p 7 8",
-      sleep: 20}
+    %{width: 40,
+      height: 20,
+      shapes: "p 2 0 p 3 0 p 4 0 p 5 0 p 6 0 p 7 0 p 8 0 p 9 0 p 10 0",
+      sleep: 0}
   end
 
   def loop(conway, options \\ default_options()) do
-    conway |> tick |> print(options) |> sleep(options) |> loop(options)
+    conway |> tick
+    |> print(options) |> kill(options) |> sleep(options)
+    |> loop(options)
   end
 
-  def process_options(:help) do
-    IO.puts @module_doc
-    System.halt(0)
+  def kill(conway, %{ticks: ticks}) do
+    if conway.ticks >= ticks do
+      System.halt(0)
+    end
+    conway
   end
-  def process_options(%{shapes: shapes} = o) when is_map(o) do
-    Dict.put(o, :points, shape_points(shapes))
-  end
-  def process_options({o, args, errors}) do
-    errors |> Enum.each(fn t -> IO.puts "warning: #{elem(t, 0)} ignored" end)
-    args |> Enum.each(fn s -> IO.puts "warning: #{s} ignored" end)
-    process_options(o)
-  end
+  def kill(conway, _options), do: conway
 end
