@@ -24,16 +24,11 @@ Gem::Specification.new do |s|
     'test/test_shapes.rb',
   ]
   s.executables = ['conway_deathmatch']
-
-  # lager (logging) may be temporary
-  s.add_runtime_dependency "lager", "~> 1.0"
   s.add_runtime_dependency "slop", "~> 3.0"
-
   s.add_development_dependency "buildar", "~> 2"
   s.add_development_dependency "minitest", "~> 5"
   s.add_development_dependency "ruby-prof", "~> 0"
   # uncomment and set ENV['CODE_COVERAGE']
   # s.add_development_dependency "simplecov", "~> 0.9.0"
-
   s.required_ruby_version = "~> 2"
 end

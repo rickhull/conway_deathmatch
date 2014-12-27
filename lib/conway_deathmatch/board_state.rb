@@ -1,4 +1,4 @@
-require 'lager'
+#require 'lager'
 module ConwayDeathmatch; end         # create namespace
 
 # data structure for the board - 2d array
@@ -6,8 +6,8 @@ module ConwayDeathmatch; end         # create namespace
 # static boundaries are treated as dead
 #
 class ConwayDeathmatch::BoardState
-  extend Lager
-  log_to $stderr
+#  extend Lager
+#  log_to $stderr
   class BoundsError < RuntimeError; end
 
   DEAD = '.'
@@ -27,7 +27,7 @@ class ConwayDeathmatch::BoardState
     @y_len = y_len
     @state = self.class.new_state(x_len, y_len)
     @deathmatch = deathmatch
-    @lager = self.class.lager
+#    @lager = self.class.lager
   end
 
   # Conway's Game of Life transition rules
