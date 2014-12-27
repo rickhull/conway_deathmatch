@@ -44,7 +44,6 @@ class ConwayDeathmatch::BoardState
   def value(x, y)
     x = x % @x_len
     y = y % @y_len
-#    x, y = toroidal(x, y)
     @state[x][y]
   end
 
@@ -52,7 +51,6 @@ class ConwayDeathmatch::BoardState
   def neighbor_stats(x, y)
     x = x % @x_len
     y = y % @y_len
-#    x, y = toroidal(x, y)
     npop = neighbor_population(x, y).tap { |h| h.delete(DEAD) }
 
     case @deathmatch
@@ -98,21 +96,15 @@ class ConwayDeathmatch::BoardState
     end
   end
 
-#  def toroidal(x, y)
-#    [x % @x_len, y % @y_len]
-#  end
-
   # population of every neighboring entity, including DEAD
   def neighbor_population(x, y)
     x = x % @x_len
     y = y % @y_len
-#    x, y = toroidal(x, y)
     neighbors = Hash.new(0)
     (x-1).upto(x+1) { |xn|
       (y-1).upto(y+1) { |yn|
         xn = xn % @x_len
         yn = yn % @y_len
-#        xn, yn = toroidal(xn, yn)
         neighbors[@state[xn][yn]] += 1 unless (xn == x and yn == y)
       }
     }
@@ -133,7 +125,6 @@ class ConwayDeathmatch::BoardState
   def populate(x, y, val = ALIVE)
     x = x % @x_len
     y = y % @y_len
-#    x, y = toroidal(x, y)
     @state[x][y] = val
   end
 
@@ -142,8 +133,6 @@ class ConwayDeathmatch::BoardState
     points.each { |point|
       x = (point[0] + x_off) % @x_len
       y = (point[1] + y_off) % @y_len
-
-#      x, y = toroidal(point[0] + x_off, point[1] + y_off)
       @state[x][y] = val
     }
     self
