@@ -1,3 +1,4 @@
+require 'lager'
 module ConwayDeathmatch; end         # create namespace
 
 # data structure for the board - 2d array
@@ -5,6 +6,8 @@ module ConwayDeathmatch; end         # create namespace
 # static boundaries are treated as dead
 #
 class ConwayDeathmatch::BoardState
+  extend Lager
+  log_to $stderr
   class BoundsError < RuntimeError; end
 
   DEAD = '.'
@@ -24,20 +27,32 @@ class ConwayDeathmatch::BoardState
     @y_len = y_len
     @state = self.class.new_state(x_len, y_len)
     @deathmatch = deathmatch
+    @lager = self.class.lager
   end
 
   # Conway's Game of Life transition rules
   def next_value(x, y)
+    # don't bother toroidaling, only called by #tick
     n, birthright = neighbor_stats(x, y)
-    if alive?(x, y)
+    if @state[x][y] != DEAD
       (n == 2 or n == 3) ? birthright : DEAD
     else
       (n == 3) ? birthright : DEAD
     end
   end
 
+  def value(x, y)
+    x = x % @x_len
+    y = y % @y_len
+#    x, y = toroidal(x, y)
+    @state[x][y]
+  end
+
   # total (alive) neighbor count and birthright
   def neighbor_stats(x, y)
+    x = x % @x_len
+    y = y % @y_len
+#    x, y = toroidal(x, y)
     npop = neighbor_population(x, y).tap { |h| h.delete(DEAD) }
 
     case @deathmatch
@@ -83,29 +98,21 @@ class ConwayDeathmatch::BoardState
     end
   end
 
-  def value(x, y)
-    in_bounds!(x,y)
-    @state[x][y].dup
-  end
-
-  def in_bounds?(x, y)
-    x.between?(0, @x_len - 1) and y.between?(0, @y_len - 1)
-  end
-
-  def in_bounds!(x, y)
-    raise(BoundsError, "(#{x}, #{y})") unless in_bounds?(x, y)
-  end
-
-  # out of bounds considered dead
-  def alive?(x, y)
-    @state[x][y] != DEAD rescue false
-  end
+#  def toroidal(x, y)
+#    [x % @x_len, y % @y_len]
+#  end
 
   # population of every neighboring entity, including DEAD
   def neighbor_population(x, y)
+    x = x % @x_len
+    y = y % @y_len
+#    x, y = toroidal(x, y)
     neighbors = Hash.new(0)
-    (x-1 > 0 ? x-1 : 0).upto(x+1 < @x_len ? x+1 : @x_len - 1) { |xn|
-      (y-1 > 0 ? y-1 : 0).upto(y+1 < @y_len ? y+1 : @y_len - 1) { |yn|
+    (x-1).upto(x+1) { |xn|
+      (y-1).upto(y+1) { |yn|
+        xn = xn % @x_len
+        yn = yn % @y_len
+#        xn, yn = toroidal(xn, yn)
         neighbors[@state[xn][yn]] += 1 unless (xn == x and yn == y)
       }
     }
@@ -122,18 +129,22 @@ class ConwayDeathmatch::BoardState
     self
   end
 
-  # set a single point, raise on OOB
+  # set a single point
   def populate(x, y, val = ALIVE)
-    in_bounds!(x, y)
+    x = x % @x_len
+    y = y % @y_len
+#    x, y = toroidal(x, y)
     @state[x][y] = val
   end
 
-  # set several points (2d array), ignore OOB
+  # set several points (2d array)
   def add_points(points, x_off = 0, y_off = 0, val = ALIVE)
     points.each { |point|
-      x = point[0] + x_off
-      y = point[1] + y_off
-      @state[x][y] = val if self.in_bounds?(x, y)
+      x = (point[0] + x_off) % @x_len
+      y = (point[1] + y_off) % @y_len
+
+#      x, y = toroidal(point[0] + x_off, point[1] + y_off)
+      @state[x][y] = val
     }
     self
   end
