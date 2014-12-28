@@ -5,6 +5,7 @@ require 'conway_deathmatch/shapes'
 
 BENCH_NEW_THRESH = (ENV['BENCH_NEW_THRESH'] || 0.9).to_f
 BENCH_TICK_THRESH = (ENV['BENCH_TICK_THRESH'] || 0.9995).to_f
+Shapes = ConwayDeathmatch::Shapes
 
 describe "ConwayDeathmatch.new Benchmark" do
   bench_range do
