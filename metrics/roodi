@@ -2,4 +2,4 @@
 Running Roodi checks
 [31mlib/conway_deathmatch.rb:51 - Method name "neighbor_stats" cyclomatic complexity is 16.  It should be 8 or less.[0m
 
-Checked 3 files
+Checked 2 files
