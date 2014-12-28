@@ -5,7 +5,7 @@ defmodule ConwayDeathmatch.Mixfile do
     [app: :conway_deathmatch,
      version: "0.0.1",
      elixir: "~> 1.0",
-     escript: [main_module: ConwayDeathmatch],
+     escript: [main_module: ConwayDeathmatch.CLI],
      consolidate_protocols: true,
      deps: deps]
   end

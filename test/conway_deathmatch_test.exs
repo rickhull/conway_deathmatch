@@ -108,21 +108,22 @@ defmodule ConwayDeathmatchTest do
     assert c.tor(-3, 2) == 1
   end
 
-  test "parse_args/1" do
+  test "CLI.parse_args/1" do
     c = ConwayDeathmatch
-    assert c.parse_args([]) == c.default_options
-    assert c.parse_args(["blammo", "whap", "zip"]) == c.default_options
+    cli = ConwayDeathmatch.CLI
+    assert cli.parse_args([]) == c.default_options
+    assert cli.parse_args(["blammo", "whap", "zip"]) == c.default_options
   end
 
-  test "shape_points/1" do
-    c = ConwayDeathmatch
-    assert c.shape_points("p 1 2 p 3 4 p 5 6") == [[1,2], [3,4], [5,6]]
+  test "CLI.shape_points/1" do
+    cli = ConwayDeathmatch.CLI
+    assert cli.shape_points("p 1 2 p 3 4 p 5 6") == [[1,2], [3,4], [5,6]]
   end
 
-  test "int/1" do
-    c = ConwayDeathmatch
-    # assert c.int("two")    # raises
-    assert c.int("23.5") == 23
-    assert c.int("25") == 25
+  test "CLI.int/1" do
+    cli = ConwayDeathmatch.CLI
+    # assert cli.int("two")    # raises
+    assert cli.int("23.5") == 23
+    assert cli.int("25") == 25
   end
 end
