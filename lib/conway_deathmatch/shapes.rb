@@ -18,7 +18,7 @@ module ConwayDeathmatch::Shapes
 
   # parse a string like "acorn 12 22 block 5 0 p 1 2 p 3 4 p 56 78"
   # add known shapes
-  def self.add(board, str, val = ConwayDeathmatch::ALIVE)
+  def self.add(grid, str, val = ConwayDeathmatch::ALIVE)
     tokens = str.split
     points = []
     classic = self.classic
@@ -33,9 +33,9 @@ module ConwayDeathmatch::Shapes
         points << [x, y]
       else
         found = classic[shape] || self.discovered.fetch(shape)
-        board.add_points(found, x, y, val)
+        grid.add_points(found, x, y, val)
       end
     end
-    board.add_points(points, 0, 0, val)
+    grid.add_points(points, 0, 0, val)
   end
 end

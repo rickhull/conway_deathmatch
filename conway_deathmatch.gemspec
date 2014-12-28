@@ -17,9 +17,9 @@ Gem::Specification.new do |s|
     'lib/conway_deathmatch/shapes/discovered.yaml',
     'bin/conway_deathmatch',
     'bin/proving_ground',
-    'test/bench_board_state.rb',
+    'test/bench_grid.rb',
     'test/spec_helper.rb',
-    'test/test_board_state.rb',
+    'test/test_grid.rb',
     'test/test_shapes.rb',
   ]
   s.executables = ['conway_deathmatch']

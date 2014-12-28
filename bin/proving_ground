@@ -13,8 +13,8 @@ opts = Slop.parse(help: true,
 		  optional_arguments: true) do
   banner 'Usage: proving_ground [options]'
 
-  on 'w', 'width=',      '[int] Board width', as: Integer
-  on      'height=',     '[int] Board height', as: Integer
+  on 'w', 'width=',      '[int] Grid width', as: Integer
+  on      'height=',     '[int] Grid height', as: Integer
   on 'n', 'num_ticks=',  '[int] Max number of ticks to generate', as: Integer
   on 'p', 'num_points=', '[int] Number of points to generate', as: Integer
   on 'm', 'max_collisions=', '[int] Max number of collisions', as: Integer
@@ -65,7 +65,7 @@ def conclude!(results, w, h)
     puts "shape_str: #{shape_str(res[1])}"
     puts
   }
-  puts "Board: #{w}x#{h}"
+  puts "Grid: #{w}x#{h}"
 
   exit 0
 end
@@ -90,24 +90,24 @@ loop {
   end
   seen << hsh
 
-  # initialize board with generated shape
+  # initialize grid with generated shape
   b = ConwayDeathmatch.new(width, height)
   b.add_points(points)
 
   current = peak = score = 0     # track population (results)
-  static_count = 0               # detect a stabilized board
+  static_count = 0               # detect a stabilized grid
 
   # iterate the game of life
   num_ticks.times { |i|
     b.tick
 
-    # evaluate board
+    # evaluate grid
     last = current
     current = b.population[ConwayDeathmatch::ALIVE]
     peak = current if current > peak
     score += current * i
 
-    # cease ticks for static or (soon-to-be) empty boards
+    # cease ticks for static or (soon-to-be) empty grids
     break if current < 3
     static_count = (current == last ? static_count + 1 : 0)
     break if static_count > 3

@@ -12,8 +12,8 @@ opts = Slop.parse(help: true,
                   optional_arguments: true) do
   banner 'Usage: conway_deathmatch [options]'
 
-  on 'x', 'width=',      '[int] Board width', as: Integer
-  on 'y', 'height=',     '[int] Board height', as: Integer
+  on 'x', 'width=',      '[int] Grid width', as: Integer
+  on 'y', 'height=',     '[int] Grid height', as: Integer
   # on 'D', 'dimensions=', '[str] width x height', as: String
   on 'n', 'ticks=',  '[int] Max number of ticks to generate', as: Integer
   on 's', 'sleep=',      '[flt] Sleep duration', as: Float

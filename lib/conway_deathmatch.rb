@@ -144,7 +144,7 @@ class ConwayDeathmatch
   end
   alias_method :render, :render_text
 
-  # full board scan
+  # full grid scan
   def population
     population = Hash.new(0)
     @grid.each { |col| col.each { |val|  population[val] += 1  } }
