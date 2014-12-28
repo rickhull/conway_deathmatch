@@ -15,7 +15,7 @@ a 2 dimensional board are populated, and the rules of the game determine the
 next state, generating interesting, unpredictable, and ultimately lifelike
 patterns over time.
 
-Rules
+Traditional Rules
 ---
 Cells die or stay dead, unless:
 * Birth rule: 3 neighboring cells turn dead to alive
@@ -81,21 +81,12 @@ Implementation
 
 Just one file, aside from shape loading: [Have a look-see](https://github.com/rickhull/conway_deathmatch/blob/master/lib/conway_deathmatch/board_state.rb)
 
-This implementation emphasizes simplicity and ease of understanding.  Currently
-there are minimal performance optimizations -- relating to avoiding unnecessary
-bounds checking.
-
-I would like to use this project to demonstrate the process of optimization,
-ideally adding optimization on an optional, parallel, or otherwise
-non-permanent basis -- i.e. maintain the simple, naive implementation for
-reference and correctness.
-
 Boundaries
 ---
 Currently:
 
 * Boundaries are static and fixed
-* Points out of bounds are treated as always-dead and unable-to-be-populated.
+* Boundaries are toroidal -- i.e. they "wrap" both left-right and top-bottom
 
 Deathmatch rules
 ---
