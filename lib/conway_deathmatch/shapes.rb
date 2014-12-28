@@ -1,11 +1,11 @@
-require 'conway_deathmatch/board_state'
+require 'conway_deathmatch'
 require 'yaml'
 
 module ConwayDeathmatch::Shapes
   def self.load_yaml(filename)
     YAML.load_file(File.join(__dir__, 'shapes', filename))
   end
-  
+
   # memoize shapes/classic.yaml
   def self.classic
     @@classic ||= self.load_yaml('classic.yaml')
@@ -15,10 +15,10 @@ module ConwayDeathmatch::Shapes
   def self.discovered
     @@disovered ||= self.load_yaml('discovered.yaml')
   end
-  
+
   # parse a string like "acorn 12 22 block 5 0 p 1 2 p 3 4 p 56 78"
   # add known shapes
-  def self.add(board, str, val = BoardState::ALIVE)
+  def self.add(board, str, val = ConwayDeathmatch::ALIVE)
     tokens = str.split
     points = []
     classic = self.classic

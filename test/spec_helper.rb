@@ -6,11 +6,11 @@ end
 require 'minitest/spec'
 require 'minitest/autorun'
 require 'conway_deathmatch'
+require 'conway_deathmatch/shapes'
 
-include ConwayDeathmatch
-
-DEAD = BoardState::DEAD
-ALIVE = BoardState::ALIVE
+ALIVE = ConwayDeathmatch::ALIVE
+DEAD = ConwayDeathmatch::DEAD
+Shapes = ConwayDeathmatch::Shapes
 
 SHAPE = "acorn"
 SHAPE_STR = "#{SHAPE} 0 0"

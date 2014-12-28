@@ -3,6 +3,7 @@
 require 'set'
 require 'slop'
 require 'conway_deathmatch'
+require 'conway_deathmatch/shapes'
 
 # process cmdline options
 #
@@ -69,9 +70,6 @@ def conclude!(results, w, h)
   exit 0
 end
 
-include ConwayDeathmatch
-ALIVE = BoardState::ALIVE
-
 results = { final: [0], peak: [0], score: [0], }
 seen = Set.new
 collisions = 0
@@ -93,7 +91,7 @@ loop {
   seen << hsh
 
   # initialize board with generated shape
-  b = BoardState.new(width, height)
+  b = ConwayDeathmatch.new(width, height)
   b.add_points(points)
 
   current = peak = score = 0     # track population (results)
@@ -105,7 +103,7 @@ loop {
 
     # evaluate board
     last = current
-    current = b.population[ALIVE]
+    current = b.population[ConwayDeathmatch::ALIVE]
     peak = current if current > peak
     score += current * i
 

@@ -12,7 +12,6 @@ Gem::Specification.new do |s|
     'Rakefile',
     'README.md',
     'lib/conway_deathmatch.rb',
-    'lib/conway_deathmatch/board_state.rb',
     'lib/conway_deathmatch/shapes.rb',
     'lib/conway_deathmatch/shapes/classic.yaml',
     'lib/conway_deathmatch/shapes/discovered.yaml',

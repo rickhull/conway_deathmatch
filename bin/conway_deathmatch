@@ -2,6 +2,7 @@
 
 require 'slop'
 require 'conway_deathmatch'
+require 'conway_deathmatch/shapes'
 
 # process cmdline options
 #
@@ -43,18 +44,17 @@ deathmatch = case opts[:deathmatch].to_s.downcase
 
 # create game
 #
-include ConwayDeathmatch
-b = BoardState.new(width, height)
+b = ConwayDeathmatch.new(width, height)
 
 # Multiple populations or not
 if opts[:one] or opts[:two] or opts[:three]
   b.deathmatch = deathmatch || :aggressive
-  Shapes.add(b, opts[:one], 1) if opts[:one]
-  Shapes.add(b, opts[:two], 2) if opts[:two]
-  Shapes.add(b, opts[:three], 3) if opts[:three]
+  ConwayDeathmatch::Shapes.add(b, opts[:one], 1) if opts[:one]
+  ConwayDeathmatch::Shapes.add(b, opts[:two], 2) if opts[:two]
+  ConwayDeathmatch::Shapes.add(b, opts[:three], 3) if opts[:three]
 else
   b.deathmatch = deathmatch
-  Shapes.add(b, shapes)
+  ConwayDeathmatch::Shapes.add(b, shapes)
 end
 
 # play game
