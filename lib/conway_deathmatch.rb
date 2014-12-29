@@ -13,19 +13,19 @@ class ConwayDeathmatch
   DEAD = '.'
   ALIVE = '0'
 
-  def self.new_grid(x_len, y_len)
+  def self.new_grid(width, height)
     grid = []
-    x_len.times { grid << Array.new(y_len, DEAD) }
+    width.times { grid << Array.new(height, DEAD) }
     grid
   end
 
   # nil for traditional, otherwise :aggressive, :defensive, or :friendly
   attr_accessor :deathmatch
 
-  def initialize(x_len, y_len, deathmatch = nil)
-    @x_len = x_len
-    @y_len = y_len
-    @grid = self.class.new_grid(x_len, y_len)
+  def initialize(width, height, deathmatch = nil)
+    @width = width
+    @height = height
+    @grid = self.class.new_grid(width, height)
     @deathmatch = deathmatch
     #@lager = self.class.lager
   end
@@ -42,15 +42,15 @@ class ConwayDeathmatch
   end
 
   def value(x, y)
-    x = x % @x_len
-    y = y % @y_len
+    x = x % @width
+    y = y % @height
     @grid[x][y]
   end
 
   # total (alive) neighbor count and birthright
   def neighbor_stats(x, y)
-    x = x % @x_len
-    y = y % @y_len
+    x = x % @width
+    y = y % @height
     npop = neighbor_population(x, y).tap { |h| h.delete(DEAD) }
 
     case @deathmatch
@@ -98,13 +98,13 @@ class ConwayDeathmatch
 
   # population of every neighboring entity, including DEAD
   def neighbor_population(x, y)
-    x = x % @x_len
-    y = y % @y_len
+    x = x % @width
+    y = y % @height
     neighbors = Hash.new(0)
     (x-1).upto(x+1) { |xn|
       (y-1).upto(y+1) { |yn|
-        xn = xn % @x_len
-        yn = yn % @y_len
+        xn = xn % @width
+        yn = yn % @height
         neighbors[@grid[xn][yn]] += 1 unless (xn == x and yn == y)
       }
     }
@@ -113,9 +113,9 @@ class ConwayDeathmatch
 
   # generate the next grid table
   def tick
-    new_grid = self.class.new_grid(@x_len, @y_len)
-    @x_len.times { |x|
-      @y_len.times { |y| new_grid[x][y] = next_value(x, y) }
+    new_grid = self.class.new_grid(@width, @height)
+    @width.times { |x|
+      @height.times { |y| new_grid[x][y] = next_value(x, y) }
     }
     @grid = new_grid
     self
@@ -123,16 +123,16 @@ class ConwayDeathmatch
 
   # set a single point
   def populate(x, y, val = ALIVE)
-    x = x % @x_len
-    y = y % @y_len
+    x = x % @width
+    y = y % @height
     @grid[x][y] = val
   end
 
   # set several points (2d array)
   def add_points(points, x_off = 0, y_off = 0, val = ALIVE)
     points.each { |point|
-      x = (point[0] + x_off) % @x_len
-      y = (point[1] + y_off) % @y_len
+      x = (point[0] + x_off) % @width
+      y = (point[1] + y_off) % @height
       @grid[x][y] = val
     }
     self
