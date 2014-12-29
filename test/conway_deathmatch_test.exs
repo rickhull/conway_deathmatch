@@ -107,10 +107,17 @@ defmodule ConwayDeathmatchTest do
 
   test "CLI.parse_args/1" do
     c = ConwayDeathmatch
+    assert ConwayDeathmatch.CLI.parse_args([]) == c.default_options
+  end
+
+  test "CLI.parse_args/1 bad_args" do
     cli = ConwayDeathmatch.CLI
-    assert cli.parse_args([]) == c.default_options
-    assert cli.parse_args(["blammo", "whap", "zip"]) == c.default_options
-    assert cli.parse_args(["--blammo", "--whap", "--zip"]) == c.default_options
+    import ExUnit.CaptureIO
+    bad_args = ["blammo", "--blammo", "whap", "--whap", "zip", "--zip"]
+    Enum.each(bad_args, fn(_arg) -> # a slimy trick to do multiple iterations
+                f = fn() -> cli.parse_args(bad_args |> Enum.sample(3)) end
+                assert (capture_io(f) |> String.length) > 20
+              end)
   end
 
   test "CLI.shape_points/1" do
