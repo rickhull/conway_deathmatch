@@ -61,7 +61,7 @@ defmodule ConwayDeathmatch do
     end
   end
 
-  # single player only
+  # traditional, single population
   def next_cell_sp(cell_val, neighbors) do
     living = neighbors |> alive
     case {cell_val, length(living)} do
