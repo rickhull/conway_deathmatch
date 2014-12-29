@@ -58,17 +58,10 @@ defmodule ConwayDeathmatch.CLI do
     shape_str |> String.split |> Enum.chunk(3)
     |> Enum.map(fn([shape, x, y]) ->
                   case shape do
-                    "p" -> [int(x), int(y)]
+                    "p" -> [String.to_integer(x, 10), String.to_integer(y, 10)]
                     _ -> raise "unknown shape: #{shape}"
                   end
                 end)
-  end
-
-  def int(bin) when is_binary(bin) do
-    case Integer.parse(bin) do
-      {int, _} when is_integer(int) -> int
-      _ -> raise "bad integer: #{bin}"
-    end
   end
 
   def usage(err \\ "") do

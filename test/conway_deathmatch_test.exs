@@ -119,11 +119,4 @@ defmodule ConwayDeathmatchTest do
     cli = ConwayDeathmatch.CLI
     assert cli.shape_points("p 1 2 p 3 4 p 5 6") == [[1,2], [3,4], [5,6]]
   end
-
-  test "CLI.int/1" do
-    cli = ConwayDeathmatch.CLI
-    # assert cli.int("two")    # raises
-    assert cli.int("23.5") == 23
-    assert cli.int("25") == 25
-  end
 end
