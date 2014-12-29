@@ -63,12 +63,8 @@ defmodule ConwayDeathmatchTest do
     grid = c.new(width, height)
     |> c.add_points(block1, val1)
     |> c.add_points(block2, val2)
-    block1 |> Enum.each(fn([x,y]) ->
-                          assert c.cell(grid, x, y) == val1
-                        end)
-    block2 |> Enum.each(fn([x,y]) ->
-                          assert c.cell(grid, x, y) == val2
-                        end)
+    block1 |> Enum.each(fn([x,y]) -> assert c.cell(grid, x, y) == val1 end)
+    block2 |> Enum.each(fn([x,y]) -> assert c.cell(grid, x, y) == val2 end)
   end
 
   test "render width/height orientation" do
@@ -103,6 +99,7 @@ defmodule ConwayDeathmatchTest do
     c = ConwayDeathmatch
     assert c.tor(-2, 5) == 3
     assert c.tor(99, 3) == 0
+    assert c.tor(6, 5) == 1
     assert c.tor(0, 5) == 0
     assert c.tor(-2, 1) == 0
     assert c.tor(-3, 2) == 1
@@ -113,6 +110,7 @@ defmodule ConwayDeathmatchTest do
     cli = ConwayDeathmatch.CLI
     assert cli.parse_args([]) == c.default_options
     assert cli.parse_args(["blammo", "whap", "zip"]) == c.default_options
+    assert cli.parse_args(["--blammo", "--whap", "--zip"]) == c.default_options
   end
 
   test "CLI.shape_points/1" do
