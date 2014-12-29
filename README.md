@@ -15,7 +15,7 @@ a 2 dimensional board are populated, and the rules of the game determine the
 next state, generating interesting, unpredictable, and ultimately lifelike
 patterns over time.
 
-Traditional Rules
+Rules
 ---
 Cells die or stay dead, unless:
 * Birth rule: 3 neighboring cells turn dead to alive
@@ -27,6 +27,17 @@ The traditional set of rules tracks a single population, even though it may
 form several distinct islands and disjointed groups.  For this project,
 *deathmatch* refers to multiple populations with respective identities over
 time (e.g. red vs blue).
+
+Deathmatch Rules
+---
+Choose:
+* Defensive: Alive cells never switch sides
+  - This is the rule followed by the *Immigration* variant of CGoL, I believe
+* Aggressive: Alive cells survive with majority
+  - 3 neighbors: clear majority (e.g. 2 red, 1 blue)
+  - 2 neighbors: coin flip (e.g. 1 red, 1 blue)
+* Friendly: Just count friendlies
+  - Enemies don't count, party on! (e.g. 3 red, 2 blue)
 
 Usage
 ===
@@ -81,23 +92,7 @@ Implementation
 
 Just one file, aside from shape loading: [Have a look-see](https://github.com/rickhull/conway_deathmatch/blob/master/lib/conway_deathmatch/board_state.rb)
 
-Boundaries
----
-Currently:
-
-* Boundaries are static and fixed
-* Boundaries are toroidal -- i.e. they "wrap" both left-right and top-bottom
-
-Deathmatch rules
----
-Choose:
-* Defensive: Alive cells never switch sides
-  - This is the rule followed by the *Immigration* variant of CGoL, I believe
-* Aggressive: Alive cells survive with majority
-  - 3 neighbors: clear majority
-  - 2 neighbors: coin flip
-* Friendly: Just count friendlies
-  - Enemies don't count, party on!
+Boundaries are toroidal, meaning that cells "wrap" at the edges, such that the left edge is adjacent to the right edge, and likewise with top and bottom. Thus, the grid has the topography of a torus (i.e. doughnut).
 
 Inspiration
 ---
