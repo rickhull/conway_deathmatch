@@ -19,9 +19,7 @@ defmodule ConwayDeathmatch do
 
   def new(width, height) when is_integer(width) and width > 0 and is_integer(height) and height > 0 do
     grid = for _y <- 0..(height - 1) do
-      for _x <- 0..(width - 1) do
-        @dead
-      end
+      for _x <- 0..(width - 1), do: @dead
     end
     %ConwayDeathmatch{grid: grid, width: width, height: height}
   end
@@ -53,17 +51,6 @@ defmodule ConwayDeathmatch do
       end
     end
     %ConwayDeathmatch{conway | grid: grid, ticks: conway.ticks + 1}
-  end
-
-  def render(conway) do
-    conway.grid |> Enum.map(&Enum.join/1) |> Enum.join("\n")
-  end
-  def print(conway, %{renderfinal: _rf}), do: conway
-  def print(conway, _options) do
-    IO.puts ""
-    IO.puts conway.ticks
-    IO.puts render(conway)
-    conway
   end
 
   # TODO: switch on deathmatch
@@ -120,6 +107,10 @@ defmodule ConwayDeathmatch do
     end
   end
 
+  def render(conway) do
+    conway.grid |> Enum.map(&Enum.join/1) |> Enum.join("\n")
+  end
+
   def default_options do
     %{width: 40,
       height: 20,
@@ -133,6 +124,14 @@ defmodule ConwayDeathmatch do
     |> loop(options)
   end
 
+  def print(conway, %{renderfinal: _rf}), do: conway
+  def print(conway, _options) do
+    IO.puts ""
+    IO.puts conway.ticks
+    IO.puts render(conway)
+    conway
+  end
+
   def stop(conway, %{ticks: ticks}) do
     if conway.ticks >= ticks, do: System.halt(0), else: conway
   end
@@ -140,4 +139,5 @@ defmodule ConwayDeathmatch do
 
   def sleep(conway, %{sleep: s}) when s == 0, do: conway
   def sleep(conway, %{sleep: s}), do: :timer.sleep(s) && conway
+  def sleep(conway, _options), do: conway
 end
