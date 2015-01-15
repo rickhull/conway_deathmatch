@@ -5,7 +5,6 @@ defmodule ConwayDeathmatch.CLI do
 
   def main(args) do
     options = args |> parse_args |> process_options
-    IO.inspect options # debug
     conway = new(options[:width],
                  options[:height],
                  options[:points]) |> loop(options)
