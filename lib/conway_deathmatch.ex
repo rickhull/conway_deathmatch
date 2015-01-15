@@ -112,10 +112,12 @@ defmodule ConwayDeathmatch do
   end
 
   def default_options do
-    %{width: 40,
+    %{width:  40,
       height: 20,
       shapes: "p 2 0 p 3 0 p 4 0 p 5 0 p 6 0 p 7 0 p 8 0 p 9 0 p 10 0",
-      sleep: 0}
+      sleep:  0,
+      render: true,
+     }
   end
 
   def loop(conway, options \\ default_options()) do
@@ -124,8 +126,7 @@ defmodule ConwayDeathmatch do
     |> loop(options)
   end
 
-  def print(conway, %{renderfinal: _rf}), do: conway
-  def print(conway, _options) do
+  def print(conway, %{render: true}) do
     IO.puts ""
     IO.puts conway.ticks
     IO.puts render(conway)
@@ -136,6 +137,7 @@ defmodule ConwayDeathmatch do
     if conway.ticks >= ticks, do: System.halt(0), else: conway
   end
   def stop(conway, _options), do: conway
+  def print(conway, _options), do: conway
 
   def sleep(conway, %{sleep: s}) when s == 0, do: conway
   def sleep(conway, %{sleep: s}), do: :timer.sleep(s) && conway

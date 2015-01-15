@@ -24,7 +24,7 @@ defmodule ConwayDeathmatch.CLI do
                                           one:    :string,
                                           two:    :string,
                                           three:  :string,
-                                          renderfinal: :boolean,],
+                                          render: :boolean,],
                                  aliases: [h: :help,
                                            x: :width,
                                            y: :height,
@@ -32,7 +32,7 @@ defmodule ConwayDeathmatch.CLI do
                                            s: :sleep,
                                            S: :shapes,
                                            p: :step,
-                                           r: :renderfinal,])
+                                           r: :render,])
     case options do
       {[help: true], _, _} ->
         usage()
