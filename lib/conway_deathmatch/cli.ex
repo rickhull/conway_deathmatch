@@ -8,8 +8,14 @@ defmodule ConwayDeathmatch.CLI do
     IO.inspect options # debug
     conway = new(options[:width],
                  options[:height],
-                 options[:points])
-    loop(conway, options)
+                 options[:points]) |> loop(options)
+    conclude(conway, options)
+  end
+
+  def conclude(conway, %{render: render} = o) do
+    # don't double-render the last iteration
+    unless render, do: print(conway, Dict.put(o, :render, true))
+    # print stats, etc.
   end
 
   def parse_args(args) do

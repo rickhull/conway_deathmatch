@@ -121,9 +121,11 @@ defmodule ConwayDeathmatch do
   end
 
   def loop(conway, options \\ default_options()) do
-    conway |> tick
-    |> print(options) |> stop(options) |> sleep(options)
-    |> loop(options)
+    if Dict.has_key?(options, :ticks) and conway.ticks >= options[:ticks] do
+      conway
+    else
+      conway |> tick |> print(options) |> sleep(options) |> loop(options)
+    end
   end
 
   def print(conway, %{render: true}) do
@@ -132,11 +134,6 @@ defmodule ConwayDeathmatch do
     IO.puts render(conway)
     conway
   end
-
-  def stop(conway, %{ticks: ticks}) do
-    if conway.ticks >= ticks, do: System.halt(0), else: conway
-  end
-  def stop(conway, _options), do: conway
   def print(conway, _options), do: conway
 
   def sleep(conway, %{sleep: s}) when s == 0, do: conway
