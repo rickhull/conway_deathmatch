@@ -74,7 +74,7 @@ defmodule ConwayDeathmatch do
 
   def neighbors(conway, x, y) do
     for xn <- (x-1)..(x+1), yn <- (y-1)..(y+1), {xn,yn} != {x,y} do
-      cell conway, tor(xn, conway.width), tor(yn, conway.height)
+      cell(conway, tor(xn, conway.width), tor(yn, conway.height))
     end
   end
 
