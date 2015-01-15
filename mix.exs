@@ -27,6 +27,11 @@ defmodule ConwayDeathmatch.Mixfile do
   #
   # Type `mix help deps` for more examples and options
   defp deps do
-    []
+    [{:exprof, "~> 0.1"},
+     {:eflame,
+      ~r//,    # project is not semantically versioned
+      github:  "proger/eflame",
+      compile: "rebar compile"},
+    ]
   end
 end
