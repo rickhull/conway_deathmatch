@@ -14,7 +14,7 @@ defmodule ConwayDeathmatch.CLI do
   def conclude(conway, %{render: render} = o) do
     # don't double-render the last iteration
     unless render, do: print(conway, Dict.put(o, :render, true))
-    # print stats, etc.
+    # TODO: print stats, etc.
   end
 
   def parse_args(args) do

@@ -15,7 +15,7 @@ defmodule ConwayDeathmatch do
 """
   @dead "."
   defstruct grid: [[]], width: 0, height: 0,
-  dead: @dead, deathmatch: nil, ticks: 0
+            dead: @dead, deathmatch: nil, ticks: 0
 
   def new(width, height) when is_integer(width) and width > 0 and is_integer(height) and height > 0 do
     grid = for _y <- 0..(height - 1) do
