@@ -1,5 +1,18 @@
 defmodule ConwayDeathmatch do
-  @module_doc "lorem ipsum"
+  @module_doc """
+  Provides Conway's Game of Life
+
+  Significant features:
+  * Deathmatch - multiple competing populations
+  * Several rulesets:
+    - Traditional - Single population
+    - Aggressive - Alive cells can switch sides
+    - Defensive - Alive cells never switch sides
+    - Friendly - Only friendly cells matter
+  * Toroidal grid - the grid wraps left/right and up/down
+  * Configurable render representation - uses @dead, and any non-@dead values
+                                         identify a specific (alive) population
+"""
   @dead "."
   defstruct grid: [[]], width: 0, height: 0,
   dead: @dead, deathmatch: nil, ticks: 0
