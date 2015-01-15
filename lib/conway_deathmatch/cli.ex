@@ -1,6 +1,6 @@
 defmodule ConwayDeathmatch.CLI do
   @module_doc "lorem ipsum"
-  import ConwayDeathmatch # TODO: default_options(), print()
+  import ConwayDeathmatch # TODO: default_options(), print(), loop()
 
 
   def main(args) do
@@ -51,7 +51,7 @@ defmodule ConwayDeathmatch.CLI do
     options
   end
 
-  def process_options(%{shapes: shapes} = o) when is_map(o) do
+  def process_options(%{shapes: shapes} = o) do
     Dict.put(o, :points, shape_points(shapes))
   end
 
