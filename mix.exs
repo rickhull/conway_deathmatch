@@ -19,6 +19,7 @@ defmodule ConwayDeathmatch.Mixfile do
     [applications: [:logger]]
   end
 
+  # only compile perf stuff for perf environment
   defp elixirc_paths(:perf), do: ["lib", "perf"]
   defp elixirc_paths(env) when env in [:dev, :test, :prod], do: ["lib"]
 
@@ -27,11 +28,9 @@ defmodule ConwayDeathmatch.Mixfile do
   end
 
   defp eflame do
-     {:eflame,
-      ~r//,    # project is not semantically versioned
-      github:  "proger/eflame",
-      compile: "rebar compile",
+     {:eflame, ~r//,    # project is not semantically versioned
       only:    :perf,
+      github:  "proger/eflame", compile: "rebar compile",
      }
   end
 end
