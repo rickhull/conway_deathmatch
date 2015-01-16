@@ -8,7 +8,7 @@ defmodule ConwayDeathmatch.Mixfile do
      escript: [main_module: ConwayDeathmatch.CLI],
      consolidate_protocols: true,
      elixirc_paths: elixirc_paths(Mix.env),
-     deps: [exprof, eflame],
+     deps: deps,
     ]
   end
 
@@ -22,6 +22,8 @@ defmodule ConwayDeathmatch.Mixfile do
   # only compile perf stuff for perf environment
   defp elixirc_paths(:perf), do: ["lib", "perf"]
   defp elixirc_paths(env) when env in [:dev, :test, :prod], do: ["lib"]
+
+  defp deps, do: [exprof, eflame]
 
   defp exprof do
     {:exprof, "~> 0.1", only: :perf}
