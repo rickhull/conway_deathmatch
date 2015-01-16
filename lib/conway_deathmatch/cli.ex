@@ -1,5 +1,5 @@
 defmodule ConwayDeathmatch.CLI do
-  @module_doc "lorem ipsum"
+  @module_doc false # TODO
   import ConwayDeathmatch, only: [default_options: 0,
                                   print: 2,
                                   loop: 2,

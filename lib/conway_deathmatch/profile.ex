@@ -1,5 +1,5 @@
 defmodule ConwayDeathmatch.Profile do
-  @module_doc "lorem ipsum"
+  @module_doc false
 
   def eflame(num_ticks \\ 100) do
     :eflame.apply(&invoke_cli/1, [num_ticks])
