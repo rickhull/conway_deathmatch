@@ -12,6 +12,13 @@ defmodule Profile do
   end
 end
 
+defmodule Mix.Tasks.DoWork do
+  @shortdoc "Run standard simulation without profiling [NUM_TICKS]"
+  use Mix.Task
+
+  def run(mix_args), do: Profile.do_work(mix_args)
+end
+
 defmodule Mix.Tasks.Eflame do
   @shortdoc "Generate perf/flame.svg [NUM_TICKS]"
   @svg "perf/flame.svg"
