@@ -31,7 +31,7 @@ defmodule ConwayDeathmatch.Mixfile do
       ~r//,    # project is not semantically versioned
       github:  "proger/eflame",
       compile: "rebar compile",
-      only: :perf,
+      only:    :perf,
      }
   end
 end

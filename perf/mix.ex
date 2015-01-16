@@ -25,8 +25,9 @@ defmodule Mix.Tasks.Profile do
 
     def run([]), do: run(["100"])
     def run([num_ticks]) do
-      # generates output
-      records = profile do: Mix.Tasks.Profile.do_work(num_ticks)
+      # generates output, returns records
+      profile do: Mix.Tasks.Profile.do_work(num_ticks)
+
       # TODO: something with records
     end
   end
