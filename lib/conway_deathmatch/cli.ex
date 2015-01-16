@@ -1,7 +1,9 @@
 defmodule ConwayDeathmatch.CLI do
   @module_doc "lorem ipsum"
-  import ConwayDeathmatch # TODO: default_options(), print(), loop()
-
+  import ConwayDeathmatch, only: [default_options: 0,
+                                  print: 2,
+                                  loop: 2,
+                                  new: 3]
 
   def main(args) do
     options = args |> parse_args |> process_options
