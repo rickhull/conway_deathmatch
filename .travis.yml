@@ -1,7 +1,6 @@
 language: erlang
 
 otp_release:
-- 17.0
 - 17.1
 
 before_install:
@@ -9,7 +8,7 @@ before_install:
 - cd elixir && make && cd ..
 
 before_script:
-- export PATH=`pwd`/elixir/bin:$PATH
+- export PATH=$PWD/elixir/bin:$PATH
 - export MIX_ENV=test
 
 script: "mix do local.hex --force, deps.get --only test, test"
