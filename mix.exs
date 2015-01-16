@@ -7,7 +7,9 @@ defmodule ConwayDeathmatch.Mixfile do
      elixir: "~> 1.0",
      escript: [main_module: ConwayDeathmatch.CLI],
      consolidate_protocols: true,
-     deps: deps(Mix.env)]
+     elixirc_paths: elixirc_paths(Mix.env),
+     deps: [exprof, eflame],
+    ]
   end
 
   # Configuration for the OTP application
@@ -17,29 +19,19 @@ defmodule ConwayDeathmatch.Mixfile do
     [applications: [:logger]]
   end
 
-  # Dependencies can be Hex packages:
-  #
-  #   {:mydep, "~> 0.3.0"}
-  #
-  # Or git/path repositories:
-  #
-  #   {:mydep, git: "https://github.com/elixir-lang/mydep.git", tag: "0.1.0"}
-  #
-  # Type `mix help deps` for more examples and options
-  defp deps(:prod), do: []
-  defp deps(:test), do: []
-  defp deps(:dev), do: []
-  defp deps(:perf), do: [exprof(), eflame()]
+  defp elixirc_paths(:perf), do: ["lib", "perf"]
+  defp elixirc_paths(env) when env in [:dev, :test, :prod], do: ["lib"]
 
   defp exprof do
-    {:exprof, "~> 0.1"}
+    {:exprof, "~> 0.1", only: :perf}
   end
 
   defp eflame do
      {:eflame,
       ~r//,    # project is not semantically versioned
       github:  "proger/eflame",
-      compile: "rebar compile"
+      compile: "rebar compile",
+      only: :perf,
      }
   end
 end
