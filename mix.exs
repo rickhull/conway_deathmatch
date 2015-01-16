@@ -7,7 +7,7 @@ defmodule ConwayDeathmatch.Mixfile do
      elixir: "~> 1.0",
      escript: [main_module: ConwayDeathmatch.CLI],
      consolidate_protocols: true,
-     deps: deps]
+     deps: deps(Mix.env)]
   end
 
   # Configuration for the OTP application
@@ -26,12 +26,20 @@ defmodule ConwayDeathmatch.Mixfile do
   #   {:mydep, git: "https://github.com/elixir-lang/mydep.git", tag: "0.1.0"}
   #
   # Type `mix help deps` for more examples and options
-  defp deps do
-    [{:exprof, "~> 0.1"},
+  defp deps(:prod), do: []
+  defp deps(:test), do: []
+  defp deps(:dev), do: []
+  defp deps(:perf), do: [exprof(), eflame()]
+
+  defp exprof do
+    {:exprof, "~> 0.1"}
+  end
+
+  defp eflame do
      {:eflame,
       ~r//,    # project is not semantically versioned
       github:  "proger/eflame",
-      compile: "rebar compile"},
-    ]
+      compile: "rebar compile"
+     }
   end
 end
