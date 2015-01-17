@@ -26,7 +26,7 @@ defmodule ConwayDeathmatch.CLI do
                                           width:  :integer,
                                           height: :integer,
                                           ticks:  :integer,
-                                          sleep:  :float,
+                                          sleep:  :integer,
                                           shapes: :string,
                                           step:   :boolean,
                                           one:    :string,

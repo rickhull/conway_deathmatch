@@ -136,7 +136,9 @@ defmodule ConwayDeathmatch do
   end
   def print(conway, _options), do: conway
 
-  def sleep(conway, %{sleep: s}) when s == 0, do: conway
-  def sleep(conway, %{sleep: s}), do: :timer.sleep(s) && conway
+  def sleep(conway, %{sleep: ms}) when is_integer(ms) and ms != 0 do
+    :timer.sleep(ms)
+    conway
+  end
   def sleep(conway, _options), do: conway
 end
