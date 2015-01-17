@@ -7,21 +7,22 @@ defmodule ConwayDeathmatch.CLI do
 
   def main(args) do
     options = args |> parse_args |> process_options
-    conway = new(options[:width],
-                 options[:height],
-                 options[:points]) |> loop(options)
-    conclude(conway, options)
+    new(options[:width],
+        options[:height],
+        options[:points])
+    |> loop(options) |> conclude(options)
   end
 
   def conclude(conway, %{render: render} = o) do
     # don't double-render the last iteration
     unless render, do: print(conway, Dict.put(o, :render, true))
+
     # TODO: print stats, etc.
   end
 
   def parse_args(args) do
     options = OptionParser.parse(args,
-                                 strict: [help: :boolean,
+                                 strict: [help:   :boolean,
                                           width:  :integer,
                                           height: :integer,
                                           ticks:  :integer,
