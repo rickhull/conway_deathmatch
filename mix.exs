@@ -2,12 +2,12 @@ defmodule ConwayDeathmatch.Mixfile do
   use Mix.Project
 
   def project do
-    common = [app: :conway_deathmatch,
-              version: "0.0.1",
-              elixir: "~> 1.0",
-              escript: [main_module: ConwayDeathmatch.CLI],
-              deps: deps]
-    Keyword.merge(common, project(Mix.env))
+    [app: :conway_deathmatch,
+     version: "0.0.1",
+     elixir: "~> 1.0",
+     escript: [main_module: ConwayDeathmatch.CLI],
+     deps: deps]
+    |> Keyword.merge(project(Mix.env))
   end
 
   # Configuration for the OTP application
@@ -29,7 +29,7 @@ defmodule ConwayDeathmatch.Mixfile do
   end
 
   defp eflame do
-     {:eflame, ~r//,    # project is not semantically versioned
+     {:eflame, ~r//,    # no semver
       only:    :perf,
       github:  "proger/eflame", compile: "rebar compile",
      }
