@@ -4,6 +4,9 @@ defmodule Profile do
   def do_work(mix_args) when is_list(mix_args) do
     cli_args(mix_args) |> ConwayDeathmatch.CLI.main
   end
+  def do_work(num_ticks) when is_integer(num_ticks) or is_binary(num_ticks) do
+    do_work(["#{num_ticks}"])
+  end
 
   # 10 ticks by default
   defp cli_args(mix_args) do
