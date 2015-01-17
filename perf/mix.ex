@@ -54,7 +54,7 @@ defmodule Mix.Tasks.Eflame do
                   :eflame.apply(&Profile.do_work/1, [mix_args])
                   Mix.Shell.IO.info "Generating SVG flamegraph..."
                   Mix.Shell.IO.cmd "mv stacks.out perf/"
-                  Mix.Shell.IO.cmd "deps/eflame/flamegraph.pl perf/stacks.out > #{@svg}"
+                  Mix.Shell.IO.cmd "deps/eflame/stack_to_flame.sh < perf/stacks.out > #{@svg}"
                   Mix.Shell.IO.info @svg
                 end)
   end
