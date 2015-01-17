@@ -29,9 +29,9 @@ defmodule ConwayDeathmatch.Mixfile do
   end
 
   defp eflame do
-     {:eflame, ~r//,    # no semver
-      only:    :perf,
-      github:  "proger/eflame", compile: "rebar compile",
-     }
+    {:eflame, "~> 0.1",
+     only:    :perf,
+     github:  "rickhull/eflame", compile: "rebar compile",
+    }
   end
 end
