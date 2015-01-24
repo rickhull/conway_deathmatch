@@ -42,9 +42,7 @@ class ConwayDeathmatch
   end
 
   def value(x, y)
-    x = x % @width
-    y = y % @height
-    @grid[x][y]
+    @grid[x % @width][y % @height]
   end
 
   # total (alive) neighbor count and birthright
@@ -123,18 +121,12 @@ class ConwayDeathmatch
 
   # set a single point
   def populate(x, y, val = ALIVE)
-    x = x % @width
-    y = y % @height
-    @grid[x][y] = val
+    @grid[x % @width][y % @height] = val
   end
 
   # set several points (2d array)
   def add_points(points, x_off = 0, y_off = 0, val = ALIVE)
-    points.each { |point|
-      x = (point[0] + x_off) % @width
-      y = (point[1] + y_off) % @height
-      @grid[x][y] = val
-    }
+    points.each { |point| populate(point[0] + x_off, point[1] + y_off, val) }
     self
   end
 
