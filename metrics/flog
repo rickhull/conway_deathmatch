@@ -1,6 +1,6 @@
-   176.4: flog total
-    10.4: flog/method average
+   171.1: flog total
+    10.1: flog/method average
 
-    53.8: ConwayDeathmatch#neighbor_stats  lib/conway_deathmatch.rb:51
+    53.8: ConwayDeathmatch#neighbor_stats  lib/conway_deathmatch.rb:49
     30.6: ConwayDeathmatch::Shapes::add    lib/conway_deathmatch/shapes.rb:21
-    21.6: ConwayDeathmatch#neighbor_population lib/conway_deathmatch.rb:100
+    21.6: ConwayDeathmatch#neighbor_population lib/conway_deathmatch.rb:98
