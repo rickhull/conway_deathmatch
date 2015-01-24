@@ -90,7 +90,7 @@ There is [another yaml file](https://github.com/rickhull/conway_deathmatch/blob/
 Implementation
 ===
 
-Just one file, aside from shape loading: [Have a look-see](https://github.com/rickhull/conway_deathmatch/blob/master/lib/conway_deathmatch/board_state.rb)
+Just one file, aside from shape loading: [Have a look-see](https://github.com/rickhull/conway_deathmatch/blob/master/lib/conway_deathmatch.rb)
 
 Boundaries are toroidal, meaning that cells "wrap" at the edges, such that the left edge is adjacent to the right edge, and likewise with top and bottom. Thus, the grid has the topography of a torus (i.e. doughnut).
 
