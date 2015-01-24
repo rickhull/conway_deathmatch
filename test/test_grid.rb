@@ -42,22 +42,31 @@ describe ConwayDeathmatch do
   describe "adding shapes" do
     before do
       @grid = ConwayDeathmatch.new(40, 40)
-      Shapes.add(@grid, SHAPE_STR)
+      Shapes.add(@grid, "acorn 0 0")
     end
 
-    it "must recognize \"#{SHAPE_STR}\"" do
-      Shapes.classic.fetch(SHAPE).each { |xy_ary|
+    it "must recognize \"acorn 0 0\"" do
+      Shapes.classic.fetch("acorn").each { |xy_ary|
         @grid.value(*xy_ary).must_equal ALIVE
       }
-      @grid.population.fetch(ALIVE).must_equal POINTS_COUNT
+      @grid.population.fetch(ALIVE).must_equal 7
     end
 
     it "must tick correctly" do
       @grid.tick
-      SHAPE_TICK_POINTS.each { |xy_ary|
+      new_points = [
+        [0, 1],
+        [1, 1],
+        [2, 1],
+        [4, 1],
+        [4, 2],
+        [5, 1],
+        [5, 2],
+        [5, 3],
+      ].each { |xy_ary|
         @grid.value(*xy_ary).must_equal ALIVE
       }
-      @grid.population.fetch(ALIVE).must_equal SHAPE_TICK_POINTS.length
+      @grid.population.fetch(ALIVE).must_equal new_points.length
     end
   end
 
