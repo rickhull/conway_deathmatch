@@ -1,11 +1,3 @@
-require 'buildar'
-
-Buildar.new do |b|
-  b.gemspec_file = 'conway_deathmatch.gemspec'
-  b.version_file = 'VERSION'
-  b.use_git = true
-end
-
 task default: %w[test bench]
 task travis: %w[test bench ruby-prof]
 
@@ -65,4 +57,16 @@ task "ruby-prof-exclude" => "ruby-prof" do
   sh ["ruby-prof -m1 --exclude-common-cycles bin/conway_deathmatch",
       "-- -n100 -s0 --renderfinal",
       "| tee metrics/ruby-prof-exclude"].join(' ')
+end
+
+begin
+  require 'buildar'
+
+  Buildar.new do |b|
+    b.gemspec_file = 'conway_deathmatch.gemspec'
+    b.version_file = 'VERSION'
+    b.use_git = true
+  end
+rescue LoadError
+  # ok
 end
