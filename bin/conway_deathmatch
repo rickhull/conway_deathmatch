@@ -1,5 +1,6 @@
 #!/usr/bin/env ruby
 
+gem 'slop', '~> 3'
 require 'slop'
 require 'conway_deathmatch'
 require 'conway_deathmatch/shapes'
