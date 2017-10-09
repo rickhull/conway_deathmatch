@@ -3,7 +3,6 @@ if ENV['CODE_COVERAGE']
   SimpleCov.start
 end
 
-require 'minitest/spec'
 require 'minitest/autorun'
 require 'conway_deathmatch'
 require 'conway_deathmatch/shapes'
