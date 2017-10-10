@@ -32,10 +32,16 @@ task :flay do
   sh "flay lib | tee metrics/flay"
 end
 
-desc "Run roodi on lib/"
-task :roodi do
-  puts
-  sh "roodi -config=.roodi.yml lib | tee metrics/roodi"
+begin
+  require 'roodi_task'
+  params = {
+    config: '.roodi.yml',
+    patterns: ['lib/**/*.rb'],
+  }
+  # params = {}
+  r = RoodiTask.new params
+rescue LoadError
+  warn "roodi_task unavailable"
 end
 
 desc "Show current system load"
