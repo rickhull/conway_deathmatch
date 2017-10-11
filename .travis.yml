@@ -1,8 +1,10 @@
 language: ruby
 rvm:
-  - 2.2.0
-  - 2.0.0
+  - 2.2
+  - 2.3
+  - 2.4
   - ruby-head
+install: gem install minitest; gem install slop -v 3.6
 env:
   - BENCH_TICK_THRESH=0.99; BENCH_NEW_THRESH=0.9
-script: bundle exec rake travis
+script: rake travis
