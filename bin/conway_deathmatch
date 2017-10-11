@@ -71,7 +71,7 @@ while n.nil? or count <= n
   b.tick
 
   if opts.step?
-    gets
+    $stdin.gets
   else
     sleep slp if slp > 0.0
   end
