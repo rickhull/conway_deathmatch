@@ -23,7 +23,7 @@ Gem::Specification.new do |s|
     'test/test_shapes.rb',
   ]
   s.executables = ['conway_deathmatch']
-  s.add_runtime_dependency "slop", "~> 3.0"
+  s.add_runtime_dependency "slop", "~> 4.0"
   s.add_development_dependency "buildar", "~> 3"
   s.add_development_dependency "minitest", "~> 5"
   s.add_development_dependency "ruby-prof", "~> 0"

@@ -4,7 +4,7 @@ rvm:
   - 2.3
   - 2.4
   - ruby-head
-install: gem install minitest; gem install slop -v 3.6
+install: gem install slop minitest
 env:
   - BENCH_TICK_THRESH=0.99; BENCH_NEW_THRESH=0.9
 script: rake travis
