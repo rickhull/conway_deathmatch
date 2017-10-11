@@ -37,8 +37,8 @@ end
 begin
   require 'flay_task'
   FlayTask.new do |t|
-    t.verbose = true
     t.dirs = ['lib']
+    t.verbose = true
   end
   metrics_tasks << :flay
 rescue LoadError
@@ -58,7 +58,7 @@ task code_metrics: metrics_tasks
 
 
 #
-# PROFILING TASKS
+# PROFILING
 #
 
 desc "Show current system load"
@@ -66,29 +66,34 @@ task "loadavg" do
   puts File.read "/proc/loadavg"
 end
 
-rubylib = "RUBYLIB=lib"
-rubyprof = "ruby-prof -m1"
-scriptname = "bin/conway_deathmatch"
-scriptargs = "-n 100 -s 0 --renderfinal"
+def lib_sh(cmd)
+  sh "RUBYLIB=lib #{cmd}"
+end
+
+def rprof_sh(script, args, rprof_args = '')
+  lib_sh ['ruby-prof', rprof_args, script, '--', args].join(' ')
+end
+
+rprof_args = "-m1"
+xname = "bin/conway_deathmatch"
+xargs = "-n 100 -s 0 --renderfinal"
 
 desc "Run ruby-prof on bin/conway_deathmatch (100 ticks)"
 task "ruby-prof" => "loadavg" do
-  sh [rubylib, rubyprof, scriptname, '--', scriptargs].join(' ')
+  rprof_sh xname, xargs, rprof_args
 end
 
 desc "Run ruby-prof with --exclude-common-cycles"
 task "ruby-prof-exclude" => "ruby-prof" do
-  sh [rubylib,
-      rubyprof, '--exclude-common-cycles', scriptname, '--',
-      scriptargs].join(' ')
+  rprof_sh xname, xargs, "#{rprof_args} --exclude-common-cycles"
 end
 
 task "no-prof" do
-  sh [rubylib, scriptname, scriptargs].join(' ')
+  lib_sh [xname, xargs].join(' ')
 end
 
 #
-# GEM BUILD / PUBLISH TASKS
+# GEM BUILD / PUBLISH
 #
 
 begin
