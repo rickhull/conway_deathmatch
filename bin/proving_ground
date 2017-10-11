@@ -1,24 +1,23 @@
 #!/usr/bin/env ruby
 
 require 'set'
-gem 'slop', '~> 3'
 require 'slop'
 require 'conway_deathmatch'
 require 'conway_deathmatch/shapes'
 
 # process cmdline options
 #
-opts = Slop.parse(help: true,
-                  banner: true,
-	          strict: true,
-		  optional_arguments: true) do
-  banner 'Usage: proving_ground [options]'
-
-  on 'w', 'width=',      '[int] Grid width', as: Integer
-  on      'height=',     '[int] Grid height', as: Integer
-  on 'n', 'num_ticks=',  '[int] Max number of ticks to generate', as: Integer
-  on 'p', 'num_points=', '[int] Number of points to generate', as: Integer
-  on 'm', 'max_collisions=', '[int] Max number of collisions', as: Integer
+opts = Slop.parse do |o|
+  o.banner = "Usage: proving_ground [options]"
+  o.int '-w', '--width', 'Grid width'
+  o.int       '--height', 'Grid height'
+  o.int '-n', '--num_ticks', 'Max number of ticks to generate'
+  o.int '-p', '--num_points', 'Number of points to generate'
+  o.int '-m', '--max_collisions', 'Max number of generation collisions'
+  o.on '-h', '--help' do
+    puts o
+    exit
+  end
 end
 
 num_points = opts[:num_points] || 5

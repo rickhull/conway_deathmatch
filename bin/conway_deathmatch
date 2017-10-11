@@ -1,31 +1,35 @@
 #!/usr/bin/env ruby
 
-gem 'slop', '~> 3'
 require 'slop'
 require 'conway_deathmatch'
 require 'conway_deathmatch/shapes'
 
 # process cmdline options
 #
-opts = Slop.parse(help: true,
-                  banner: true,
-                  strict: true,
-                  optional_arguments: true) do
-  banner 'Usage: conway_deathmatch [options]'
+opts = Slop.parse do |o|
+  o.banner = "Usage: conway_deathmatch [options]"
+  o.int '-x', '--width', 'Grid width'
+  o.int '-y', '--height', 'Grid height'
+  o.int '-n', '--ticks', 'Max number of ticks to generate'
+  o.float '-s', '--sleep', 'Sleep duration'
+  o.string '-p', '--points', 'e.g. acorn 50 18 p 1 2 p 3 4'
+  o.bool '-g', '--step', 'Pause each tick for user input'
+  o.bool '-r', '--renderfinal', 'Only render the final state'
+  o.string '-d', '--deathmatch', 'single|aggressive|defensive|friendly'
+  o.string '--one', 'points for population "1"'
+  o.string '--two', 'points for population "2"'
+  o.string '--three', 'points for population "3"'
 
-  on 'x', 'width=',      '[int] Grid width', as: Integer
-  on 'y', 'height=',     '[int] Grid height', as: Integer
-  # on 'D', 'dimensions=', '[str] width x height', as: String
-  on 'n', 'ticks=',  '[int] Max number of ticks to generate', as: Integer
-  on 's', 'sleep=',      '[flt] Sleep duration', as: Float
-  on 'p', 'points=',     '[str] e.g. "acorn 50 18 p 1 2 p 3 4"', as: String
-  on 'g', 'step',        'Hold ticks for user input'
-  on 'r', 'renderfinal', 'Only render the final state'
-  on 'd', 'deathmatch',
-     '[str] single|aggressive|defensive|friendly', as: String
-  on      'one=',        '[str] points for population "1"', as: String
-  on      'two=',        '[str] points for population "2"', as: String
-  on      'three=',      '[str] points for population "3"', as: String
+  o.on '-h', '--help' do
+    puts o
+    exit
+  end
+end
+
+def opts.error(msg = nil)
+  puts self
+  puts "ERROR: #{msg}" if msg
+  exit 1
 end
 
 width = opts[:width] || 70
@@ -40,7 +44,7 @@ deathmatch = case opts[:deathmatch].to_s.downcase
              when 'd', 'defensive' then :defensive
              when 'f', 'friendly' then :friendly
              else
-               raise "unknown: #{opts[:deathmatch]}"
+               opts.error("unknown deathmatch option: #{opts[:deathmatch]}")
              end
 
 # create game
