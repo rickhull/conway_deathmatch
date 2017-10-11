@@ -49,20 +49,18 @@ task "loadavg" do
   puts File.read "/proc/loadavg"
 end
 
-# this runs against the installed gem lib, not git / filesystem
 desc "Run ruby-prof on bin/conway_deathmatch (100 ticks)"
 task "ruby-prof" => "loadavg" do
-  sh ["ruby-prof -m1 bin/conway_deathmatch",
-      "-- -n100 -s0 --renderfinal",
-      "| tee metrics/ruby-prof"].join(' ')
+  sh ["RUBYLIB=lib ruby-prof -m1 bin/conway_deathmatch",
+      "-- -n 100 -s 0 --renderfinal",
+     ].join(' ')
 end
 
-# this runs against the installed gem lib, not git / filesystem
 desc "Run ruby-prof with --exclude-common-cycles"
 task "ruby-prof-exclude" => "ruby-prof" do
   sh ["ruby-prof -m1 --exclude-common-cycles bin/conway_deathmatch",
-      "-- -n100 -s0 --renderfinal",
-      "| tee metrics/ruby-prof-exclude"].join(' ')
+      "-- -n 100 -s 0 --renderfinal",
+     ].join(' ')
 end
 
 begin
