@@ -71,7 +71,7 @@ def conclude!(results, w, h)
   exit 0
 end
 
-results = { final: [0], peak: [0], score: [0], }
+results = { final: [0, []], peak: [0, []], score: [0, []], }
 seen = Set.new
 collisions = 0
 
