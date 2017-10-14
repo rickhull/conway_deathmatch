@@ -114,4 +114,4 @@ end
 #
 
 desc "Rake tasks for travis to run"
-task travis: %w[test bench no-prof]
+task travis: %w[test no-prof]
