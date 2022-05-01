@@ -9,13 +9,13 @@ describe ConwayDeathmatch do
     end
 
     it "must have dead population" do
-      @grid.population[DEAD].must_equal @x * @y
-      @grid.population.keys.length.must_equal 1
+      expect(@grid.population[DEAD]).must_equal @x * @y
+      expect(@grid.population.keys.length).must_equal 1
     end
 
     it "must still be dead after a tick" do
-      @grid.tick.population[DEAD].must_equal @x*@y
-      @grid.population.keys.length.must_equal 1
+      expect(@grid.tick.population[DEAD]).must_equal @x*@y
+      expect(@grid.population.keys.length).must_equal 1
     end
 
     it "must accept a block" do
@@ -24,15 +24,15 @@ describe ConwayDeathmatch do
       @grid.populate 2,1
       @grid.populate 2,2
 
-      @grid.population[DEAD].must_equal @x * @y - 4
-      @grid.population[ALIVE].must_equal 4
+      expect(@grid.population[DEAD]).must_equal @x * @y - 4
+      expect(@grid.population[ALIVE]).must_equal 4
 
       0.upto(4) { |x|
         0.upto(4) { |y|
           if x.between?(1, 2) and y.between?(1, 2)
-            @grid.value(x, y).must_equal ALIVE
+            expect(@grid.value(x, y)).must_equal ALIVE
           else
-            @grid.value(x, y).must_equal DEAD
+            expect(@grid.value(x, y)).must_equal DEAD
           end
         }
       }
@@ -47,9 +47,9 @@ describe ConwayDeathmatch do
 
     it "must recognize \"acorn 0 0\"" do
       Shapes.classic.fetch("acorn").each { |xy_ary|
-        @grid.value(*xy_ary).must_equal ALIVE
+        expect(@grid.value(*xy_ary)).must_equal ALIVE
       }
-      @grid.population.fetch(ALIVE).must_equal 7
+      expect(@grid.population.fetch(ALIVE)).must_equal 7
     end
 
     it "must tick correctly" do
@@ -64,9 +64,9 @@ describe ConwayDeathmatch do
         [5, 2],
         [5, 3],
       ].each { |xy_ary|
-        @grid.value(*xy_ary).must_equal ALIVE
+        expect(@grid.value(*xy_ary)).must_equal ALIVE
       }
-      @grid.population.fetch(ALIVE).must_equal new_points.length
+      expect(@grid.population.fetch(ALIVE)).must_equal new_points.length
     end
   end
 
@@ -82,14 +82,14 @@ describe ConwayDeathmatch do
         break if @grid.value(2, 1) == '2'
       }
 
-      @grid.population.fetch('1').must_equal 2
-      @grid.population.fetch('2').must_equal 1
+      expect(@grid.population.fetch('1')).must_equal 2
+      expect(@grid.population.fetch('2')).must_equal 1
       0.upto(4) { |x|
         0.upto(2) { |y|
           if x == 2 and y.between?(0, 2)
-            @grid.value(x, y).must_equal(y == 1 ? '2' : '1')
+            expect(@grid.value(x, y)).must_equal(y == 1 ? '2' : '1')
           else
-            @grid.value(x, y).must_equal DEAD
+            expect(@grid.value(x, y)).must_equal DEAD
           end
         }
       }
@@ -105,13 +105,13 @@ describe ConwayDeathmatch do
         @grid.populate(3, 1, '2') # enemy
         @grid.tick
 
-        @grid.population.fetch('1').must_equal 3
+        expect(@grid.population.fetch('1')).must_equal 3
         0.upto(4) { |x|
           0.upto(2) { |y|
             if x == 2 and y.between?(0, 2)
-              @grid.value(x, y).must_equal '1'
+              expect(@grid.value(x, y)).must_equal '1'
             else
-              @grid.value(x, y).must_equal DEAD
+              expect(@grid.value(x, y)).must_equal DEAD
             end
           }
         }
@@ -129,11 +129,11 @@ describe ConwayDeathmatch do
       @grid.populate(2, 3, '2') # enemy
       @grid.tick
 
-      @grid.population.fetch('1').must_equal 1
+      expect(@grid.population.fetch('1')).must_equal 1
       # (2,2) alive despite 4 neighbors, only 2 friendly; all else DEAD
       0.upto(4) { |x|
         0.upto(4) { |y|
-          @grid.value(x, y).must_equal (x == 2 && y == 2 ? '1' : DEAD)
+          expect(@grid.value(x, y)).must_equal (x == 2 && y == 2 ? '1' : DEAD)
         }
       }
     end
