@@ -4,7 +4,7 @@
 # 3. done!
 #
 # the shell is completely safe from garbage collection and evaluates instantly
-# due to Nix's native caching. if you want logs during build, add `-L` to 
+# due to Nix's native caching. if you want logs during build, add `-L` to
 # `nix develop`.
 {
   inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
@@ -33,6 +33,7 @@
         (pkgs.ruby.withPackages (p: with p; [
 	  rake
 	  minitest
+	  slop
 	]))
 
         pleaseKeepMyInputs
