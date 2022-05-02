@@ -1,8 +1,3 @@
-# HOW TO USE:
-# 1. make a `profiles/` directory in your repo and add to .gitignore
-# 2. nix develop --profile profiles/dev
-# 3. done!
-#
 # the shell is completely safe from garbage collection and evaluates instantly
 # due to Nix's native caching. if you want logs during build, add `-L` to
 # `nix develop`.
@@ -25,7 +20,7 @@
 
     # a text file containing the paths to the flake inputs in order to stop
     # them from being garbage collected
-    pleaseKeepMyInputs = pkgs.writeTextDir "bin/.please-keep-my-inputs"
+    flakeRoot = pkgs.writeTextDir "bin/.flakeRoot"
       (builtins.concatStringsSep " " (builtins.attrValues inputs));
   in {
     devShell."${system}" = pkgs.mkShell {
@@ -37,7 +32,7 @@
 	  simplecov
 	]))
 
-        pleaseKeepMyInputs
+        flakeRoot
       ];
     };
   };
