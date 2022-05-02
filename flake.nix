@@ -34,6 +34,7 @@
 	  rake
 	  minitest
 	  slop
+	  simplecov
 	]))
 
         pleaseKeepMyInputs

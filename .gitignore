@@ -1,3 +1,4 @@
 pkg/
 profiles/
+coverage/
 Gemfile.lock
