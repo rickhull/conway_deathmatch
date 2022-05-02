@@ -1,20 +1,20 @@
 require 'rake/testtask'
+
 desc "Run tests"
 Rake::TestTask.new do |t|
   t.name = "test"
-  t.pattern = "test/test_*.rb"
+  t.pattern = "test/*.rb"
   # t.warning = true
 end
 
 desc "Run benchmarks"
 Rake::TestTask.new do |t|
   t.name = "bench"
-  t.pattern = "test/bench_*.rb"
+  t.pattern = "bench/*.rb"
   # t.warning = true
 end
 
-task default: %w[test bench]
-
+task default: :test
 
 #
 # METRICS
