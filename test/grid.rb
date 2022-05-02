@@ -1,12 +1,12 @@
-# require_relative './spec_helper'
-
+require_relative 'helper'
 require 'conway_deathmatch'
-require 'minitest/autorun'
-
-ALIVE = ConwayDeathmatch::ALIVE
-DEAD = ConwayDeathmatch::DEAD
 
 describe ConwayDeathmatch do
+  before do
+    @alive = ConwayDeathmatch::ALIVE
+    @dead = ConwayDeathmatch::DEAD
+  end
+
   describe "an empty grid" do
     before do
       @x = 5
@@ -15,12 +15,12 @@ describe ConwayDeathmatch do
     end
 
     it "consists entirely of dead cells" do
-      expect(@grid.population[DEAD]).must_equal @x * @y
+      expect(@grid.population[@dead]).must_equal @x * @y
       expect(@grid.population.keys.length).must_equal 1
     end
 
     it "stays dead after a tick" do
-      expect(@grid.tick.population[DEAD]).must_equal @x*@y
+      expect(@grid.tick.population[@dead]).must_equal @x*@y
       expect(@grid.population.keys.length).must_equal 1
     end
 
@@ -30,15 +30,15 @@ describe ConwayDeathmatch do
       @grid.populate 2,1
       @grid.populate 2,2
 
-      expect(@grid.population[DEAD]).must_equal @x * @y - 4
-      expect(@grid.population[ALIVE]).must_equal 4
+      expect(@grid.population[@dead]).must_equal @x * @y - 4
+      expect(@grid.population[@alive]).must_equal 4
 
       0.upto(4) { |x|
         0.upto(4) { |y|
           if x.between?(1, 2) and y.between?(1, 2)
-            expect(@grid.value(x, y)).must_equal ALIVE
+            expect(@grid.value(x, y)).must_equal @alive
           else
-            expect(@grid.value(x, y)).must_equal DEAD
+            expect(@grid.value(x, y)).must_equal @dead
           end
         }
       }
@@ -71,7 +71,7 @@ describe ConwayDeathmatch do
       0.upto(4) { |x|
         0.upto(2) { |y|
           val = team.include?([x, y]) ? :team :
-                  (hostile.include?([x, y]) ? :hostile : DEAD)
+                  (hostile.include?([x, y]) ? :hostile : @dead)
           expect(@grid.value(x, y)).must_equal(val)
         }
       }
@@ -93,7 +93,7 @@ describe ConwayDeathmatch do
             if x == 2 and y.between?(0, 2)
               expect(@grid.value(x, y)).must_equal :team
             else
-              expect(@grid.value(x, y)).must_equal DEAD
+              expect(@grid.value(x, y)).must_equal @dead
             end
           }
         }
@@ -114,12 +114,12 @@ describe ConwayDeathmatch do
 
       @grid.tick
 
-      # (2,2) alive despite 4 neighbors (2 friendly); now all else DEAD
+      # (2,2) alive despite 4 neighbors (2 friendly); now all else @dead
       expect(@grid.population.fetch(:team)).must_equal 1
       0.upto(4) { |x|
         0.upto(4) { |y|
           expect(@grid.value(x, y)).
-            must_equal(x == 2 && y == 2 ? :team : DEAD)
+            must_equal(x == 2 && y == 2 ? :team : @dead)
         }
       }
     end

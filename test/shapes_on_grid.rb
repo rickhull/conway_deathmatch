@@ -1,22 +1,19 @@
+require_relative 'helper'
 require 'conway_deathmatch'
 require 'conway_deathmatch/shapes'
-require 'minitest/autorun'
-
-ALIVE = ConwayDeathmatch::ALIVE
-DEAD = ConwayDeathmatch::DEAD
-Shapes = ConwayDeathmatch::Shapes
 
 describe "Shapes on the grid" do
   before do
+    @alive = ConwayDeathmatch::ALIVE
     @grid = ConwayDeathmatch.new(20, 20)
-    Shapes.add(@grid, "acorn 0 0")
+    ConwayDeathmatch::Shapes.add(@grid, "acorn 0 0")
   end
 
   it "recognizes \"acorn 0 0\"" do
-    Shapes.classic.fetch("acorn").each { |xy_ary|
-      expect(@grid.value(*xy_ary)).must_equal ALIVE
+    ConwayDeathmatch::Shapes.classic.fetch("acorn").each { |xy_ary|
+      expect(@grid.value(*xy_ary)).must_equal @alive
     }
-    expect(@grid.population.fetch(ALIVE)).must_equal 7
+    expect(@grid.population.fetch(@alive)).must_equal 7
   end
 
   it "ticks correctly" do
@@ -31,8 +28,8 @@ describe "Shapes on the grid" do
       [5, 2],
       [5, 3],
     ].each { |xy_ary|
-      expect(@grid.value(*xy_ary)).must_equal ALIVE
+      expect(@grid.value(*xy_ary)).must_equal @alive
     }
-    expect(@grid.population.fetch(ALIVE)).must_equal new_points.length
+    expect(@grid.population.fetch(@alive)).must_equal new_points.length
   end
 end
