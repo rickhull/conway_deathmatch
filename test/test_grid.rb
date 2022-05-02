@@ -8,17 +8,17 @@ describe ConwayDeathmatch do
       @grid = ConwayDeathmatch.new(@x, @y)
     end
 
-    it "must have dead population" do
+    it "consists entirely of dead cells" do
       expect(@grid.population[DEAD]).must_equal @x * @y
       expect(@grid.population.keys.length).must_equal 1
     end
 
-    it "must still be dead after a tick" do
+    it "stays dead after a tick" do
       expect(@grid.tick.population[DEAD]).must_equal @x*@y
       expect(@grid.population.keys.length).must_equal 1
     end
 
-    it "must accept a block" do
+    it "can be populated by a 2x2 block" do
       @grid.populate 1,1
       @grid.populate 1,2
       @grid.populate 2,1
@@ -45,14 +45,14 @@ describe ConwayDeathmatch do
       Shapes.add(@grid, "acorn 0 0")
     end
 
-    it "must recognize \"acorn 0 0\"" do
+    it "recognizes \"acorn 0 0\"" do
       Shapes.classic.fetch("acorn").each { |xy_ary|
         expect(@grid.value(*xy_ary)).must_equal ALIVE
       }
       expect(@grid.population.fetch(ALIVE)).must_equal 7
     end
 
-    it "must tick correctly" do
+    it "ticks correctly" do
       @grid.tick
       new_points = [
         [0, 1],
@@ -71,7 +71,7 @@ describe ConwayDeathmatch do
   end
 
   describe "aggressive deathmatch" do
-    it "must allow survivors to switch sides" do
+    it "allows survivors to switch sides" do
       32.times {
         @grid = ConwayDeathmatch.new(5, 3, :aggressive)
         @grid.populate(1, 1, '1') # friendly
@@ -97,7 +97,7 @@ describe ConwayDeathmatch do
   end
 
   describe "defensive deathmatch" do
-    it "must not allow survivors to switch sides" do
+    it "won't allow survivors to switch sides" do
       16.times {
         @grid = ConwayDeathmatch.new(5, 3, :defensive)
         @grid.populate(1, 1, '1') # friendly
