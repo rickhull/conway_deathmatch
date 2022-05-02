@@ -1,15 +1,15 @@
-require_relative './spec_helper'
+# require_relative './spec_helper'
+
+# require 'conway_deathmatch'
+require 'conway_deathmatch/shapes'
+require 'minitest/autorun'
+
+#ALIVE = ConwayDeathmatch::ALIVE
+#DEAD = ConwayDeathmatch::DEAD
+Shapes = ConwayDeathmatch::Shapes
 
 describe Shapes do
-  it "must recognize acorn" do
+  it "recognizes acorn" do
     expect(Shapes.classic.fetch("acorn")).must_be_instance_of Array
-  end
-
-  it "must confirm acorn on the grid" do
-    @grid = ConwayDeathmatch.new(20, 20)
-    Shapes.add(@grid, "acorn 0 0")
-    Shapes.classic.fetch("acorn").each { |xy_ary|
-      expect(@grid.value(*xy_ary)).must_equal ALIVE
-    }
   end
 end
