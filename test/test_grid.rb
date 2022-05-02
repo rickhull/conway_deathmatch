@@ -74,20 +74,20 @@ describe ConwayDeathmatch do
     it "allows survivors to switch sides" do
       32.times {
         @grid = ConwayDeathmatch.new(5, 3, :aggressive)
-        @grid.populate(1, 1, '1') # friendly
-        @grid.populate(2, 1, '1') # survivor
-        @grid.populate(3, 1, '2') # enemy
+        @grid.populate(1, 1, :team) # friendly
+        @grid.populate(2, 1, :team) # survivor
+        @grid.populate(3, 1, :hostile) # enemy
 
         @grid.tick
-        break if @grid.value(2, 1) == '2'
+        break if @grid.value(2, 1) == :hostile
       }
 
-      expect(@grid.population.fetch('1')).must_equal 2
-      expect(@grid.population.fetch('2')).must_equal 1
+      expect(@grid.population.fetch(:team)).must_equal 2
+      expect(@grid.population.fetch(:hostile)).must_equal 1
       0.upto(4) { |x|
         0.upto(2) { |y|
           if x == 2 and y.between?(0, 2)
-            expect(@grid.value(x, y)).must_equal(y == 1 ? '2' : '1')
+            expect(@grid.value(x, y)).must_equal(y == 1 ? :hostile : :team)
           else
             expect(@grid.value(x, y)).must_equal DEAD
           end
@@ -100,16 +100,16 @@ describe ConwayDeathmatch do
     it "won't allow survivors to switch sides" do
       16.times {
         @grid = ConwayDeathmatch.new(5, 3, :defensive)
-        @grid.populate(1, 1, '1') # friendly
-        @grid.populate(2, 1, '1') # survivor
-        @grid.populate(3, 1, '2') # enemy
+        @grid.populate(1, 1, :team) # friendly
+        @grid.populate(2, 1, :team) # survivor
+        @grid.populate(3, 1, :hostile) # enemy
         @grid.tick
 
-        expect(@grid.population.fetch('1')).must_equal 3
+        expect(@grid.population.fetch(:team)).must_equal 3
         0.upto(4) { |x|
           0.upto(2) { |y|
             if x == 2 and y.between?(0, 2)
-              expect(@grid.value(x, y)).must_equal '1'
+              expect(@grid.value(x, y)).must_equal :team
             else
               expect(@grid.value(x, y)).must_equal DEAD
             end
@@ -120,20 +120,24 @@ describe ConwayDeathmatch do
   end
 
   describe "friendly deathmatch" do
-    it "must allow survivors with excess hostiles nearby" do
+    it "allows survivors even with excess hostiles nearby" do
       @grid = ConwayDeathmatch.new(5, 5, :friendly)
-      @grid.populate(1, 2, '1') # friendly
-      @grid.populate(2, 2, '1') # survivor
-      @grid.populate(3, 2, '1') # friendly
-      @grid.populate(2, 1, '2') # enemy
-      @grid.populate(2, 3, '2') # enemy
+      @grid.populate(1, 2, :team)    # friendly
+      @grid.populate(2, 2, :team)    # friendly, eventual survivor
+      @grid.populate(3, 2, :team)    # friendly
+      @grid.populate(2, 1, :hostile) # enemy
+      @grid.populate(2, 3, :hostile) # enemy
+      expect(@grid.population.fetch(:team)).must_equal 3
+      expect(@grid.population.fetch(:hostile)).must_equal 2
+
       @grid.tick
 
-      expect(@grid.population.fetch('1')).must_equal 1
-      # (2,2) alive despite 4 neighbors, only 2 friendly; all else DEAD
+      # (2,2) alive despite 4 neighbors (2 friendly); now all else DEAD
+      expect(@grid.population.fetch(:team)).must_equal 1
       0.upto(4) { |x|
         0.upto(4) { |y|
-          expect(@grid.value(x, y)).must_equal (x == 2 && y == 2 ? '1' : DEAD)
+          expect(@grid.value(x, y)).
+            must_equal(x == 2 && y == 2 ? :team : DEAD)
         }
       }
     end
