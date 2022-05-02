@@ -72,25 +72,32 @@ describe ConwayDeathmatch do
 
   describe "aggressive deathmatch" do
     it "allows survivors to switch sides" do
-      32.times {
+      # don't risk an infinite loop if a bug is present
+      99.times {
         @grid = ConwayDeathmatch.new(5, 3, :aggressive)
-        @grid.populate(1, 1, :team) # friendly
-        @grid.populate(2, 1, :team) # survivor
+        @grid.populate(1, 1, :team)    # friendly
+        @grid.populate(2, 1, :team)    # friendly; eventual survivor
         @grid.populate(3, 1, :hostile) # enemy
 
         @grid.tick
+
+        # exit the loop when the survivor switches sides
         break if @grid.value(2, 1) == :hostile
       }
 
+      # expect to fail once per 2^99 runs
       expect(@grid.population.fetch(:team)).must_equal 2
       expect(@grid.population.fetch(:hostile)).must_equal 1
+
+      # survivors
+      team = [[2, 0], [2, 2]]
+      hostile = [[2, 1]]
+
       0.upto(4) { |x|
         0.upto(2) { |y|
-          if x == 2 and y.between?(0, 2)
-            expect(@grid.value(x, y)).must_equal(y == 1 ? :hostile : :team)
-          else
-            expect(@grid.value(x, y)).must_equal DEAD
-          end
+          val = team.include?([x, y]) ? :team :
+                  (hostile.include?([x, y]) ? :hostile : DEAD)
+          expect(@grid.value(x, y)).must_equal(val)
         }
       }
     end
