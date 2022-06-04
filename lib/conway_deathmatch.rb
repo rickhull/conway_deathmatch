@@ -3,8 +3,6 @@
 # Boundaries are toroidal: they wrap in each direction
 #
 class ConwayDeathmatch
-  class BoundsError < RuntimeError; end
-
   DEAD = '.'
   ALIVE = '0'
 
