@@ -1,13 +1,8 @@
-#require 'conway_deathmatch/shapes'
-#require 'lager'
-
 # Provides a 2d array for the grid
 # Implements standard and deathmatch evaluation rules
 # Boundaries are toroidal: they wrap in each direction
 #
 class ConwayDeathmatch
-  #extend Lager
-  #log_to $stderr
   class BoundsError < RuntimeError; end
 
   DEAD = '.'
@@ -27,7 +22,6 @@ class ConwayDeathmatch
     @height = height
     @grid = self.class.new_grid(width, height)
     @deathmatch = deathmatch
-    #@lager = self.class.lager
   end
 
   # Conway's Game of Life transition rules
