@@ -6,8 +6,8 @@ group :development, optional: true do
   gem 'minitest'
   gem 'rake'
   gem 'buildar'
-  gem 'ruby-prof'
   gem 'flog'
   gem 'flay'
   gem 'roodi'
+  gem 'ruby-prof', platforms: :mri
 end
