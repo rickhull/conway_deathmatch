@@ -33,5 +33,5 @@ Gem::Specification.new do |s|
 
   # uncomment and set ENV['CODE_COVERAGE']
   # s.add_development_dependency "simplecov", "~> 0.9.0"
-  s.required_ruby_version = "~> 2"
+  s.required_ruby_version = ">= 2"
 end
