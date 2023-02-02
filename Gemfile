@@ -1,10 +1,11 @@
-source 'https://rubygems.org'
+source 'https://rubygems.org/'
 
 gemspec
 
 group :development, optional: true do
-  gem 'buildar'
   gem 'minitest'
+  gem 'rake'
+  gem 'buildar'
   gem 'ruby-prof'
   gem 'flog'
   gem 'flay'
